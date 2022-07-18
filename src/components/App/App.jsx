@@ -8,17 +8,17 @@ import {
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import Nav from '../Nav/Nav';
-import Footer from '../Footer/Footer';
+import Nav from '../Shared/Nav/Nav';
+import Footer from '../Shared/Footer/Footer';
 
-import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import ProtectedRoute from '../Shared/ProtectedRoute/ProtectedRoute';
 
-import AboutPage from '../AboutPage/AboutPage';
-import UserPage from '../UserPage/UserPage';
-import InfoPage from '../InfoPage/InfoPage';
-import LandingPage from '../LandingPage/LandingPage';
-import LoginPage from '../LoginPage/LoginPage';
-import RegisterPage from '../RegisterPage/RegisterPage';
+import AboutPage from '../Pages/AboutPage/AboutPage';
+import UserPage from '../Pages/UserPage/UserPage';
+import InfoPage from '../Pages/InfoPage/InfoPage';
+import LandingPage from '../Pages/LandingPage/LandingPage';
+import LoginPage from '../Auth/LoginPage/LoginPage';
+import RegisterPage from '../Auth/RegisterPage/RegisterPage';
 
 import './App.css';
 
