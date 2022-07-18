@@ -6,13 +6,14 @@ const {
   } = require('../modules/authentication-middleware');
     
 
-router.get('/', (req, res) => {
+router.get('/:projectID', rejectUnauthenticated, (req, res) => {
     console.log('employee-Activity GET running')
     const query = `SELECT 
 	"user"."username" as "employee",
 	"user".is_intern,
 	projects."name" as "project_name",
 	"activity"."type",
+    "activity_employee"."id",
 	"activity".activity_date,
 	"activity".notes,
 	"employee_hours",
@@ -23,10 +24,11 @@ JOIN "projects" on activity.projects_id=projects.id
 JOIN "company" on projects.company_id = company.id
 join "user" on  activity_employee.user_id= "user".id
 WHERE projects.id=$1
-GROUP BY "user"."username","user".is_intern,projects."name","activity"."type" ,"employee_hours","activity".activity_date,"activity".notes;
+GROUP BY "activity_employee"."id", "user"."username","user".is_intern,projects."name","activity"."type" ,"employee_hours","activity".activity_date,"activity".notes;
 `
-    pool.query(query,[2])
+    pool.query(query,[req.params.projectID])
     .then(result =>{
+        console.log('id of project for activity',req.params.projectID)
         res.send(result.rows)
     }).catch((err)=>{
         console.log('get employee-activity error',err)

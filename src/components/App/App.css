@@ -110,3 +110,8 @@ input {
   margin: 5px;
   margin-bottom: 10px;
 }
+
+.activity{
+  display:inline-block;
+  margin-right: 2em;
+}
