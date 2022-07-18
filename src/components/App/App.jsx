@@ -19,6 +19,8 @@ import InfoPage from '../Pages/InfoPage/InfoPage';
 import LandingPage from '../Pages/LandingPage/LandingPage';
 import LoginPage from '../Auth/LoginPage/LoginPage';
 import RegisterPage from '../Auth/RegisterPage/RegisterPage';
+import CompanyPage from '../Pages/CompanyPage/CompanyPage';
+import ArchivedPage from '../Pages/ArchivedPage/ArchivedPage';
 
 import './App.css';
 
@@ -68,6 +70,19 @@ function App() {
             <InfoPage />
           </ProtectedRoute>
 
+          <ProtectedRoute
+            exact
+            path="/company"
+          >
+            <CompanyPage />
+          </ProtectedRoute>
+          <ProtectedRoute
+            exact
+            path="/archives"
+          >
+            <ArchivedPage />
+          </ProtectedRoute>
+
           <Route
             exact
             path="/login"
@@ -75,7 +90,7 @@ function App() {
             {user.id ?
               // If the user is already logged in, 
               // redirect to the /user page
-              <Redirect to="/user" />
+              <Redirect to="/company" />
               :
               // Otherwise, show the login page
               <LoginPage />
