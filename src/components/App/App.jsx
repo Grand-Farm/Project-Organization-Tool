@@ -15,6 +15,7 @@ import InfoPage from '../Pages/InfoPage/InfoPage';
 import LandingPage from '../Pages/LandingPage/LandingPage';
 import LoginPage from '../Auth/LoginPage/LoginPage';
 import RegisterPage from '../Auth/RegisterPage/RegisterPage';
+import ActivityPage from '../Pages/ActivityPage/ActivityPage';
 
 import ProjectsList from '../ProjectsPage/projects';
 import CompanyPage from '../Pages/CompanyPage/CompanyPage';
@@ -49,6 +50,14 @@ function App() {
             path="/about"
           >
             <AboutPage />
+          </Route>
+
+          <Route
+            // shows AboutPage at all times (logged in or not)
+            exact
+            path="/activity"
+          >
+            <ActivityPage />
           </Route>
 
           {/* For protected routes, the view could show one of several things on the same route.
