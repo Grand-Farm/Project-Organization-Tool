@@ -9,6 +9,17 @@ function ArchivedPage() {
     return (
         <div className='archivePage'>
             <h1>Archived</h1>
+            <select>
+                {companyStore.map(company => {
+                    {
+                        if (company.is_archived === true) {
+                            return (
+                                <option key={company.id}>{company.name}</option>
+                            )
+                        }
+                    }
+                })}
+            </select>
             <div className='container'>
                 {companyStore.map(company => {
                     {
