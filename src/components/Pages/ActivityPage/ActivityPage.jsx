@@ -10,7 +10,6 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ActivityEmployee from './ActivityEmployee';
 
 export default function ActivityPage() {
     const dispatch = useDispatch();
@@ -43,8 +42,7 @@ export default function ActivityPage() {
     const columns = [
         { field: 'id', headerName: 'ID', width: 70 },
         { field: 'Type', headerName: 'Type', width: 130 },
-        { field: 'Employees', headerName: 'Employees', width: 130, valueGetter: (params) => console.log('params',params)
-        ``,},
+        { field: 'Employees', headerName: 'Employees', width: 130, renderCell:(params)=> { return(params.row.Employees.map((e,i)=> { return (e.employee + ', ' )}))}},
         {
           field: 'Date',
           headerName: 'Date',
@@ -58,7 +56,7 @@ export default function ActivityPage() {
       activity.map((a,i)=>{
           return{
             id:a.id,
-            Employees:a.employee,
+            Employees: employee.filter((e)=> a.id=== e.activity_id),
             Type:a.type,
             Date:(moment(a.activity_date).format('l')),
             Notes: a.notes
@@ -67,51 +65,18 @@ export default function ActivityPage() {
         
     })
 
-   const dispatchfunction= (a,event)=>{
-       dispatch( {type: "FETCH_EMPLOYEES", payload: {activityID:a.id}})
-       event.preventDefault();
-   }
     
     
     return (
-        <div>
     <div style={{ height: 500, width: '100%' }}>
          <DataGrid
-        rows={rows}
+         style={{marginLeft:50, marginRight:50}}
+        rows={rows }
         columns={columns}
         pageSize={5}
         rowsPerPageOptions={[5]}
       />
       </div>
-       {activity.map((a,i) =>{
-           console.log('this is a', a)
-           return(
-               
-               <div className='activity' key={i}>
-                   <p >{a.id}</p>
-                <p>Type: {a.type}</p>
-                <p>date:{moment(a.activity_date).format('l')} </p>
-                <p>employees: <ActivityEmployee key={i} a={a} /> </p>
-                <p>notes:<Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-            >
-              <Typography> View</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography>
-              {a.notes}
-              </Typography>
-            </AccordionDetails>
-          </Accordion></p>
-                <p>Length: {a.employee_hours}</p>
-                
-                </div>
-            )
-        })}
-    </div>
   )
  }
 
