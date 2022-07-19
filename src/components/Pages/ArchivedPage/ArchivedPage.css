@@ -1,0 +1,13 @@
+.archivePage{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container{
+    display: flex;
+}
+
+.content{
+    margin: 1em
+}
