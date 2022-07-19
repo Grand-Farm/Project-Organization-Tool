@@ -16,7 +16,7 @@ import LandingPage from '../Pages/LandingPage/LandingPage';
 import LoginPage from '../Auth/LoginPage/LoginPage';
 import RegisterPage from '../Auth/RegisterPage/RegisterPage';
 import ProjectsList from '../ProjectsPage/projects';
-import CompanyPage from '../Pages/CompanyPage/CompanyPage';
+import CompaninesPage from '../Pages/CompanyPage/CompaniesPage';
 import ArchivedPage from '../Pages/ArchivedPage/ArchivedPage';
 import AboutPage from '../Pages/AboutPage/AboutPage'
 import './App.css';
@@ -71,7 +71,7 @@ function App() {
             exact
             path="/company"
           >
-            <CompanyPage />
+            <CompaninesPage />
           </ProtectedRoute>
           <ProtectedRoute
             exact
