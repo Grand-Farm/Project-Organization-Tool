@@ -31,4 +31,27 @@ router.get('/', (req, res) => {
   })
 
   });
+
+  // updating the rating of a project
+router.put('/', (req, res) => {
+  console.log(req.body)
+  const projects = req.body;
+
+  const queryText = `UPDATE "projects"
+  SET "status" = $1 WHERE "id" = $2 ` 
+;
+
+  const queryValues = [
+  projects.newStatus,
+  projects.projectID
+  ];
+
+
+  pool.query(queryText, queryValues)
+    .then(() => { res.sendStatus(200); })
+    .catch((err) => {
+      console.log('Error completing UPDATE projects query', err);
+      res.sendStatus(500);
+    });
+});
 module.exports = router;
