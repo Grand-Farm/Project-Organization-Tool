@@ -5,7 +5,6 @@ import { useState } from "react"
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-
 import ProjectRow from './ProjectRow';
 
 function ProjectsList() {
@@ -27,13 +26,6 @@ function ProjectsList() {
         history.push(`/details/${projects}`);
     }
 
-    function updateStatus(projectID) {
-        // event.preventDefault();
-        // console.log(event);
-        // setstatus(event);
-        console.log("this is the status project", status, projectID)
-        // dispatch({type:'STATUS', payload:{newStatus:status, projectID}});
-    }
 
 
 

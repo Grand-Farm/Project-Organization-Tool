@@ -8,6 +8,7 @@ router.get('/', (req, res) => {
     const query = `SELECT * FROM projects`;
     pool.query(query)
       .then( result => {
+        console.log(result.rows)
         res.send(result.rows);
       })
       .catch(err => {
@@ -33,22 +34,18 @@ router.get('/', (req, res) => {
   });
 
   // updating the rating of a project
-router.put('/', (req, res) => {
+router.put('/:ProjectID', (req, res) => {
   console.log(req.body)
   const projects = req.body;
+  console.log(projects.status)
 
   const queryText = `UPDATE "projects"
-  SET "status" = $1 WHERE "id" = $2 ` 
+  SET ("status","budgeted_hours") = ($2,$3) WHERE "id" = $1` 
 ;
 
-  const queryValues = [
-  projects.newStatus,
-  projects.projectID
-  ];
 
-
-  pool.query(queryText, queryValues)
-    .then(() => { res.sendStatus(200); })
+  pool.query(queryText, [req.params.ProjectID,projects.status,projects.budgeted_hours])
+    .then(() => { res.sendStatus(200) })
     .catch((err) => {
       console.log('Error completing UPDATE projects query', err);
       res.sendStatus(500);
