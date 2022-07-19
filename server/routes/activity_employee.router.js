@@ -6,29 +6,31 @@ const {
   } = require('../modules/authentication-middleware');
     
 
-router.get('/:projectID', rejectUnauthenticated, (req, res) => {
-    console.log('employee-Activity GET running')
+router.get('/:activityID', rejectUnauthenticated, (req, res) => {
+    console.log('employee-Activity GET',req.params.activityID)
     const query = `SELECT 
-	"user"."username" as "employee",
-	"user".is_intern,
-	projects."name" as "project_name",
-	"activity"."type",
-    "activity_employee"."id",
-	"activity".activity_date,
-	"activity".notes,
-	"employee_hours",
-	CASE WHEN "user"."is_intern" = true THEN SUM(employee_hours * company.intern_rate) ELSE SUM(employee_hours * company.full_time_rate) END as "cost for employee" 
-FROM activity_employee
+	"user"."username" as "employee" FROM activity_employee
 JOIN "activity" on activity_employee.activity_id=activity.id
 JOIN "projects" on activity.projects_id=projects.id
-JOIN "company" on projects.company_id = company.id
 join "user" on  activity_employee.user_id= "user".id
-WHERE projects.id=$1
-GROUP BY "activity_employee"."id", "user"."username","user".is_intern,projects."name","activity"."type" ,"employee_hours","activity".activity_date,"activity".notes;
-`
-    pool.query(query,[req.params.projectID])
+WHERE activity.id=$1
+GROUP BY "user"."username"`
+    pool.query(query,[req.params.activityID])
     .then(result =>{
-        console.log('id of project for activity',req.params.projectID)
+        res.send(result.rows)
+    }).catch((err)=>{
+        console.log('get employee-activity error',err)
+    })
+});
+
+router.get('/', rejectUnauthenticated, (req, res) => {
+    const query = ` SELECT 
+	"user"."username" as "employee", "activity".id as activity_id FROM activity_employee
+JOIN "activity" on activity_employee.activity_id=activity.id
+JOIN "projects" on activity.projects_id=projects.id
+join "user" on  activity_employee.user_id= "user".id`
+    pool.query(query)
+    .then(result =>{
         res.send(result.rows)
     }).catch((err)=>{
         console.log('get employee-activity error',err)

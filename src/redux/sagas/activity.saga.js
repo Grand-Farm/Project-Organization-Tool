@@ -4,7 +4,7 @@ import { put, takeLatest, select } from 'redux-saga/effects';
 
 function* fetchActivity(action) {
   try {
-    const response = yield axios.get(`/api/activity_employee/${action.payload.projectID}`)
+    const response = yield axios.get(`/api/activity/${action.payload.projectID}`)
     console.log('RESPONSE IN ACTIVITTTYYYYYYY', response.data)
     yield put({ type: 'GET_ACTIVITY', payload: response.data })
   } catch {
