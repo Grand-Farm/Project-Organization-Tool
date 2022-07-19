@@ -3,7 +3,12 @@ import activitySaga from './activity.saga';
 import loginSaga from './login.saga';
 import registrationSaga from './registration.saga';
 import userSaga from './user.saga';
+
 import employeeSaga from './activity_employee.saga';
+import fetchProjects from './projects.saga';
+import statusSaga from './status.saga';
+import companySaga from './company.saga';
+
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -19,5 +24,8 @@ export default function* rootSaga() {
     userSaga(),
     activitySaga(),
     employeeSaga()
+    fetchProjects(),
+    statusSaga(),
+    companySaga(),
   ]);
 }
