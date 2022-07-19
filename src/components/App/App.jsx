@@ -13,15 +13,8 @@ import Footer from '../Shared/Footer/Footer';
 
 import ProtectedRoute from '../Shared/ProtectedRoute/ProtectedRoute';
 
-<<<<<<< HEAD
-import AboutPage from '../AboutPage/AboutPage';
-import UserPage from '../UserPage/UserPage';
-import InfoPage from '../InfoPage/InfoPage';
-import LandingPage from '../LandingPage/LandingPage';
-import LoginPage from '../LoginPage/LoginPage';
-import RegisterPage from '../RegisterPage/RegisterPage';
+
 import ProjectsList from '../ProjectsPage/projects';
-=======
 import AboutPage from '../Pages/AboutPage/AboutPage';
 import UserPage from '../Pages/UserPage/UserPage';
 import InfoPage from '../Pages/InfoPage/InfoPage';
@@ -30,7 +23,6 @@ import LoginPage from '../Auth/LoginPage/LoginPage';
 import RegisterPage from '../Auth/RegisterPage/RegisterPage';
 import CompaninesPage from '../Pages/CompanyPage/CompaniesPage';
 import ArchivedPage from '../Pages/ArchivedPage/ArchivedPage';
->>>>>>> e95c8b3812493fb729350c97954640420f7ef287
 
 import './App.css';
 
