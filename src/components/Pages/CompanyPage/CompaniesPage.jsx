@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
 import './CompanyPage.css'
+import CompanyFormPage from './CompanyFormPage';
 
 // Material UI
 import { styled } from '@mui/material/styles';
@@ -20,7 +21,16 @@ import { IconButton } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
-import swal from 'sweetalert';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import FormControl from '@mui/material/FormControl';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
+
 
 
 const ExpandMore = styled((props) => {
@@ -57,17 +67,25 @@ function CompaninesPage() {
     const [internRate, setInternRate] = useState('');
     const [contractStart, setContractStart] = useState('');
     const [expanded, setExpanded] = useState(false);
-    const [alert, setAlert] = useState(false)
+  
 
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
+    const handleExpandClick = (id) => {
+        setExpanded((prevState) => ({ ...prevState, [id]: !prevState[id] }));
     };
 
-    const addCompany = () => {
+    const openForm = () => {
         setAddingCompany(true);
     }
 
+    const closeForm = () => {
+        setAddingCompany(false)
+    }
+
     const saveForm = () => {
+        setAddingCompany(false);
+    }
+
+    const addCompany = () => {
         dispatch({
             type: 'ADD_COMPANY',
             payload: {
@@ -78,51 +96,74 @@ function CompaninesPage() {
                 contract_start: contractStart,
             }
         })
+        setCompanyName('');
+        setAllocatedHours('');
+        setFullTimeRate('');
+        setInternRate('');
+        setContractStart('');
         setAddingCompany(false);
     }
 
-    const swalArchive = () =>{
-        if(!alert){
-            swal(
-                <p>testing</p>
-            )
-        }
-    }
+
 
 
     return (
         <div className='landingCompany'>
             <h1>Home</h1>
-            {addingCompany ?
-                <form>
-                    <div>
-                        <label htmlFor='name'>Company Name</label>
-                        <input id='name' value={companyName} onChange={(e) => setCompanyName(e.target.value)} />
-                    </div>
-                    <div>
-                        <label htmlFor='hours'>Allocated Hours</label>
-                        <input id='hours' value={allocatedHours} onChange={(e) => setAllocatedHours(e.target.value)} />
-                    </div>
-                    <div>
-                        <label htmlFor='fulltime'>Full Time Rate</label>
-                        <input id='fulltime' value={fulTimeRate} onChange={(e) => setFullTimeRate(e.target.value)} />
-                    </div>
-                    <div>
-                        <label htmlFor='inter'>Inter Time Rate</label>
-                        <input id='intern' value={internRate} onChange={(e) => setInternRate(e.target.value)} />
-                    </div>
-                    <div>
-                        <label htmlFor='contract'>Contract Start</label>
-                        <input id='contract' value={contractStart} onChange={(e) => setContractStart(e.target.value)} />
-                    </div>
-                </form> :
-                ''
-            }
             <div>
-                {addingCompany ?
-                    <button onClick={saveForm}>Save Company</button> :
-                    <button onClick={addCompany}>Add Company</button>
-                }
+                <Button onClick={openForm}>Add</Button>
+                {/* <CompanyFormPage setAddingCompany={setAddingCompany} /> */}
+                <Dialog open={addingCompany} onClose={() => saveForm()}>
+                    <DialogTitle>Add New Company</DialogTitle>
+                    <DialogContent>
+                        {/* <DialogContentText>
+                            To subscribe to this website, please enter your email address here. We
+                            will send updates occasionally.
+                        </DialogContentText> */}
+                        <FormControl sx={{ mt: 2, minWidth: 250 }}>
+                            <TextField
+                                autoFocus
+                                // margin="dense"
+                                label="Comapany Name"
+                                variant="standard"
+                                value={companyName}
+                                onChange={(e) => setCompanyName(e.target.value)}
+                            />
+                            <TextField
+                                // margin="dense"
+                                label="Allocated Hours"
+                                variant="standard"
+                                value={allocatedHours}
+                                onChange={(e) => setAllocatedHours(e.target.value)}
+                            />
+                             <TextField
+                                // margin="dense"
+                                label="Intern Rate"
+                                variant="standard"
+                                value={internRate}
+                                onChange={(e) => setInternRate(e.target.value)}
+                            />
+                            <TextField
+                                // margin="dense"
+                                label="Intern Rate"
+                                variant="standard"
+                                value={fulTimeRate}
+                                onChange={(e) => setFullTimeRate(e.target.value)}
+                            />
+                            <TextField
+                                // margin="dense"
+                                type='date'
+                                variant="standard"
+                                value={contractStart}
+                                onChange={(e) => setContractStart(e.target.value)}
+                            />
+                        </FormControl>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={closeForm}>Cancel</Button>
+                        <Button onClick={addCompany}>Add</Button>
+                    </DialogActions>
+                </Dialog>
             </div>
             <div className='container'>
                 {companyStore.map(company => {
@@ -137,11 +178,14 @@ function CompaninesPage() {
                                             </Avatar>
                                         }
                                         action={
-                                            <IconButton aria-label="settings">
-                                                <ArchiveIcon onClick={() => dispatch({
+                                            <IconButton
+                                                aria-label="settings"
+                                                onClick={() => dispatch({
                                                     type: 'ARCHIVE_COMPANY',
                                                     payload: company.id
-                                                })} />
+                                                })}
+                                            >
+                                                <ArchiveIcon />
                                             </IconButton>
                                         }
                                     />
@@ -149,19 +193,25 @@ function CompaninesPage() {
                                         <Typography gutterBottom variant="h5" component="div">
                                             {company.company_name}
                                         </Typography>
+                                        <Typography>
+                                            Hours Remaining
+                                        </Typography>
+                                        <Box sx={{ width: '100%' }}>
+                                            <LinearProgress variant='determinate' value={50} />
+                                        </Box>
 
                                     </CardContent>
                                     <CardActions disableSpacing>
                                         <ExpandMore
-                                            expand={expanded}
-                                            onClick={handleExpandClick}
-                                            aria-expanded={expanded}
+                                            expand={expanded[company.id]}
+                                            onClick={() => handleExpandClick(company.id)}
+                                            aria-expanded={expanded[company.id]}
                                             aria-label="show more"
                                         >
                                             <ExpandMoreIcon />
                                         </ExpandMore>
                                     </CardActions>
-                                    <Collapse in={expanded} timeout="auto" unmountOnExit>
+                                    <Collapse in={expanded[company.id]} timeout="auto" unmountOnExit>
                                         <h5>{company.allocated_hours}</h5>
                                         <h5>{company.contract_start}</h5>
                                     </Collapse>
@@ -174,14 +224,6 @@ function CompaninesPage() {
                             )
                         }
                     }
-                    // return (
-                    //     <div className='content' key={company.id}>
-                    //         <h3>{company.company_name}</h3>
-                    //         <h5>{company.allocated_hours}</h5>
-                    //         <h5>{company.contract_start}</h5>
-                    //         <button>Archive</button>
-                    //     </div>
-                    // )
                 })}
             </div>
         </div>
