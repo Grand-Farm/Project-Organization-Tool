@@ -7,12 +7,12 @@ const {
   
 
 
-router.get('/',rejectUnauthenticated, (req, res) => {
+router.get('/:projectID',rejectUnauthenticated, (req, res) => {
     console.log('activity-get-router running')
-    const query = `Select activity.type, activity.notes,activity.activity_date From activity
+    const query = `Select activity.type,activity.id,activity.notes,activity.activity_date From activity
     JOIN "projects" on activity.projects_id=projects.id
     Where projects.id = $1`
-    pool.query(query,[2])
+    pool.query(query,[req.params.projectID])
     .then(result =>{
         res.send(result.rows)
     }).catch((err)=>{

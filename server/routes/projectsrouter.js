@@ -3,10 +3,12 @@ const router = express.Router();
 const pool = require('../modules/pool')
 
 
-router.get('/', (req, res) => {
+router.get('/:companyID', (req, res) => {
 // allowing the user to order collection by rating
-    const query = `SELECT * FROM projects`;
-    pool.query(query)
+    const query = ` SELECT * FROM projects 
+    join company ON projects.company_id=company.id 
+    WHERE projects.company_id = $1`
+    pool.query(query,[req.params.companyID])
       .then( result => {
         console.log(result.rows)
         res.send(result.rows);
@@ -35,7 +37,7 @@ router.get('/', (req, res) => {
 
   // updating the rating of a project
 router.put('/:ProjectID', (req, res) => {
-  console.log(req.body)
+  console.log("THIS IS THE PUT VALUE",req.body)
   const projects = req.body;
   console.log(projects.status)
 
