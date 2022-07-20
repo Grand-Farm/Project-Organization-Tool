@@ -18,7 +18,6 @@ import RegisterPage from '../Auth/RegisterPage/RegisterPage';
 import ActivityPage from '../Pages/ActivityPage/ActivityPage';
 
 import ProjectsList from '../ProjectsPage/projects';
-import CompanyPage from '../Pages/CompanyPage/CompanyPage';
 
 import CompaninesPage from '../Pages/CompanyPage/CompaniesPage';
 
@@ -33,7 +32,7 @@ function App() {
 
   useEffect(() => {
     dispatch({ type: 'FETCH_USER' });
-  }, [dispatch]);
+  }, []);
 
   return (
     <Router>

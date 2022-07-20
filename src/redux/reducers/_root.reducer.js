@@ -18,7 +18,7 @@ const rootReducer = combineReducers({
   errors, // contains registrationMessage and loginMessage
 
   activity,
-  employee // will have an id and username if someone is logged in
+  employee, // will have an id and username if someone is logged in
   user, // will have an id and username if someone is logged in
   projectsReducer,
   company,

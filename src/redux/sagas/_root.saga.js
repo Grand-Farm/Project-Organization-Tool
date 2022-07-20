@@ -23,7 +23,7 @@ export default function* rootSaga() {
     registrationSaga(),
     userSaga(),
     activitySaga(),
-    employeeSaga()
+    employeeSaga(),
     fetchProjects(),
     statusSaga(),
     companySaga(),
