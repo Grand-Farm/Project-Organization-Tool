@@ -156,10 +156,12 @@ export default function ActivityPage() {
 
     return (
         <div>
-            <Button onClick={handleOpen} size='small' variant='outlined'>Add Activity</Button>
-            <Button onClick={handleClickOpen} size='small' variant='outlined'>Add Hours</Button>
-            <Button onClick={handleEditOpen} size='small' variant='outlined'>Edit Hours</Button>
-            <Button onClick={handleActivityOpen} size='small' variant='outlined'>Edit Activity</Button>
+            
+            <Button className='optionButtons' onClick={handleOpen} size='small' variant='outlined'>Add Activity</Button>
+            <Button className='optionButtons' onClick={handleClickOpen} size='small' variant='outlined'>Add Hours</Button>
+            <Button className='optionButtons' onClick={handleEditOpen} size='small' variant='outlined'>Edit Hours</Button>
+            <Button className='optionButtons' onClick={handleActivityOpen} size='small' variant='outlined'>Edit Activity</Button>
+           
 
 
             <Dialog

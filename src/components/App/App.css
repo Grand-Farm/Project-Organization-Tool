@@ -121,3 +121,7 @@ input {
   .boxClass{
     overflow-wrap: break-word;
   }
+
+.optionButtons:hover{
+color: #e01616;
+}
