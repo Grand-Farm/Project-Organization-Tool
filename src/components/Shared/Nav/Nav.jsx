@@ -10,7 +10,8 @@ function Nav() {
   return (
     <div className="nav">
       <Link to="/home">
-        <h2 className="nav-title">Prime Solo Project</h2>
+        {/* <h2 className="nav-title">Project Organization Tool</h2> */}
+        <img className='logo-image' src="https://grandfarm.com/wp-content/uploads/2021/03/Grand-Farm_Logo_Horizontal_White-01-2-1.png"></img>
       </Link>
       <div>
         {/* If no user is logged in, show these links */}
@@ -31,8 +32,12 @@ function Nav() {
               Archives
             </Link>
 
+            <Link className='navLink' to='/activity'>
+              Activity
+            </Link>
+
             <Link className="navLink" to="/projects">
-              Projects Page
+              Project Page
             </Link>
 
             <LogOutButton className="navLink" />
