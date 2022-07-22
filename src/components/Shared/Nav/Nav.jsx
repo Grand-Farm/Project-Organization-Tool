@@ -31,8 +31,8 @@ function Nav() {
               Archives
             </Link>
 
-            <Link className="navLink" to="/info">
-              Info Page
+            <Link className="navLink" to="/projects">
+              Projects Page
             </Link>
 
             <LogOutButton className="navLink" />

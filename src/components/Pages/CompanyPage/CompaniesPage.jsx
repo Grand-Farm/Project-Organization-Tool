@@ -3,8 +3,10 @@ import { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
 import './CompanyPage.css'
+
 import CompanyFormPage from './CompanyFormPage';
 import CompanyCard from './CompanyCard';
+
 
 
 function CompaninesPage() {
@@ -16,11 +18,18 @@ function CompaninesPage() {
         dispatch({ type: 'FETCH_COMPANY' });
     }, [])
 
+
+    function viewProjects(company){
+        console.log(company)
+        history.push(`/projects/${company}`)
+      }
+
     // const params = useParams();
     // let companyId = params.companyId;
     // console.log(companyId);
     // let company = companyStore.find(company => company.id === Number(companyId));
     // console.log('Archiving this company', company);
+
 
     return (
         <div className='landingCompany'>

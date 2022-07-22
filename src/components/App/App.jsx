@@ -7,23 +7,27 @@ import {
 } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
-
 import Nav from '../Shared/Nav/Nav';
 import Footer from '../Shared/Footer/Footer';
-
 import ProtectedRoute from '../Shared/ProtectedRoute/ProtectedRoute';
+
 
 
 import ProjectsList from '../ProjectsPage/projects';
 import AboutPage from '../Pages/AboutPage/AboutPage';
+
 import UserPage from '../Pages/UserPage/UserPage';
 import InfoPage from '../Pages/InfoPage/InfoPage';
 import LandingPage from '../Pages/LandingPage/LandingPage';
 import LoginPage from '../Auth/LoginPage/LoginPage';
 import RegisterPage from '../Auth/RegisterPage/RegisterPage';
+import ActivityPage from '../Pages/ActivityPage/ActivityPage';
+
+import ProjectsList from '../ProjectsPage/projects';
+
 import CompaninesPage from '../Pages/CompanyPage/CompaniesPage';
 import ArchivedPage from '../Pages/ArchivedPage/ArchivedPage';
-
+import AboutPage from '../Pages/AboutPage/AboutPage'
 import './App.css';
 
 function App() {
@@ -52,6 +56,14 @@ function App() {
             <AboutPage />
           </Route>
 
+          <Route
+            // shows AboutPage at all times (logged in or not)
+            exact
+            path="/activity"
+          >
+            <ActivityPage />
+          </Route>
+
           {/* For protected routes, the view could show one of several things on the same route.
             Visiting localhost:3000/user will show the UserPage if the user is logged in.
             If the user is not logged in, the ProtectedRoute will show the LoginPage (component).
@@ -67,7 +79,7 @@ function App() {
           <ProtectedRoute
             // logged in shows InfoPage else shows LoginPage
             exact
-            path="/projects"
+            path="/projects/:companyid"
           >
             <ProjectsList />
           </ProtectedRoute>
