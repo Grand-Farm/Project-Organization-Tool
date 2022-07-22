@@ -18,6 +18,9 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
 import clsx from 'clsx';
+import { useHistory } from 'react-router-dom';
+
+
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -31,21 +34,32 @@ const ExpandMore = styled((props) => {
 }));
 
 function CompanyCard({ company, i }) {
- 
+
+    
+    
     const [expanded, setExpanded] = useState(false);
     const [selectedId, setSelectedId] = useState(-1);
+    const history = useHistory();
+    const dispatch = useDispatch();
 
+
+    
+    
     function handleExpandClick(id) {
         setSelectedId((prevState => ({ ...prevState, [id]: !prevState[id] })));
         setExpanded(expanded => !expanded);
         console.log(id);
     }
 
+    function viewProjects(company){
+        console.log("THIS IS THE COMPANY", company)
+        history.push(`/projects/${company}`)
+      }
 
 
 
     return (
-        <Card className='content' key={i}
+        <Card onClick={() => viewProjects(company.id)} className='content' key={i}
             sx={{ minWidth: 300, maxWidth: 300 }}
             style={{
                 width: '25vw',

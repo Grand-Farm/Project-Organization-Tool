@@ -10,10 +10,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import Nav from '../Shared/Nav/Nav';
 import Footer from '../Shared/Footer/Footer';
 import ProtectedRoute from '../Shared/ProtectedRoute/ProtectedRoute';
-
-
-
-
 import AboutPage from '../Pages/AboutPage/AboutPage';
 import UserPage from '../Pages/UserPage/UserPage';
 import InfoPage from '../Pages/InfoPage/InfoPage';
