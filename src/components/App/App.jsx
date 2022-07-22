@@ -13,7 +13,11 @@ import ProtectedRoute from '../Shared/ProtectedRoute/ProtectedRoute';
 
 
 
+<<<<<<< HEAD
+import AboutPage from '../Pages/AboutPage/AboutPage';
+=======
 
+>>>>>>> a22cd3d08d0dbb888b088a6db31cb8982f9e16ef
 
 import UserPage from '../Pages/UserPage/UserPage';
 import InfoPage from '../Pages/InfoPage/InfoPage';
@@ -24,7 +28,6 @@ import ActivityPage from '../Pages/ActivityPage/ActivityPage';
 import ProjectsList from '../ProjectsPage/projects';
 import CompaninesPage from '../Pages/CompanyPage/CompaniesPage';
 import ArchivedPage from '../Pages/ArchivedPage/ArchivedPage';
-import AboutPage from '../Pages/AboutPage/AboutPage'
 import './App.css';
 
 function App() {
