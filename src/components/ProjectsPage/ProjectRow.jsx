@@ -39,14 +39,17 @@ function ProjectRow({ project }) {
 
     const history = useHistory();
 
-    function viewActivities() {
-        history.push('/activity')
+    function viewActivities(projectID) {
+        history.push(`/activity/${projectID}`)
     }
 
     console.log("THIS IS THE CURENT STATE OF THINGS", status, budgetedhours)
     return (
-        <><Card sx={{ maxWidth: 255 }}>
-            <CardActionArea onDoubleClick={viewActivities}>
+        
+        <>
+        {console.log(project)}
+        <Card sx={{ maxWidth: 255 }}>
+            <CardActionArea onDoubleClick={()=>viewActivities(project.id)}>
                 <CardContent>
                     <Typography>
                         {project.name} {project.id}
