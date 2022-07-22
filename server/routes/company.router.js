@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get('/', rejectUnauthenticated, (req, res) => {
     console.log('req.user:', req.user);
-    pool.query(`SELECT * FROM "company";`)
+    pool.query(`SELECT * FROM "company" ORDER BY "company"."id" DESC;`)
         .then(result => {
             console.log('GET company',result.rows);
             res.send(result.rows);

@@ -3,10 +3,13 @@ const router = express.Router();
 const pool = require('../modules/pool')
 
 
-router.get('/', (req, res) => {
+router.get('/:companyID', (req, res) => {
+  console.log('adfhiadihsuifhudhifdfas',req.params)
 // allowing the user to order collection by rating
-    const query = `SELECT * FROM projects`;
-    pool.query(query)
+    const query = `   SELECT projects.id, projects.name,projects.budgeted_hours,projects.status,company.id AS company_id FROM projects 
+    join company ON projects.company_id=company.id 
+   WHERE projects.company_id = $1`
+    pool.query(query,[req.params.companyID])
       .then( result => {
         console.log(result.rows)
         res.send(result.rows);
@@ -35,16 +38,11 @@ router.get('/', (req, res) => {
 
   // updating the rating of a project
 router.put('/:ProjectID', (req, res) => {
-  console.log(req.body)
-  const projects = req.body;
-  console.log(projects.status)
-
+  console.log("THIS IS THE PUT VALUE",req.body)
   const queryText = `UPDATE "projects"
-  SET ("status","budgeted_hours") = ($2,$3) WHERE "id" = $1` 
-;
+  SET ("status","budgeted_hours") = ($1,$2) WHERE "id" = $3` 
 
-
-  pool.query(queryText, [req.params.ProjectID,projects.status,projects.budgeted_hours])
+  pool.query(queryText, [req.body.status,req.body.budgeted_hours,req.params.ProjectID])
     .then(() => { res.sendStatus(200) })
     .catch((err) => {
       console.log('Error completing UPDATE projects query', err);
