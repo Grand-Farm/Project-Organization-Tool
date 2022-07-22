@@ -13,12 +13,8 @@ import ProtectedRoute from '../Shared/ProtectedRoute/ProtectedRoute';
 
 
 
-<<<<<<< HEAD
+
 import AboutPage from '../Pages/AboutPage/AboutPage';
-=======
-
->>>>>>> a22cd3d08d0dbb888b088a6db31cb8982f9e16ef
-
 import UserPage from '../Pages/UserPage/UserPage';
 import InfoPage from '../Pages/InfoPage/InfoPage';
 import LandingPage from '../Pages/LandingPage/LandingPage';
@@ -37,7 +33,7 @@ function App() {
 
   useEffect(() => {
     dispatch({ type: 'FETCH_USER' });
-  }, [dispatch]);
+  }, []);
 
   return (
     <Router>

@@ -115,3 +115,9 @@ input {
   display:inline-block;
   margin-right: 2em;
 }
+
+
+
+  .boxClass{
+    overflow-wrap: break-word;
+  }
