@@ -12,13 +12,15 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 
 
+
 function ProjectRow({ project }) {
+    console.log('this is project', project)
 
     const dispatch = useDispatch();
 
 function updateStatus(id){
-    console.log('This should change', id)
-dispatch({type: 'STATUS', payload : {status:status,budgeted_hours:budgetedhours,ProjectID:id}})
+    console.log('This should change',id)
+dispatch({type: 'STATUS', payload : {status:status,budgeted_hours:budgetedhours,ProjectID:id,companyID:2}});
 }
 
 
@@ -28,28 +30,32 @@ dispatch({type: 'STATUS', payload : {status:status,budgeted_hours:budgetedhours,
     history.push('/activity')
 }
 
-    const [status, setstatus] = useState("not_completed");
+    const [status, setstatus] = useState(project.status);
     const [budgetedhours, setBudgetedHours] = useState(project.budgeted_hours);
+
     return (
-        <Card sx={{ maxWidth: 345 }}>
-            <CardActionArea onDoubleClick={viewActivities} >
-            <CardContent>
-            <Typography>
-            {project.name}
-            <TextField  value={budgetedhours} onChange={(e) => setBudgetedHours(e.target.value)} id="outlined-basic" label= 'budgeted hours'  variant="outlined" /> 
-             {project.status}
-            <InputLabel id="status">Choose a new status:</InputLabel>
-            <Select type='select' value={status} onChange={(e) => setstatus(e.target.value)}>
-                <MenuItem value={"not_completed"}>Not Complete</MenuItem>
-                <MenuItem value={"in_progress"}>In Progress</MenuItem>
-                <MenuItem value={"getting_closer"}>Getting Closer</MenuItem>
-                <MenuItem value={"done"}>Done</MenuItem>
-            </Select>
-            </Typography>
+        <><Card sx={{ maxWidth: 255 }}>
+            <CardActionArea onDoubleClick={viewActivities}>
+                <CardContent>
+                    <Typography>
+                        {project.name}{project.id}
+                    <br/>
+                    <br/>
+                    <TextField value={budgetedhours} onChange={(e) => setBudgetedHours(e.target.value)} id="outlined-basic" label='budgeted hours' variant="outlined" />
+                    <InputLabel id="status">status:</InputLabel>
+                    <Select type='select' value={status} onChange={(e) => setstatus(e.target.value)}>
+                        <MenuItem value={"not_completed"}>Not Complete</MenuItem>
+                        <MenuItem value={"in_progress"}>In Progress</MenuItem>
+                        <MenuItem value={"getting_closer"}>Getting Closer</MenuItem>
+                        <MenuItem value={"done"}>Done</MenuItem>
+                    </Select>
+                    <br/>
+                </Typography>
             </CardContent>
         </CardActionArea>
         <Button onClick={() => updateStatus(project.id)} variant="contained">Save Changes</Button>
         </Card>
+        </>
     )
 }
 

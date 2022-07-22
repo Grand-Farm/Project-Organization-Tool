@@ -18,7 +18,6 @@ import RegisterPage from '../Auth/RegisterPage/RegisterPage';
 import ActivityPage from '../Pages/ActivityPage/ActivityPage';
 
 import ProjectsList from '../ProjectsPage/projects';
-import CompanyPage from '../Pages/CompanyPage/CompanyPage';
 
 import CompaninesPage from '../Pages/CompanyPage/CompaniesPage';
 
@@ -75,7 +74,7 @@ function App() {
           <ProtectedRoute
             // logged in shows InfoPage else shows LoginPage
             exact
-            path="/projects"
+            path="/projects/:companyid"
           >
             <ProjectsList />
           </ProtectedRoute>

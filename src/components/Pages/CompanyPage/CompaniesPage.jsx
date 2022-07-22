@@ -22,8 +22,8 @@ import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
 import swal from 'sweetalert';
 
-
 const ExpandMore = styled((props) => {
+
     const { expand, ...other } = props;
     return <IconButton {...other} />;
 })(({ theme, expand }) => ({
@@ -44,6 +44,12 @@ function CompaninesPage() {
         dispatch({ type: 'FETCH_COMPANY' });
     }, [])
 
+
+    function viewProjects(company){
+        console.log(company)
+        history.push(`/projects/${company}`)
+      }
+
     // const params = useParams();
     // let companyId = params.companyId;
     // console.log(companyId);
@@ -58,6 +64,7 @@ function CompaninesPage() {
     const [contractStart, setContractStart] = useState('');
     const [expanded, setExpanded] = useState(false);
     const [alert, setAlert] = useState(false)
+    const history = useHistory();
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -129,7 +136,7 @@ function CompaninesPage() {
                     {
                         if (company.is_archived === false) {
                             return (
-                                <Card className='content' key={company.id} sx={{ minWidth: 300 }}>
+                                <Card onClick={() => viewProjects(company.id)} className='content' key={company.id} sx={{ minWidth: 300 }}>
                                     <CardHeader
                                         avatar={
                                             <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
