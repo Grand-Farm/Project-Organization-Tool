@@ -57,6 +57,7 @@ function CompanyFormPage(){
         setAddingCompany(false);
     }
 
+ 
 
 
     return (
@@ -69,7 +70,7 @@ function CompanyFormPage(){
                     To subscribe to this website, please enter your email address here. We
                     will send updates occasionally.
                 </DialogContentText> */}
-                    <FormControl sx={{ mt: 2, minWidth: 250 }}>
+                    <FormControl  sx={{ mt: 2, minWidth: 250 }}>
                         <TextField
                             autoFocus
                             // margin="dense"

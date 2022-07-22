@@ -13,8 +13,8 @@ import ProtectedRoute from '../Shared/ProtectedRoute/ProtectedRoute';
 
 
 
-import ProjectsList from '../ProjectsPage/projects';
-import AboutPage from '../Pages/AboutPage/AboutPage';
+
+
 
 import UserPage from '../Pages/UserPage/UserPage';
 import InfoPage from '../Pages/InfoPage/InfoPage';

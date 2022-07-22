@@ -72,7 +72,7 @@ function ProjectsList() {
                     </Typography>
                 </Box>
             </Modal>
-            {projects.map((project, i) => <ProjectRow key={i} project={project} />)}
+            {projects.map((project, i) => <ProjectRow key={project.id} project={project} />)}
 
         </>
     )
