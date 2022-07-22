@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 
 //Material UI
 import { styled } from '@mui/material/styles';
@@ -17,6 +18,7 @@ import { IconButton } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
+import moment from 'moment';
 import clsx from 'clsx';
 
 const ExpandMore = styled((props) => {
@@ -31,7 +33,14 @@ const ExpandMore = styled((props) => {
 }));
 
 function CompanyCard({ company, i }) {
- 
+
+    const companyInfoStore = useSelector(store => store.companyInfo);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch({ type: 'FETCH_COMPANYINFO' });
+    }, [])
+
     const [expanded, setExpanded] = useState(false);
     const [selectedId, setSelectedId] = useState(-1);
 
@@ -41,6 +50,9 @@ function CompanyCard({ company, i }) {
         console.log(id);
     }
 
+    const history = useHistory();
+    
+    
 
 
 
@@ -72,7 +84,9 @@ function CompanyCard({ company, i }) {
                 }
             />
             <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
+                <Typography gutterBottom variant="h5" component="div"
+                    onClick={() => history.push(`/company/${company.id}`)}
+                >
                     {company.company_name}
                 </Typography>
                 <Typography>
@@ -94,12 +108,20 @@ function CompanyCard({ company, i }) {
                 </ExpandMore>
             </CardActions>
             <Collapse in={selectedId[company.id]} timeout="auto" unmountOnExit>
-                Testting Somthing
-                Testing Collapse
-                Height
-                <h1>{company.company_name}</h1>
-                <h5>{company.allocated_hours}</h5>
-                <h5>{company.contract_start}</h5>
+                <Typography>
+                    Contract End: {(moment(company.contract_start).format('l'))}
+                </Typography>
+                {companyInfoStore.map((info, index) => {
+                    return (
+                        <Typography key={index}>
+                            {company.id === info.company_id ?
+                                info.total_project
+                                :
+                                ''
+                            }
+                        </Typography>
+                    )
+                })}
             </Collapse>
         </Card>
     )

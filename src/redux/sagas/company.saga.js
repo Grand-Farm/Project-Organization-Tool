@@ -11,6 +11,16 @@ function* fetchCompany() {
     }
 }
 
+function* fetchCompanyInfo(){
+    try{
+        const response = yield axios.get('api/company/pro');
+        console.log('In Fetch company info', response.data);
+        yield put({type: 'SET_COMPANYINFO', payload: response.data});
+    }catch(err){
+        console.log('ERROR in Fetch company info saga', err);
+    }
+}
+
 function* addCompany(action) {
     try {
         yield axios.post('/api/company/', action.payload);
@@ -32,6 +42,7 @@ function* archiveCompany(action){
 
 function* companySaga(){
     yield takeLatest('FETCH_COMPANY', fetchCompany);
+    yield takeLatest('FETCH_COMPANYINFO', fetchCompanyInfo);
     yield takeLatest('ADD_COMPANY', addCompany);
     yield takeLatest('ARCHIVE_COMPANY', archiveCompany);
 }

@@ -13,16 +13,22 @@ import { useParams } from 'react-router-dom';
 
 
 function ProjectsList() {
-    const params=useParams();
+    
     
     console.log("fdafgagagdas",params)
 
     const projects = useSelector(store => store.projectsReducer);
+    const companyStore = useSelector(store => store.company);
     const dispatch = useDispatch();
     const history = useHistory();
     const [status, setstatus] = useState("not_completed");
     console.log('list of projects',projects,params);
     console.log(`Current Status: ${status}`)
+
+    const params=useParams();
+    const companyID = params.companyID;
+    const company = companyStore.find(company => company.id === Number(companyID))
+    
 
 
     const [newBudgetedHours, setNewBudgetedHours] = useState(0)

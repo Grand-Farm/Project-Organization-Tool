@@ -19,9 +19,9 @@ function CompaninesPage() {
     }, [])
 
 
-    function viewProjects(company){
-        console.log("THIS IS THE COMPANY", company)
-        history.push(`/projects/${company}`)
+    function viewProjects(companyID){
+        console.log("THIS IS THE COMPANY", companyID)
+        history.push(`/projects/${companyID}`)
       }
 
     // const params = useParams();
@@ -40,7 +40,7 @@ function CompaninesPage() {
                     {
                         if (company.is_archived === false) {
                             return (
-                                <CompanyCard company={company} i={index}/>
+                                <CompanyCard company={company} i={index} key={index}/>
                             )
                         }
                     }
