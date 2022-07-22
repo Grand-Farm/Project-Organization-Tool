@@ -40,7 +40,7 @@ function CompaninesPage() {
                     {
                         if (company.is_archived === false) {
                             return (
-                                <CompanyCard company={company} i={index} key={index}/>
+                                <CompanyCard company={company} i={index} key={company.id}/>
                             )
                         }
                     }

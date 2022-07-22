@@ -32,7 +32,7 @@ const ExpandMore = styled((props) => {
     }),
 }));
 
-function CompanyCard({ company, i }) {
+function CompanyCard({ company }) {
 
     const companyInfoStore = useSelector(store => store.companyInfo);
     const dispatch = useDispatch();
@@ -57,7 +57,7 @@ function CompanyCard({ company, i }) {
 
 
     return (
-        <Card className='content' key={i}
+        <Card className='content' 
             sx={{ minWidth: 300, maxWidth: 300 }}
             style={{
                 width: '25vw',
