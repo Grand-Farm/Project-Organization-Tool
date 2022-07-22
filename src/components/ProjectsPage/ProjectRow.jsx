@@ -10,6 +10,8 @@ import { CardActionArea } from '@mui/material';
 import { useDispatch } from 'react-redux'
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import { useParams } from 'react-router-dom';
+
 
 
 
@@ -18,9 +20,9 @@ function ProjectRow({ project }) {
 
     const dispatch = useDispatch();
 
-function updateStatus(id){
-    console.log('This should change',id)
-dispatch({type: 'STATUS', payload : {status:status,budgeted_hours:budgetedhours,ProjectID:id,companyID:2}});
+function updateStatus(project){
+    console.log('This should change',project)
+dispatch({type: 'STATUS', payload : {status:status,budgeted_hours:budgetedhours,ProjectID:project.id,companyID:project.company_id}});
 }
 
 
@@ -53,7 +55,7 @@ dispatch({type: 'STATUS', payload : {status:status,budgeted_hours:budgetedhours,
                 </Typography>
             </CardContent>
         </CardActionArea>
-        <Button onClick={() => updateStatus(project.id)} variant="contained">Save Changes</Button>
+        <Button onClick={() => updateStatus(project)} variant="contained">Save Changes</Button>
         </Card>
         </>
     )

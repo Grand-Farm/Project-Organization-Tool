@@ -20,7 +20,7 @@ function CompaninesPage() {
 
 
     function viewProjects(company){
-        console.log(company)
+        console.log("THIS IS THE COMPANY", company)
         history.push(`/projects/${company}`)
       }
 
