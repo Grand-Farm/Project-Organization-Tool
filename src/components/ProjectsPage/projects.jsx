@@ -8,25 +8,31 @@ import Box from '@mui/material/Box';
 import ProjectRow from './ProjectRow';
 import { Button } from '@mui/material';
 import TextField from '@mui/material/TextField';
+import { useParams } from 'react-router-dom';
+
 
 
 function ProjectsList() {
+    const params=useParams();
+    
+    console.log("fdafgagagdas",params)
 
     const projects = useSelector(store => store.projectsReducer);
     const dispatch = useDispatch();
     const history = useHistory();
     const [status, setstatus] = useState("not_completed");
-    console.log('list of projects',projects);
+    console.log('list of projects',projects,params);
     console.log(`Current Status: ${status}`)
+
 
     const [newBudgetedHours, setNewBudgetedHours] = useState(0)
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-
+    
 
     useEffect(() => {
-        dispatch({ type: 'FETCH_PROJECTS', payload:{companyID:2} });
+        dispatch({ type: 'FETCH_PROJECTS', payload:{companyID:params.companyid} });
     }, []);
 
 
