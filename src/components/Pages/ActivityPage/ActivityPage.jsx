@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react'
+import{useParams} from 'react-router-dom'
 import moment from 'moment';
 import { DataGrid, gridClasses } from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
@@ -23,6 +24,7 @@ export default function ActivityPage() {
     const dispatch = useDispatch();
     const activity = useSelector((store => store.activity))
     const employee = useSelector((store => store.employee))
+    const params= useParams();
     const [type, setType] = useState('');
     const [notes, setNotes] = useState('');
     const [hours, setHours] = useState('');
@@ -52,7 +54,7 @@ export default function ActivityPage() {
 
     const addActivity = () => {
         return (
-            dispatch({ type: "ADD_ACTIVITY", payload: { projectID: 2, type, notes, date } }),
+            dispatch({ type: "ADD_ACTIVITY", payload: { projectID: params.projectID, type, notes, date } }),
             setType(''),
             setNotes(''),
             setDate(''),
@@ -67,7 +69,7 @@ export default function ActivityPage() {
         return (
             setHours(''),
             setTaskNumber(''),
-            dispatch({ type: "ADD_EMPLOYEE", payload: { projectID: 2, activityID: taskNumber, hours } }),
+            dispatch({ type: "ADD_EMPLOYEE", payload: { projectID: params.projectID, activityID: taskNumber, hours } }),
             handleClickClose()
 
         )
@@ -75,7 +77,7 @@ export default function ActivityPage() {
 
     const changeEmployee = () => {
         return (
-            dispatch({ type: "EDIT_EMPLOYEE", payload: { projectID: 2, activityID: taskNumber, hours } }),
+            dispatch({ type: "EDIT_EMPLOYEE", payload: { projectID:params.projectID, activityID: taskNumber, hours } }),
             setHours(''),
             setTaskNumber(''),
             handleEditClose()
@@ -86,7 +88,7 @@ export default function ActivityPage() {
     const changeActivity = () => {
         return (
             
-            dispatch({ type: "UPDATE_ACTIVITY", payload: { projectID: 2, activityID: taskNumber, type,notes } }),
+            dispatch({ type: "UPDATE_ACTIVITY", payload: { projectID:params.projectID, activityID: taskNumber, type,notes } }),
             setTask(''),
             setTaskNumber(''),
             setNotes(''),
@@ -113,7 +115,7 @@ export default function ActivityPage() {
 
     useEffect(() => {
         dispatch({ type: "FETCH_USER" }),
-            dispatch({ type: "FETCH_ACTIVITY", payload: { projectID: 2 } })
+            dispatch({ type: "FETCH_ACTIVITY", payload: { projectID: params.projectID } })
         dispatch({ type: "FETCH_EMPLOYEES" })
     }, [])
     const columns = [
