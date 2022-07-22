@@ -20,7 +20,8 @@ join "user" on  activity_employee.user_id= "user".id
  where activity_employee.activity_id = activity.id AND "user".is_intern = true
 )as "intern",activity.id,activity.notes,activity.activity_date From activity
     JOIN "projects" on activity.projects_id=projects.id
-    Where projects.id = $1`
+    Where projects.id = $1
+    ORDER BY activity.id DESC`
     pool.query(query,[req.params.projectID])
     .then(result =>{
         res.send(result.rows)
@@ -44,4 +45,17 @@ router.post('/', (req, res) => {
         })
 });
 
+router.put('/:activityID', rejectUnauthenticated, (req,res) => {
+    console.log('please work in activity put', req.body);
+    const query = ` UPDATE activity
+    Set ("type","notes") = ($1,$2)
+    WHERE activity.id = $3`
+    pool.query(query,[req.body.type,req.body.notes,req.params.activityID])
+        .then(results =>{
+            res.sendStatus(201);
+        }).catch(err => {
+            console.log('Error in get company', err);
+            res.sendStatus(500);
+        })
+})
 module.exports = router;

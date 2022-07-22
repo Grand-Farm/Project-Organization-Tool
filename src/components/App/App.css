@@ -118,4 +118,6 @@ input {
 
 
 
-  
+  .boxClass{
+    overflow-wrap: break-word;
+  }

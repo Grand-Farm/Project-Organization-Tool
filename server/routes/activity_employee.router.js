@@ -54,8 +54,8 @@ router.post('/', (req, res) => {
 router.put('/:activityID',(req,res)=>{
     console.log('please work', req.body)
     const queryText=`UPDATE "activity_employee"
-    Set "employee_hours" = $1  WHERE activity_employee.activity_id = $2`
-pool.query(queryText,[req.body.hours,req.params.activityID])
+    Set "employee_hours" = $1  WHERE activity_employee.activity_id = $2  AND activity_employee.user_id=$3`
+pool.query(queryText,[req.body.hours,req.params.activityID,req.user.id])
 .then(()=>{
     res.sendStatus(201)
 }).catch((err)=>{
