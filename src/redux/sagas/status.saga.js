@@ -7,7 +7,6 @@ function* updateStatus(action) {
     try {
         console.log(action.payload)
          yield axios.put(`/api/projects/${action.payload.ProjectID}`,action.payload);
-        console.log('updating the status:', action.payload);
 
     } catch {
         console.log('update status error',error);

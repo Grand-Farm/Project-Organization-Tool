@@ -14,12 +14,13 @@ import TextField from '@mui/material/TextField';
 
 
 function ProjectRow({ project }) {
+    console.log('this is project', project)
 
     const dispatch = useDispatch();
 
 function updateStatus(id){
-    console.log('This should change', id)
-dispatch({type: 'STATUS', payload : {status:status,budgeted_hours:budgetedhours,ProjectID:id}});
+    console.log('This should change',id)
+dispatch({type: 'STATUS', payload : {status:status,budgeted_hours:budgetedhours,ProjectID:id,companyID:2}});
 }
 
 
