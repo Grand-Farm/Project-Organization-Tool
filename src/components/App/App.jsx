@@ -10,6 +10,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import Nav from '../Shared/Nav/Nav';
 import Footer from '../Shared/Footer/Footer';
 import ProtectedRoute from '../Shared/ProtectedRoute/ProtectedRoute';
+
+
+
+import ProjectsList from '../ProjectsPage/projects';
+import AboutPage from '../Pages/AboutPage/AboutPage';
+
 import UserPage from '../Pages/UserPage/UserPage';
 import InfoPage from '../Pages/InfoPage/InfoPage';
 import LandingPage from '../Pages/LandingPage/LandingPage';
@@ -20,7 +26,6 @@ import ActivityPage from '../Pages/ActivityPage/ActivityPage';
 import ProjectsList from '../ProjectsPage/projects';
 
 import CompaninesPage from '../Pages/CompanyPage/CompaniesPage';
-
 import ArchivedPage from '../Pages/ArchivedPage/ArchivedPage';
 import AboutPage from '../Pages/AboutPage/AboutPage'
 import './App.css';
