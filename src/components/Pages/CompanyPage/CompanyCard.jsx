@@ -21,6 +21,7 @@ import LinearProgress from '@mui/material/LinearProgress';
 import moment from 'moment';
 import clsx from 'clsx';
 
+import CompanyCardProgress from './CompanyCardProgress';
 
 
 
@@ -39,39 +40,32 @@ function CompanyCard({ company }) {
 
     const companyInfoStore = useSelector(store => store.companyInfo);
     const dispatch = useDispatch();
+    const history = useHistory();
 
     useEffect(() => {
         dispatch({ type: 'FETCH_COMPANYINFO' });
     }, [])
 
-    
-    
+
     const [expanded, setExpanded] = useState(false);
     const [selectedId, setSelectedId] = useState(-1);
-    const history = useHistory();
-    
+    const [progress, setProgress] = useState(0);
 
-
-    
-    
     function handleExpandClick(id) {
         setSelectedId((prevState => ({ ...prevState, [id]: !prevState[id] })));
         setExpanded(expanded => !expanded);
         console.log(id);
     }
 
-  
-    
-    
-    function viewProjects(company){
+    function viewProjects(company) {
         console.log("THIS IS THE COMPANY", company)
         history.push(`/projects/${company}`)
-      }
+    }
 
 
 
     return (
-        <Card className='content' 
+        <Card className='content'
             sx={{ minWidth: 300, maxWidth: 300 }}
             style={{
                 width: '25vw',
@@ -103,12 +97,10 @@ function CompanyCard({ company }) {
                 <Typography gutterBottom variant="h5" component="div">
                     {company.company_name}
                 </Typography>
-                <Typography>
-                    Hours Remaining
-                </Typography>
-                <Box sx={{ width: '100%' }}>
-                    <LinearProgress variant='determinate' value={50} />
-                </Box>
+                {/* <Box sx={{ width: '100%' }}>
+                    <LinearProgress variant='determinate' value={company.allocated_hours - } />
+                </Box> */}
+                <CompanyCardProgress company={company}/>
 
             </CardContent>
             <CardActions disableSpacing>
@@ -127,14 +119,14 @@ function CompanyCard({ company }) {
                 </Typography>
                 {companyInfoStore.map((info, index) => {
                     return (
-                            company.id === info.company_id ?
-                               <Typography key={info.company_id}>
-                                   Total Projects: {info.total_project}
-                               </Typography> 
-                                :
-                                ''
-                            
-                        
+                        company.id === info.company_id ?
+                            <Typography key={info.company_id}>
+                                Total Projects: {info.total_project}
+                            </Typography>
+                            :
+                            ''
+
+
                     )
                 })}
             </Collapse>

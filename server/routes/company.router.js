@@ -50,7 +50,18 @@ router.post('/',  rejectUnauthenticated, (req,res) => {
         })
 })
 
-
+router.put('/:id', rejectUnauthenticated, (req, res) =>{
+    console.log('req.userL', req.user);
+    console.log(`company with an ID of ${req.params.id} is archived`);
+    const query = `UPDATE "company" SET "is_archived" = NOT is_archived WHERE id=$1;`
+    pool.query(query,[req.params.id])
+        .then(result =>{
+            res.sendStatus(201);
+        }).catch(err =>{
+            console.log('Error Updating compnay', err);
+            res.sendStatus(500);
+        })
+})
 
 
 
