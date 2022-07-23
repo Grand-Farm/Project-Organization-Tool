@@ -6,7 +6,7 @@ const pool = require('../modules/pool')
 router.get('/:companyID', (req, res) => {
   console.log('adfhiadihsuifhudhifdfas',req.params)
 // allowing the user to order collection by rating
-    const query = `   SELECT projects.id, projects.name,projects.budgeted_hours,projects.status,company.id AS company_id FROM projects 
+    const query = `   SELECT projects.id, projects.name,projects.budgeted_hours,projects.status,projects.manager,projects.description,projects.outcome,company.id AS company_id FROM projects 
     join company ON projects.company_id=company.id 
    WHERE projects.company_id = $1`
     pool.query(query,[req.params.companyID])
@@ -24,8 +24,8 @@ router.get('/:companyID', (req, res) => {
   router.post('/', (req, res) => {
   let projects = req.body
   console.log(req.body);
-  const queryText = `INSERT INTO "projects" ("name","company_id","manager","description","outcome","budgeted_hours") VALUES ($1,$2,$3,$4,$5,$6);`
-  pool.query(queryText, [projects.name,projects.company_id,projects.manager,projects.description,projects.outcome,projects.budgeted_hours])
+  const queryText = `INSERT INTO "projects" ("name","company_id","manager","description","budgeted_hours") VALUES ($1,$2,$3,$4,$5);`
+  pool.query(queryText, [projects.name,projects.companyID,projects.manager,projects.description,projects.budgeted_hours])
   .then( result => {
     res.sendStatus(201);
   })
@@ -36,7 +36,7 @@ router.get('/:companyID', (req, res) => {
 
   });
 
-  // updating the rating of a project
+  // updating the status of a project
 router.put('/:ProjectID', (req, res) => {
   console.log("THIS IS THE PUT VALUE",req.body)
   const queryText = `UPDATE "projects"

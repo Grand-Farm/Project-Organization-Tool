@@ -9,6 +9,7 @@ import employeeSaga from './activity_employee.saga';
 import fetchProjects from './projects.saga';
 import statusSaga from './status.saga';
 import companySaga from './company.saga';
+import newProject from './NewProject.saga';
 
 
 // rootSaga is the primary saga.
@@ -28,5 +29,6 @@ export default function* rootSaga() {
     fetchProjects(),
     statusSaga(),
     companySaga(),
+    newProject(),
   ]);
 }
