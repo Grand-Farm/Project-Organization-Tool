@@ -2,7 +2,11 @@ import { useSelector, useDispatch } from 'react-redux'
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useState } from "react"
+import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import ProjectRow from './ProjectRow';
@@ -14,6 +18,9 @@ import { useParams } from 'react-router-dom';
 
 function ProjectsList() {
     const params = useParams();
+    useEffect(() => {
+        dispatch({ type: 'FETCH_COMPANY' });
+    }, [])
 
     console.log("fdafgagagdas", params)
 
@@ -23,7 +30,14 @@ function ProjectsList() {
     const [status, setstatus] = useState("not_completed");
     console.log('list of projects', projects, params);
     console.log(`Current Status: ${status}`)
+    const [expanded, setExpanded] = React.useState(false);
 
+    const handleChange = (panel) => (event, isExpanded) => {
+      setExpanded(isExpanded ? panel : false);
+    }
+
+    const company = useSelector(store => store.company);
+    console.log('This is Company store', company);
 
     const [newBudgetedHours, setNewBudgetedHours] = useState(0);
     const [newName, setNewName] = useState("");
@@ -64,6 +78,9 @@ function ProjectsList() {
             }
         });
     }
+function switchProjects(id){
+    dispatch({ type: 'FETCH_PROJECTS', payload: { companyID: id } })
+}
 
 
     return (
@@ -89,6 +106,31 @@ function ProjectsList() {
                     </Typography>
                 </Box>
             </Modal>
+            <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1bh-content"
+          id="panel1bh-header"
+        >
+          <Typography sx={{ width: '33%', flexShrink: 0 }}>
+            General settings
+          </Typography>
+          <Typography sx={{ color: 'text.secondary' }}>I am an accordion</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+          {company.map((company) => {
+                    {
+                        if (company.is_archived === false) {
+                            return (
+                                <p onClick={() => switchProjects(company.id)}  key={company.id} >{company.company_name}</p>
+                            )
+                        }
+                    }
+                })}
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
             {projects.map((project) => <ProjectRow key={project.id} project={project} />)}
 
         </>
@@ -96,4 +138,4 @@ function ProjectsList() {
 
 
 }
-export default ProjectsList;
+export default ProjectsList
