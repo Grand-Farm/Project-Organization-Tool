@@ -13,26 +13,29 @@ import { useParams } from 'react-router-dom';
 
 
 function ProjectsList() {
-    const params=useParams();
-    
-    console.log("fdafgagagdas",params)
+    const params = useParams();
+
+    console.log("fdafgagagdas", params)
 
     const projects = useSelector(store => store.projectsReducer);
     const dispatch = useDispatch();
     const history = useHistory();
     const [status, setstatus] = useState("not_completed");
-    console.log('list of projects',projects,params);
+    console.log('list of projects', projects, params);
     console.log(`Current Status: ${status}`)
 
 
-    const [newBudgetedHours, setNewBudgetedHours] = useState(0)
+    const [newBudgetedHours, setNewBudgetedHours] = useState(0);
+    const [newName, setNewName] = useState("");
+    const [newManager, setNewManager] = useState(projects.manager);
+    const [newDescription, setNewDescription] = useState("");
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    
+
 
     useEffect(() => {
-        dispatch({ type: 'FETCH_PROJECTS', payload:{companyID:params.companyid} });
+        dispatch({ type: 'FETCH_PROJECTS', payload: { companyID: params.companyid } });
     }, []);
 
 
@@ -48,7 +51,19 @@ function ProjectsList() {
         p: 4,
     };
 
-
+    function newProject() {
+        console.log('DISPATCHING NEW PROJECT',params.companyid);
+        dispatch({
+            type: 'ADD_PROJECTS',
+            payload: {
+                name: newName,
+                companyID: params.companyid,
+                manager: newManager,
+                description: newDescription,
+                budgeted_hours: newBudgetedHours
+            }
+        });
+    }
 
 
     return (
@@ -66,13 +81,15 @@ function ProjectsList() {
                         New Project
                     </Typography>
                     <Typography id="modal-modal-description" sx={{ mt: 4 }}>
-                        <TextField label='project name' />
+                        <TextField value={newName} onChange={(e) => setNewName(e.target.value)} id="outlined-basic" label='name' variant="outlined" />
                         <TextField value={newBudgetedHours} onChange={(e) => setNewBudgetedHours(e.target.value)} id="outlined-basic" label='budgeted hours' variant="outlined" />
-                        <Button variant="contained">Add</Button>
+                        <TextField value={newManager} onChange={(e) => setNewManager(e.target.value)} id="outlined-basic" label='Project Manager' variant="outlined" />
+                        <TextField value={newDescription} onChange={(e) => setNewDescription(e.target.value)} id="outlined-basic" label='description' variant="outlined" />
+                        <Button onClick={newProject} variant="contained">Add</Button>
                     </Typography>
                 </Box>
             </Modal>
-            {projects.map((project, i) => <ProjectRow key={project.id} project={project} />)}
+            {projects.map((project) => <ProjectRow key={project.id} project={project} />)}
 
         </>
     )
