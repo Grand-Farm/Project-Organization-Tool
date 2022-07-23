@@ -4,7 +4,7 @@ CREATE TABLE "company" (
 	"full_time_rate" decimal,
 	"allocated_hours" DECIMAL,
 	"intern_rate" decimal,
-	"contract_start" DATE,
+	"contract_end" DATE,
 	"is_archived" boolean default false
 );
 
@@ -30,7 +30,7 @@ CREATE TABLE "projects" (
 	"manager" varchar(250) NOT NULL,
 	"description" text NOT NULL,
 	"outcome" text NOT NULL,
-	"company_id" int references "company",
+	"company_id" int references "company"
 	"status" varchar(250)
 );
 

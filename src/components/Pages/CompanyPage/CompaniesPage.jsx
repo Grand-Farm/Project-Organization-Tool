@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import './CompanyPage.css'
 
@@ -24,7 +24,7 @@ function CompaninesPage() {
         history.push(`/projects/${companyID}`)
       }
 
-    // const params = useParams();
+  
     // let companyId = params.companyId;
     // console.log(companyId);
     // let company = companyStore.find(company => company.id === Number(companyId));

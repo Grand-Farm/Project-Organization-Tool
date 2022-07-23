@@ -21,6 +21,9 @@ import LinearProgress from '@mui/material/LinearProgress';
 import moment from 'moment';
 import clsx from 'clsx';
 
+
+
+
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
     return <IconButton {...other} />;
@@ -41,18 +44,29 @@ function CompanyCard({ company }) {
         dispatch({ type: 'FETCH_COMPANYINFO' });
     }, [])
 
+    
+    
     const [expanded, setExpanded] = useState(false);
     const [selectedId, setSelectedId] = useState(-1);
+    const history = useHistory();
+    
 
+
+    
+    
     function handleExpandClick(id) {
         setSelectedId((prevState => ({ ...prevState, [id]: !prevState[id] })));
         setExpanded(expanded => !expanded);
         console.log(id);
     }
 
-    const history = useHistory();
+  
     
     
+    function viewProjects(company){
+        console.log("THIS IS THE COMPANY", company)
+        history.push(`/projects/${company}`)
+      }
 
 
 
@@ -67,7 +81,9 @@ function CompanyCard({ company }) {
         >
             <CardHeader
                 avatar={
-                    <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+                    <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe"
+                        onClick={() => viewProjects(company.id)}
+                    >
                         {company.company_name[0]}
                     </Avatar>
                 }
@@ -84,9 +100,7 @@ function CompanyCard({ company }) {
                 }
             />
             <CardContent>
-                <Typography gutterBottom variant="h5" component="div"
-                    onClick={() => history.push(`/company/${company.id}`)}
-                >
+                <Typography gutterBottom variant="h5" component="div">
                     {company.company_name}
                 </Typography>
                 <Typography>
@@ -113,13 +127,14 @@ function CompanyCard({ company }) {
                 </Typography>
                 {companyInfoStore.map((info, index) => {
                     return (
-                        <Typography key={index}>
-                            {company.id === info.company_id ?
-                                info.total_project
+                            company.id === info.company_id ?
+                               <Typography key={info.company_id}>
+                                   Total Projects: {info.total_project}
+                               </Typography> 
                                 :
                                 ''
-                            }
-                        </Typography>
+                            
+                        
                     )
                 })}
             </Collapse>
