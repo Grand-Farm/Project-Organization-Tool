@@ -26,7 +26,6 @@ function ProjectsList() {
         dispatch({ type: 'FETCH_PROJECTS', payload: { companyID: params.companyid } });
         dispatch({ type: 'FETCH_COMPANY' });
     }, []);
-    const company = useSelector(store => store.company);
     console.log('This is the store', company);
     const projects = useSelector(store => store.projectsReducer);
 
@@ -37,11 +36,10 @@ function ProjectsList() {
     
 
     const companyStore = useSelector(store => store.company);
-    const dispatch = useDispatch();
+
 
     const history = useHistory();
     const [status, setstatus] = useState("not_completed");
-    console.log('list of projects', projects, params);
     console.log(`Current Status: ${status}`)
 
 
@@ -56,7 +54,7 @@ function ProjectsList() {
     }
 
 
-    const params=useParams();
+
     const companyID = params.companyID;    
 
 
