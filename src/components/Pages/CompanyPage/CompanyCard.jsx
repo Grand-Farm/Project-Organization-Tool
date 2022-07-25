@@ -2,11 +2,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
+
+import CompanyCardProgress from './CompanyCardProgress';
+
 //Material UI
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Collapse from '@mui/material/Collapse';
@@ -16,13 +18,7 @@ import Avatar from '@mui/material/Avatar';
 import ArchiveIcon from '@mui/icons-material/Archive';
 import { IconButton } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import LinearProgress from '@mui/material/LinearProgress';
 import moment from 'moment';
-import clsx from 'clsx';
-
-import CompanyCardProgress from './CompanyCardProgress';
-
 
 
 const ExpandMore = styled((props) => {
@@ -97,11 +93,7 @@ function CompanyCard({ company }) {
                 <Typography gutterBottom variant="h5" component="div">
                     {company.company_name}
                 </Typography>
-                {/* <Box sx={{ width: '100%' }}>
-                    <LinearProgress variant='determinate' value={company.allocated_hours - } />
-                </Box> */}
                 <CompanyCardProgress company={company}/>
-
             </CardContent>
             <CardActions disableSpacing>
                 <ExpandMore
@@ -125,8 +117,6 @@ function CompanyCard({ company }) {
                             </Typography>
                             :
                             ''
-
-
                     )
                 })}
             </Collapse>

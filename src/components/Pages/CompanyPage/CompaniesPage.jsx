@@ -3,9 +3,11 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import './CompanyPage.css'
-
 import CompanyFormPage from './CompanyFormPage';
 import CompanyCard from './CompanyCard';
+
+// Material UI
+import Typography from '@mui/material/Typography';
 
 
 
@@ -33,7 +35,9 @@ function CompaninesPage() {
 
     return (
         <div className='landingCompany'>
-            <h1>Home</h1>
+            <Typography variant='h1'>
+                Partners
+            </Typography>
             <CompanyFormPage/>
             <div className='container'>
                 {companyStore.map((company, index) => {
