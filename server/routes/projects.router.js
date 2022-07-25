@@ -9,7 +9,8 @@ router.get('/:companyID', (req, res) => {
     const query = `   SELECT projects.id,projects.name,projects.budgeted_hours,projects.status,projects.manager,projects.description,projects.outcome,company.company_name,company.id 
     AS company_id FROM projects 
     join company ON projects.company_id=company.id 
-   WHERE projects.company_id = $1`
+   WHERE projects.company_id = $1
+   ORDER BY projects.id ASC`
     pool.query(query,[req.params.companyID])
       .then( result => {
         console.log(result.rows)
