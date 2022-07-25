@@ -84,38 +84,11 @@ function ProjectRow({ project }) {
                         </Typography>
                         <br />
                         <br />
-
                         <br />
-                        <InputLabel id="status">status:</InputLabel>
-                        <Select type='select' value={status} onChange={(e) => setstatus(e.target.value)}>
-                            <MenuItem value={"not_completed"}>Not Complete</MenuItem>
-                            <MenuItem value={"in_progress"}>In Progress</MenuItem>
-                            <MenuItem value={"getting_closer"}>Getting Closer</MenuItem>
-                            <MenuItem value={"done"}>Done</MenuItem>
-                        </Select>
                         <br />
-                    </Typography>
-                        <TextField value={""} onChange={(e) => setOutcome(e.target.value)} id="outlined-basic" label='outcome' variant="outlined" />
-                    <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel2bh-content"
-          id="panel2bh-header"
-        >
-          <Typography sx={{ width: '33%', flexShrink: 0 }}>Outcome:</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-        {outcome}
-          </Typography>
-        </AccordionDetails>
-        </Accordion>
-                </CardContent>
-            </CardActionArea>
-            <Button onClick={() => updateStatus(project)} variant="contained">Save Changes</Button>
-        </Card>
-
-                        <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+                        <TextField  value={outcome} onChange={(e) => setOutcome(e.target.value)} id="outlined-basic" label='outcome' variant="outlined" />
+           
+                        <Accordion elevation={0} expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
                             <AccordionSummary
 
                                 expandIcon={<ExpandMoreIcon />}
@@ -144,7 +117,7 @@ function ProjectRow({ project }) {
                                     <br />
                                     <br />
                                 </Typography>
-                                <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
+                                <Accordion elevation={0} expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
                                     <AccordionSummary
                                         expandIcon={<ExpandMoreIcon />}
                                         aria-controls="panel2bh-content"
@@ -169,6 +142,7 @@ function ProjectRow({ project }) {
                                 </InputLabel>
 
                                 <br />
+
                             </CardContent>
                         </CardActionArea>
                         <Box  textAlign='center'>
