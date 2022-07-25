@@ -9,7 +9,7 @@ function Nav() {
 
   return (
     <div className="nav">
-      <Link to="/home">
+      <Link to="/company">
         {/* <h2 className="nav-title">Project Organization Tool</h2> */}
         <img className='logo-image' src="https://grandfarm.com/wp-content/uploads/2021/03/Grand-Farm_Logo_Horizontal_White-01-2-1.png"></img>
       </Link>
@@ -40,13 +40,15 @@ function Nav() {
               Project Page
             </Link>
 
+            <Link className="navLink" to="/about">
+          About
+        </Link>
+
             <LogOutButton className="navLink" />
           </>
         )}
 
-        <Link className="navLink" to="/about">
-          About
-        </Link>
+       
       </div>
     </div>
   );

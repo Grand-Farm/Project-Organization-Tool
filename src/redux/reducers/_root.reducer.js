@@ -6,6 +6,7 @@ import activity from './activity.reducer';
 import employee from './employee.reducer';
 import projectsReducer from './projects.reducer';
 import company from './company.reducer';
+import AllUser from './alluser.reducer';
 
 
 // rootReducer is the primary reducer for our entire project
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   user, // will have an id and username if someone is logged in
   projectsReducer,
   company,
+  AllUser
 });
 
 export default rootReducer;

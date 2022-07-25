@@ -11,7 +11,7 @@ import Nav from '../Shared/Nav/Nav';
 import Footer from '../Shared/Footer/Footer';
 import ProtectedRoute from '../Shared/ProtectedRoute/ProtectedRoute';
 import AboutPage from '../Pages/AboutPage/AboutPage';
-import UserPage from '../Pages/UserPage/UserPage';
+import AdminPage from '../Pages/AdminPage/AdminPage';
 import InfoPage from '../Pages/InfoPage/InfoPage';
 import LandingPage from '../Pages/LandingPage/LandingPage';
 import LoginPage from '../Auth/LoginPage/LoginPage';
@@ -49,7 +49,7 @@ function App() {
           </Route>
 
           <Route
-            // shows AboutPage at all times (logged in or not)
+      
             exact
             path="/activity/:projectID"
           >
@@ -63,9 +63,9 @@ function App() {
           <ProtectedRoute
             // logged in shows UserPage else shows LoginPage
             exact
-            path="/user"
+            path="/Main"
           >
-            <UserPage />
+           <CompaninesPage />
           </ProtectedRoute>
 
           <ProtectedRoute
@@ -74,6 +74,14 @@ function App() {
             path="/projects/:companyid"
           >
             <ProjectsList />
+          </ProtectedRoute>
+
+            <ProtectedRoute
+            // logged in shows InfoPage else shows LoginPage
+            exact
+            path="/Admin"
+          >
+            <AdminPage />
           </ProtectedRoute>
 
           <ProtectedRoute
