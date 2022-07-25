@@ -40,7 +40,6 @@ function CompanyCard({ company }) {
         dispatch({ type: 'FETCH_PROJECTS', payload: { companyID: company.id } });
     }, [])
 
-
     const companyInfoStore = useSelector(store => store.companyInfo);
 
     const dispatch = useDispatch();
