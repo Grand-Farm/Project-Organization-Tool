@@ -40,8 +40,6 @@ function CompanyCard({ company }) {
         dispatch({ type: 'FETCH_PROJECTS', payload: { companyID: company.id } });
     }, [])
 
-
-
     const companyInfoStore = useSelector(store => store.companyInfo);
 
     const dispatch = useDispatch();
@@ -116,7 +114,7 @@ function CompanyCard({ company }) {
             </CardActions>
             <Collapse in={selectedId[company.id]} timeout="auto" unmountOnExit>
                 <Typography>
-                    Contract End: {(moment(company.contract_start).format('l'))}
+                    Contract End: {(moment(company.contract_end).format('l'))}
                 </Typography>
                 {companyInfoStore.map((info, index) => {
                     return (

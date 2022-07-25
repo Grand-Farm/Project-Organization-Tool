@@ -122,8 +122,14 @@ color: #e01616;
 
 .ColumnColor{
   color: #244c62;
-  font-style: italic;
   font-size: 1.3em;
-  font-family:'Times New Roman', Times, serif
+  
  
 }
+
+.projectTitle{
+  text-align: center;
+  
+}
+
+
