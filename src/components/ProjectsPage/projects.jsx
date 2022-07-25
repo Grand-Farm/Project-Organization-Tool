@@ -18,7 +18,6 @@ import { useParams } from 'react-router-dom';
 
 function ProjectsList() {
 
-    const params = useParams();
     useEffect(() => {
         dispatch({ type: 'FETCH_COMPANY' });
     }, [])
@@ -41,7 +40,7 @@ function ProjectsList() {
 
     const params=useParams();
     const companyID = params.companyID;
-    const company = companyStore.find(company => company.id === Number(companyID))
+    // const company = companyStore.find(company => company.id === Number(companyID))
     
 
 

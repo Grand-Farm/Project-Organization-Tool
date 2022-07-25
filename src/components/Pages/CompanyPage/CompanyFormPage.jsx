@@ -24,7 +24,7 @@ function CompanyFormPage(){
     const [allocatedHours, setAllocatedHours] = useState('');
     const [fulTimeRate, setFullTimeRate] = useState('');
     const [internRate, setInternRate] = useState('');
-    const [contractStart, setContractStart] = useState('');
+    const [contractEnd, setContractEnd] = useState('');
 
     const openForm = () => {
         setAddingCompany(true);
@@ -46,14 +46,14 @@ function CompanyFormPage(){
                 allocated_hours: allocatedHours,
                 full_time_rate: fulTimeRate,
                 intern_rate: internRate,
-                contract_start: contractStart,
+                contract_end: contractEnd,
             }
         })
         setCompanyName('');
         setAllocatedHours('');
         setFullTimeRate('');
         setInternRate('');
-        setContractStart('');
+        setContractEnd('');
         setAddingCompany(false);
     }
 
@@ -66,10 +66,6 @@ function CompanyFormPage(){
             <Dialog open={addingCompany} onClose={() => saveForm()}>
                 <DialogTitle>Add New Company</DialogTitle>
                 <DialogContent>
-                    {/* <DialogContentText>
-                    To subscribe to this website, please enter your email address here. We
-                    will send updates occasionally.
-                </DialogContentText> */}
                     <FormControl  sx={{ mt: 2, minWidth: 250 }}>
                         <TextField
                             autoFocus
@@ -104,8 +100,8 @@ function CompanyFormPage(){
                             // margin="dense"
                             type='date'
                             variant="standard"
-                            value={contractStart}
-                            onChange={(e) => setContractStart(e.target.value)}
+                            value={contractEnd}
+                            onChange={(e) => setContractEnd(e.target.value)}
                         />
                     </FormControl>
                 </DialogContent>

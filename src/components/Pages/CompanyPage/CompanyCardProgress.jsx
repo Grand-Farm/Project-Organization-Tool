@@ -15,7 +15,7 @@ function CompanyCardProgress({ company }) {
             {companyInfoStore.map((info, index) => {
                 return (
                     company.id === info.company_id ?
-                        <Box>
+                        <Box key={info.company_id}>
                             <LinearProgress variant='determinate' value={(info.project_hours / company.allocated_hours) * 100}>
                             </LinearProgress>
                             <Typography variant='body2'>

@@ -19,12 +19,11 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 
 router.get('/pro', rejectUnauthenticated, (req,res) =>{
     console.log('req_user is', req.user);
-    pool.query(`SELECT sum(activity_employee.employee_hours) as project_hours, count(projects.id) as total_project, company.id as company_id
-    FROM activity_employee
-    JOIN "user" ON activity_employee.user_id="user".id
-    JOIN activity ON activity_employee.activity_id=activity.id
-    JOIN projects ON activity.projects_id=projects.id
-    JOIN company ON projects.company_id=company.id
+    pool.query(`SELECT sum(activity_employee.employee_hours) as project_hours, (SELECT Count(projects.id) FROM projects) as total_project, company.id as company_id
+    FROM company
+    JOIN projects ON projects.company_id=company.id
+    JOIN activity ON activity.projects_id=projects.id
+    JOIN activity_employee ON activity_employee.activity_id=activity.id
     GROUP BY projects.id, company.id;`)
         .then(result =>{
             console.log(result.rows);
@@ -37,9 +36,9 @@ router.get('/pro', rejectUnauthenticated, (req,res) =>{
 router.post('/',  rejectUnauthenticated, (req,res) => {
     console.log('req.user:', req.user);
     console.log('req.body of company is', req.body);
-    const query = `INSERT INTO "company"("company_name","full_time_rate","allocated_hours","intern_rate","contract_start")
+    const query = `INSERT INTO "company"("company_name","full_time_rate","allocated_hours","intern_rate","contract_end")
                 VALUES($1,$2,$3,$4,$5);`
-    const companyBody = [req.body.company_name, req.body.full_time_rate, req.body.allocated_hours, req.body.intern_rate, req.body.contract_start];
+    const companyBody = [req.body.company_name, req.body.full_time_rate, req.body.allocated_hours, req.body.intern_rate, req.body.contract_end];
     pool.query(query, companyBody)
         .then(result =>{
             console.log('Inserting new company', companyBody);
