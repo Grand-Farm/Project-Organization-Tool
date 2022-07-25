@@ -37,6 +37,7 @@ function ProjectRow({ project }) {
     const dispatch = useDispatch();
     const [status, setstatus] = useState(project.status);
     const [budgetedhours, setBudgetedHours] = useState(project.budgeted_hours);
+    const [outcome, setOutcome] = useState(project.outcome);
     function updateStatus(project) {
         console.log('This should change', project)
         dispatch({
@@ -45,6 +46,7 @@ function ProjectRow({ project }) {
                 status: status,
                 budgeted_hours: budgetedhours,
                 ProjectID: project.id,
+                outcome: outcome,
                 companyID: project.company_id
             }
         });
@@ -82,6 +84,37 @@ function ProjectRow({ project }) {
                         </Typography>
                         <br />
                         <br />
+
+                        <br />
+                        <InputLabel id="status">status:</InputLabel>
+                        <Select type='select' value={status} onChange={(e) => setstatus(e.target.value)}>
+                            <MenuItem value={"not_completed"}>Not Complete</MenuItem>
+                            <MenuItem value={"in_progress"}>In Progress</MenuItem>
+                            <MenuItem value={"getting_closer"}>Getting Closer</MenuItem>
+                            <MenuItem value={"done"}>Done</MenuItem>
+                        </Select>
+                        <br />
+                    </Typography>
+                        <TextField value={""} onChange={(e) => setOutcome(e.target.value)} id="outlined-basic" label='outcome' variant="outlined" />
+                    <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel2bh-content"
+          id="panel2bh-header"
+        >
+          <Typography sx={{ width: '33%', flexShrink: 0 }}>Outcome:</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+        {outcome}
+          </Typography>
+        </AccordionDetails>
+        </Accordion>
+                </CardContent>
+            </CardActionArea>
+            <Button onClick={() => updateStatus(project)} variant="contained">Save Changes</Button>
+        </Card>
+
                         <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
                             <AccordionSummary
 
@@ -144,6 +177,7 @@ function ProjectRow({ project }) {
                     </Card>
                    
         </Box>
+
 
     )
 }
