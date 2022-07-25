@@ -17,6 +17,7 @@ import Select from '@mui/material/Select';
 
 
 function ProjectsList() {
+
     const params = useParams();
     const dispatch = useDispatch();
     useEffect(() => {
@@ -26,21 +27,44 @@ function ProjectsList() {
     const company = useSelector(store => store.company);
     console.log('This is the store', company);
     const projects = useSelector(store => store.projectsReducer);
+
     console.log("these are the projects",projects)
     
     
   
     
+
+    const companyStore = useSelector(store => store.company);
+    const dispatch = useDispatch();
+
     const history = useHistory();
     const [status, setstatus] = useState("not_completed");
     console.log('list of projects', projects, params);
     console.log(`Current Status: ${status}`)
 
 
+
     
     
     
     
+
+    const handleChange = (panel) => (event, isExpanded) => {
+      setExpanded(isExpanded ? panel : false);
+    }
+
+
+    const params=useParams();
+    const companyID = params.companyID;
+    const company = companyStore.find(company => company.id === Number(companyID))
+    
+
+
+    const company = useSelector(store => store.company);
+    console.log('This is Company store', company);
+
+
+
     const [newBudgetedHours, setNewBudgetedHours] = useState(0);
     const [newName, setNewName] = useState("");
     const [newManager, setNewManager] = useState(projects.manager);

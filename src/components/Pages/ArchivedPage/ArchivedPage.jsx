@@ -2,13 +2,21 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import './ArchivedPage.css';
 
+// Material UI
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import CardContent from '@mui/material/CardContent';
+import  Typography  from '@mui/material/Typography';
+
 function ArchivedPage() {
 
     const companyStore = useSelector(store => store.company);
 
     return (
         <div className='archivePage'>
-            <h1>Archived</h1>
+            <Typography variant='h1'>
+                Archives
+            </Typography>
             <select>
                 {companyStore.map(company => {
                     {
@@ -25,11 +33,16 @@ function ArchivedPage() {
                     {
                         if (company.is_archived === true) {
                             return (
-                                <div key={company.id} className='content'>
-                                    <h3>{company.company_name}</h3>
+                                <Card key={company.id} className='content'>
+                                    <CardContent>
+                                        <Typography variant='h3'>
+                                            {company.company_name}
+                                        </Typography>
+                                    </CardContent>
+                                    {/* <h3>{company.company_name}</h3>
                                     <h5>{company.allocated_hours}</h5>
-                                    <h5>{company.contract_start}</h5>
-                                </div>
+                                    <h5>{company.contract_start}</h5> */}
+                                </Card>
                             )
                         }
                     }

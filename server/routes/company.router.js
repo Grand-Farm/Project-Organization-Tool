@@ -17,6 +17,23 @@ router.get('/', rejectUnauthenticated, (req, res) => {
         })
 })
 
+router.get('/pro', rejectUnauthenticated, (req,res) =>{
+    console.log('req_user is', req.user);
+    pool.query(`SELECT sum(activity_employee.employee_hours) as project_hours, count(projects.id) as total_project, company.id as company_id
+    FROM activity_employee
+    JOIN "user" ON activity_employee.user_id="user".id
+    JOIN activity ON activity_employee.activity_id=activity.id
+    JOIN projects ON activity.projects_id=projects.id
+    JOIN company ON projects.company_id=company.id
+    GROUP BY projects.id, company.id;`)
+        .then(result =>{
+            console.log(result.rows);
+            res.send(result.rows);
+        }).catch(err =>{
+            console.log('ERROR in GET total hours and projects for Company', err);
+        })
+})
+
 router.post('/',  rejectUnauthenticated, (req,res) => {
     console.log('req.user:', req.user);
     console.log('req.body of company is', req.body);
@@ -33,7 +50,18 @@ router.post('/',  rejectUnauthenticated, (req,res) => {
         })
 })
 
-
+router.put('/:id', rejectUnauthenticated, (req, res) =>{
+    console.log('req.userL', req.user);
+    console.log(`company with an ID of ${req.params.id} is archived`);
+    const query = `UPDATE "company" SET "is_archived" = NOT is_archived WHERE id=$1;`
+    pool.query(query,[req.params.id])
+        .then(result =>{
+            res.sendStatus(201);
+        }).catch(err =>{
+            console.log('Error Updating compnay', err);
+            res.sendStatus(500);
+        })
+})
 
 
 
