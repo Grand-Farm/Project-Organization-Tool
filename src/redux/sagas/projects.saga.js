@@ -5,6 +5,7 @@ import { put, takeEvery } from 'redux-saga/effects';
 function* projects(action) {
     // get all projects from the DB
     try {
+        console.log(action.payload)
         const response = yield axios.get(`/api/projects/${action.payload.companyID}`);
         console.log('get correect projects:', action.payload);
         yield put({ type: 'GET_PROJECTS', payload: response.data });
