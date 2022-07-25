@@ -17,6 +17,7 @@ import { useParams } from 'react-router-dom';
 
 
 function ProjectsList() {
+
     const params = useParams();
     useEffect(() => {
         dispatch({ type: 'FETCH_COMPANY' });
@@ -25,6 +26,7 @@ function ProjectsList() {
     console.log("fdafgagagdas", params)
 
     const projects = useSelector(store => store.projectsReducer);
+    const companyStore = useSelector(store => store.company);
     const dispatch = useDispatch();
     const history = useHistory();
     const [status, setstatus] = useState("not_completed");
@@ -36,8 +38,16 @@ function ProjectsList() {
       setExpanded(isExpanded ? panel : false);
     }
 
+
+    const params=useParams();
+    const companyID = params.companyID;
+    const company = companyStore.find(company => company.id === Number(companyID))
+    
+
+
     const company = useSelector(store => store.company);
     console.log('This is Company store', company);
+
 
     const [newBudgetedHours, setNewBudgetedHours] = useState(0);
     const [newName, setNewName] = useState("");

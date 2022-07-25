@@ -1,11 +1,14 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
+
+
+import CompanyCardProgress from './CompanyCardProgress';
 
 //Material UI
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Collapse from '@mui/material/Collapse';
@@ -15,11 +18,7 @@ import Avatar from '@mui/material/Avatar';
 import ArchiveIcon from '@mui/icons-material/Archive';
 import { IconButton } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import LinearProgress from '@mui/material/LinearProgress';
-import clsx from 'clsx';
-import { useHistory } from 'react-router-dom';
-
+import moment from 'moment';
 
 
 const ExpandMore = styled((props) => {
@@ -33,33 +32,36 @@ const ExpandMore = styled((props) => {
     }),
 }));
 
-function CompanyCard({ company, i }) {
+function CompanyCard({ company }) {
 
-    
-    
+    const companyInfoStore = useSelector(store => store.companyInfo);
+    const dispatch = useDispatch();
+    const history = useHistory();
+
+    useEffect(() => {
+        dispatch({ type: 'FETCH_COMPANYINFO' });
+    }, [])
+
+
     const [expanded, setExpanded] = useState(false);
     const [selectedId, setSelectedId] = useState(-1);
-    const history = useHistory();
-    const dispatch = useDispatch();
+    const [progress, setProgress] = useState(0);
 
-
-    
-    
     function handleExpandClick(id) {
         setSelectedId((prevState => ({ ...prevState, [id]: !prevState[id] })));
         setExpanded(expanded => !expanded);
         console.log(id);
     }
 
-    function viewProjects(company){
+    function viewProjects(company) {
         console.log("THIS IS THE COMPANY", company)
         history.push(`/projects/${company}`)
-      }
+    }
 
 
 
     return (
-        <Card onClick={() => viewProjects(company.id)} className='content' key={i}
+        <Card className='content'
             sx={{ minWidth: 300, maxWidth: 300 }}
             style={{
                 width: '25vw',
@@ -69,7 +71,9 @@ function CompanyCard({ company, i }) {
         >
             <CardHeader
                 avatar={
-                    <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+                    <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe"
+                        onClick={() => viewProjects(company.id)}
+                    >
                         {company.company_name[0]}
                     </Avatar>
                 }
@@ -89,13 +93,7 @@ function CompanyCard({ company, i }) {
                 <Typography gutterBottom variant="h5" component="div">
                     {company.company_name}
                 </Typography>
-                <Typography>
-                    Hours Remaining
-                </Typography>
-                <Box sx={{ width: '100%' }}>
-                    <LinearProgress variant='determinate' value={50} />
-                </Box>
-
+                <CompanyCardProgress company={company}/>
             </CardContent>
             <CardActions disableSpacing>
                 <ExpandMore
@@ -108,12 +106,19 @@ function CompanyCard({ company, i }) {
                 </ExpandMore>
             </CardActions>
             <Collapse in={selectedId[company.id]} timeout="auto" unmountOnExit>
-                Testting Somthing
-                Testing Collapse
-                Height
-                <h1>{company.company_name}</h1>
-                <h5>{company.allocated_hours}</h5>
-                <h5>{company.contract_start}</h5>
+                <Typography>
+                    Contract End: {(moment(company.contract_start).format('l'))}
+                </Typography>
+                {companyInfoStore.map((info, index) => {
+                    return (
+                        company.id === info.company_id ?
+                            <Typography key={info.company_id}>
+                                Total Projects: {info.total_project}
+                            </Typography>
+                            :
+                            ''
+                    )
+                })}
             </Collapse>
         </Card>
     )
