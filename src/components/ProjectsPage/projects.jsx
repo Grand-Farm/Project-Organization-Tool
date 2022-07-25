@@ -22,6 +22,7 @@ import { width } from '@mui/system';
 function ProjectsList() {
 
 
+
     const params = useParams();
     const dispatch = useDispatch();
 
@@ -59,6 +60,9 @@ function ProjectsList() {
 
 
     const companyID = params.companyID;
+    // const company = companyStore.find(company => company.id === Number(companyID))
+    
+
 
 
     const company = useSelector(store => store.company);

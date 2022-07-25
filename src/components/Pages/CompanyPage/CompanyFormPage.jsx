@@ -53,7 +53,7 @@ function CompanyFormPage(){
         setAllocatedHours('');
         setFullTimeRate('');
         setInternRate('');
-        setContractStart('');
+        setContractEnd('');
         setAddingCompany(false);
     }
 
@@ -66,10 +66,6 @@ function CompanyFormPage(){
             <Dialog open={addingCompany} onClose={() => saveForm()}>
                 <DialogTitle>Add New Company</DialogTitle>
                 <DialogContent>
-                    {/* <DialogContentText>
-                    To subscribe to this website, please enter your email address here. We
-                    will send updates occasionally.
-                </DialogContentText> */}
                     <FormControl  sx={{ mt: 2, minWidth: 250 }}>
                         <TextField
                             autoFocus
