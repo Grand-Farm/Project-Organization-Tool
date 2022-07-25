@@ -26,6 +26,7 @@ function ProjectRow({ project }) {
     const dispatch = useDispatch();
     const [status, setstatus] = useState(project.status);
     const [budgetedhours, setBudgetedHours] = useState(project.budgeted_hours);
+    const [outcome, setOutcome] = useState(project.outcome);
     function updateStatus(project) {
         console.log('This should change', project)
         dispatch({
@@ -34,6 +35,7 @@ function ProjectRow({ project }) {
                 status: status,
                 budgeted_hours: budgetedhours,
                 ProjectID: project.id,
+                outcome: outcome,
                 companyID: project.company_id
             }
         });
@@ -96,6 +98,7 @@ function ProjectRow({ project }) {
                         </Select>
                         <br />
                     </Typography>
+                        <TextField value={""} onChange={(e) => setOutcome(e.target.value)} id="outlined-basic" label='outcome' variant="outlined" />
                     <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -106,7 +109,7 @@ function ProjectRow({ project }) {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-        {project.outcome}
+        {outcome}
           </Typography>
         </AccordionDetails>
         </Accordion>

@@ -70,7 +70,7 @@ function ProjectsList() {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    const [companyName, setComapnyName] = useState('');
+    const [companyName, setComapnyName] = useState("");
     
     
     
@@ -106,6 +106,7 @@ function ProjectsList() {
     }
     function switchProjects(id){
         dispatch({ type: 'FETCH_PROJECTS', payload: { companyID: id } });
+        history.push(`/projects/${id}`)
     }
     
     
