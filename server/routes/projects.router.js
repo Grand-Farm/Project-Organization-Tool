@@ -6,7 +6,8 @@ const pool = require('../modules/pool')
 router.get('/:companyID', (req, res) => {
   console.log('adfhiadihsuifhudhifdfas',req.params)
 // allowing the user to order collection by rating
-    const query = `   SELECT projects.id, projects.name,projects.budgeted_hours,projects.status,projects.manager,projects.description,projects.outcome,company.id AS company_id FROM projects 
+    const query = `   SELECT projects.id,projects.name,projects.budgeted_hours,projects.status,projects.manager,projects.description,projects.outcome,company.company_name,company.id 
+    AS company_id FROM projects 
     join company ON projects.company_id=company.id 
    WHERE projects.company_id = $1`
     pool.query(query,[req.params.companyID])
@@ -20,6 +21,20 @@ router.get('/:companyID', (req, res) => {
       })
   
   });
+
+  router.get('/', (req, res) => {
+    // allowing the user to order collection by rating
+        const query = `SELECT * FROM projects`;
+        pool.query(query)
+          .then( result => {
+            res.send(result.rows);
+          })
+          .catch(err => {
+            console.log('ERROR: Get all projects', err);
+            res.sendStatus(500)
+          })
+      
+      });
 
   router.post('/', (req, res) => {
   let projects = req.body
@@ -40,13 +55,14 @@ router.get('/:companyID', (req, res) => {
 router.put('/:ProjectID', (req, res) => {
   console.log("THIS IS THE PUT VALUE",req.body)
   const queryText = `UPDATE "projects"
-  SET ("status","budgeted_hours") = ($1,$2) WHERE "id" = $3` 
+  SET ("status","budgeted_hours","outcome") = ($1,$2,$4) WHERE "id" = $3` 
 
-  pool.query(queryText, [req.body.status,req.body.budgeted_hours,req.params.ProjectID])
+  pool.query(queryText, [req.body.status,req.body.budgeted_hours,req.params.ProjectID,req.body.outcome])
     .then(() => { res.sendStatus(200) })
     .catch((err) => {
       console.log('Error completing UPDATE projects query', err);
       res.sendStatus(500);
     });
 });
+
 module.exports = router;

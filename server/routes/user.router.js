@@ -14,6 +14,17 @@ router.get('/', rejectUnauthenticated, (req, res) => {
   res.send(req.user);
 });
 
+router.get('/:admin', rejectUnauthenticated, (req, res) => {
+  const query = `SELECT * FROM "user"`;
+  pool.query(query)
+      .then( result => {
+        res.send(result.rows);
+      }) .catch(err => {
+        console.log('ERROR: Get all projects', err);
+        res.sendStatus(500)
+      })
+});
+
 // Handles POST request with new user data
 // The only thing different from this and every other post we've seen
 // is that the password gets encrypted before being inserted
@@ -45,6 +56,20 @@ router.post('/logout', (req, res) => {
   // Use passport's built-in method to log out the user
   req.logout();
   res.sendStatus(200);
+});
+
+router.put('/:username', (req, res) => {
+  console.log("THIS IS THE PUT VALUE in USER",req.body)
+  const password = encryptLib.encryptPassword(req.body.password);
+  const queryText = `UPDATE "user"
+  SET "password" = $1 WHERE "username" = $2` 
+
+  pool.query(queryText, [password,req.params.username])
+    .then(() => { res.sendStatus(200) })
+    .catch((err) => {
+      console.log('Error completing UPDATE projects query', err);
+      res.sendStatus(500);
+    });
 });
 
 module.exports = router;

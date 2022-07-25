@@ -34,7 +34,14 @@ const ExpandMore = styled((props) => {
 
 function CompanyCard({ company }) {
 
+
+    
+    useEffect(() => {
+        dispatch({ type: 'FETCH_PROJECTS', payload: { companyID: company.id } });
+    }, [])
+
     const companyInfoStore = useSelector(store => store.companyInfo);
+
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -107,7 +114,9 @@ function CompanyCard({ company }) {
             </CardActions>
             <Collapse in={selectedId[company.id]} timeout="auto" unmountOnExit>
                 <Typography>
-                    Contract End: {(moment(company.contract_End).format('l'))}
+
+                    Contract End: {(moment(company.contract_end).format('l'))}
+
                 </Typography>
                 {companyInfoStore.map((info, index) => {
                     return (

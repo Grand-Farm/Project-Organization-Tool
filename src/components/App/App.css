@@ -29,10 +29,8 @@ Button
 .btn {
   display: inline-block;
   padding: 10px 20px;
-  border-color: #014041;
-  border-width: 1px 1px 3px;
   border-radius: 4px;
-  background-color: #00acb0;
+  background-color: #afcc36;
   color: #f8f8f8;
   font-size: 1.1rem;
   outline: 0;
@@ -54,10 +52,6 @@ Button
   width: 100%;
 }
 
-.btn:hover {
-  background-color: #008183;
-  text-decoration: none;
-}
 
 /* This line makes the "Register" and "Login" buttons look like links */
 .btn_asLink {
@@ -125,3 +119,17 @@ input {
 .optionButtons:hover{
 color: #e01616;
 }
+
+.ColumnColor{
+  color: #244c62;
+  font-size: 1.3em;
+  
+ 
+}
+
+.projectTitle{
+  text-align: center;
+  
+}
+
+
