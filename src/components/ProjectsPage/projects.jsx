@@ -2,43 +2,45 @@ import { useSelector, useDispatch } from 'react-redux'
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useState } from "react"
-import Accordion from '@mui/material/Accordion';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Modal from '@mui/material/Modal';
-import Box from '@mui/material/Box';
 import ProjectRow from './ProjectRow';
 import { Button } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import { useParams } from 'react-router-dom';
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 
 
 function ProjectsList() {
     const params = useParams();
-    useEffect(() => {
-        dispatch({ type: 'FETCH_COMPANY' });
-    }, [])
-
-    console.log("fdafgagagdas", params)
-
-    const projects = useSelector(store => store.projectsReducer);
     const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch({ type: 'FETCH_PROJECTS', payload: { companyID: params.companyid } });
+        dispatch({ type: 'FETCH_COMPANY' });
+    }, []);
+    const company = useSelector(store => store.company);
+    console.log('This is the store', company);
+    const projects = useSelector(store => store.projectsReducer);
+    console.log("these are the projects",projects)
+    
+    
+  
+    
     const history = useHistory();
     const [status, setstatus] = useState("not_completed");
     console.log('list of projects', projects, params);
     console.log(`Current Status: ${status}`)
-    const [expanded, setExpanded] = React.useState(false);
 
-    const handleChange = (panel) => (event, isExpanded) => {
-      setExpanded(isExpanded ? panel : false);
-    }
 
-    const company = useSelector(store => store.company);
-    console.log('This is Company store', company);
-
+    
+    
+    
+    
     const [newBudgetedHours, setNewBudgetedHours] = useState(0);
     const [newName, setNewName] = useState("");
     const [newManager, setNewManager] = useState(projects.manager);
@@ -46,13 +48,11 @@ function ProjectsList() {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-
-
-    useEffect(() => {
-        dispatch({ type: 'FETCH_PROJECTS', payload: { companyID: params.companyid } });
-    }, []);
-
-
+    const [companyName, setComapnyName] = useState('');
+    
+    
+    
+    
     const style = {
         position: 'absolute',
         top: '50%',
@@ -64,7 +64,10 @@ function ProjectsList() {
         boxShadow: 24,
         p: 4,
     };
-
+    const handleCompany = (event) => {
+        setComapnyName(event.target.value);
+      };
+    
     function newProject() {
         console.log('DISPATCHING NEW PROJECT',params.companyid);
         dispatch({
@@ -77,21 +80,27 @@ function ProjectsList() {
                 budgeted_hours: newBudgetedHours
             }
         });
+        setOpen(false)
     }
-function switchProjects(id){
-    dispatch({ type: 'FETCH_PROJECTS', payload: { companyID: id } })
-}
-
-
+    function switchProjects(id){
+        dispatch({ type: 'FETCH_PROJECTS', payload: { companyID: id } });
+    }
+    
+    
     return (
         <>
-            <h2>{projects.id}</h2>
+        
+        {projects[0] === undefined ? 
+        <h1>Loading</h1>
+        : <h1>{projects[0].company_name}</h1>}
+        <div>
             <Button onClick={handleOpen} variant="contained" >add new project</Button>
+        
             <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
             >
                 <Box sx={style} >
                     <Typography id="modal-modal-title" variant="h6" component="h2">
@@ -106,36 +115,35 @@ function switchProjects(id){
                     </Typography>
                 </Box>
             </Modal>
-            <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1bh-content"
-          id="panel1bh-header"
-        >
-          <Typography sx={{ width: '33%', flexShrink: 0 }}>
-            General settings
-          </Typography>
-          <Typography sx={{ color: 'text.secondary' }}>I am an accordion</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-          {company.map((company) => {
-                    {
-                        if (company.is_archived === false) {
-                            return (
-                                <p onClick={() => switchProjects(company.id)}  key={company.id} >{company.company_name}</p>
-                            )
-                        }
-                    }
-                })}
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
+     
+            <FormControl fullWidth>
+  <InputLabel id="demo-simple-select-label">Select Company</InputLabel>
+  <Select
+  onChange={handleCompany}
+  value={companyName}
+    labelId="demo-simple-select-label"
+    id="demo-simple-select"
+    label="Name"
+    >
+   {company.map((company) => {
+        {
+            if (company.is_archived === false) {
+                return (
+                    <MenuItem value={companyName}  onClick={() => switchProjects(company.id)}  key={company.id} >{company.company_name}</MenuItem>
+                    )
+                }
+            }
+        })}
+
+  </Select>
+</FormControl>
             {projects.map((project) => <ProjectRow key={project.id} project={project} />)}
+
+            </div>
 
         </>
     )
 
-
+    
 }
 export default ProjectsList
