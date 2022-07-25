@@ -18,8 +18,10 @@ import Select from '@mui/material/Select';
 
 function ProjectsList() {
 
+
     const params = useParams();
     const dispatch = useDispatch();
+
     useEffect(() => {
         dispatch({ type: 'FETCH_PROJECTS', payload: { companyID: params.companyid } });
         dispatch({ type: 'FETCH_COMPANY' });
@@ -55,9 +57,7 @@ function ProjectsList() {
 
 
     const params=useParams();
-    const companyID = params.companyID;
-    const company = companyStore.find(company => company.id === Number(companyID))
-    
+    const companyID = params.companyID;    
 
 
     const company = useSelector(store => store.company);

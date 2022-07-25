@@ -119,19 +119,20 @@ export default function ActivityPage() {
         dispatch({ type: "FETCH_EMPLOYEES" })
     }, [])
     const columns = [
-        { field: 'id', headerName: 'ID', flex: .3 },
-        { field: 'Type', headerName: 'Activity', flex: .5 },
-        { field: 'Employees', headerName: 'Employees', flex: .5, renderCell: (params) => { return (params.row.Employees.map((e, i) => { return (e.employee + ', ') })) } },
+        { field: 'id',  headerClassName:'ColumnColor', headerName: 'ID', flex: .3 },
+        { field: 'Type',  headerClassName:'ColumnColor', headerName: 'Activity', flex: .5 },
+        { field: 'Employees',  headerClassName:'ColumnColor', headerName: 'Employees', flex: .5, renderCell: (params) => { return (params.row.Employees.map((e, i) => { return (e.employee + ', ') })) } },
         {
             field: 'Date',
             headerName: 'Date',
             type: 'string',
             flex: .3,
+            headerClassName:'ColumnColor'
         },
-        { field: 'fulltime', headerName: 'full-time-Hours', flex: .3 },
-        { field: 'intern', headerName: 'intern-Hours', flex: .3 },
+        { field: 'fulltime', headerName: 'full-time-Hours', flex: .3, headerClassName:'ColumnColor', },
+        { field: 'intern', headerName: 'intern-Hours', flex: .3, headerClassName:'ColumnColor', },
 
-        { field: 'Notes', headerName: 'Notes', flex: 1.5, }
+        { field: 'Notes', headerName: 'Notes', flex: 1.5, headerClassName:'ColumnColor', }
     ];
 
     let rows =
@@ -160,7 +161,7 @@ export default function ActivityPage() {
         <div>
             
             <Button className='optionButtons' onClick={handleOpen} size='small' variant='outlined'>Add Activity</Button>
-            <Button className='optionButtons' onClick={handleClickOpen} size='small' variant='outlined'>Add Hours</Button>
+            <Button className='optionButtons' onClick={handleClickOpen} size='small' variant='outlined'>Add Employee</Button>
             <Button className='optionButtons' onClick={handleEditOpen} size='small' variant='outlined'>Edit Hours</Button>
             <Button className='optionButtons' onClick={handleActivityOpen} size='small' variant='outlined'>Edit Activity</Button>
            

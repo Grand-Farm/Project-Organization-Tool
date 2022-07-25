@@ -22,6 +22,20 @@ router.get('/:companyID', (req, res) => {
   
   });
 
+  router.get('/', (req, res) => {
+    // allowing the user to order collection by rating
+        const query = `SELECT * FROM projects`;
+        pool.query(query)
+          .then( result => {
+            res.send(result.rows);
+          })
+          .catch(err => {
+            console.log('ERROR: Get all projects', err);
+            res.sendStatus(500)
+          })
+      
+      });
+
   router.post('/', (req, res) => {
   let projects = req.body
   console.log(req.body);
