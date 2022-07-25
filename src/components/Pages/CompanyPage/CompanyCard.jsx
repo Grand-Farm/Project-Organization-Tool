@@ -40,9 +40,7 @@ function CompanyCard({ company }) {
         dispatch({ type: 'FETCH_PROJECTS', payload: { companyID: company.id } });
     }, [])
 
-    const [expanded, setExpanded] = useState(false);
-    const [selectedId, setSelectedId] = useState(-1);
-    const history = useHistory();
+
 
     const companyInfoStore = useSelector(store => store.companyInfo);
 
