@@ -37,9 +37,9 @@ router.get('/pro', rejectUnauthenticated, (req,res) =>{
 router.post('/',  rejectUnauthenticated, (req,res) => {
     console.log('req.user:', req.user);
     console.log('req.body of company is', req.body);
-    const query = `INSERT INTO "company"("company_name","full_time_rate","allocated_hours","intern_rate","contract_start")
+    const query = `INSERT INTO "company"("company_name","full_time_rate","allocated_hours","intern_rate","contract_end")
                 VALUES($1,$2,$3,$4,$5);`
-    const companyBody = [req.body.company_name, req.body.full_time_rate, req.body.allocated_hours, req.body.intern_rate, req.body.contract_start];
+    const companyBody = [req.body.company_name, req.body.full_time_rate, req.body.allocated_hours, req.body.intern_rate, req.body.contract_end];
     pool.query(query, companyBody)
         .then(result =>{
             console.log('Inserting new company', companyBody);

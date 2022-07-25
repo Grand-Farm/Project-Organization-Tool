@@ -7,6 +7,8 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
+import { styled } from '@mui/material/styles';
+
 import { useDispatch } from 'react-redux'
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -15,6 +17,15 @@ import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import FormControl from '@mui/material/FormControl';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+
+
+
+
+
 
 
 
@@ -38,7 +49,15 @@ function ProjectRow({ project }) {
             }
         });
     }
- 
+
+    const Item = styled(Paper)(({ theme }) => ({
+        backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+        ...theme.typography.body2,
+        padding: theme.spacing(1),
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+      }));
+
 
     const history = useHistory();
     const [expanded, setExpanded] = useState(false);
@@ -52,68 +71,79 @@ function ProjectRow({ project }) {
     }
 
     return (
+        <Box sx={{ flexGrow: 1,display:'inline-flex' }}>
+         
+                    <Card className="Project Card" elevation={3} sx={{  minWidth:250,maxWidth: 250, marginTop: 5,marginLeft:5,marginBottom:2,marginRight:5 }}>
+                        <Typography
+                            variant="h5"
+                            className="projectTitle"
+                            onClick={() => viewActivities(project.id)}>
+                            {project.name}
+                        </Typography>
+                        <br />
+                        <br />
+                        <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+                            <AccordionSummary
 
-        <Card sx={{ maxWidth: 555 }}>
-            <Typography
-                onClick={() => viewActivities(project.id)}>
-                name: {project.name}
-            </Typography>
-            <br />
-            <br />
-            <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
-                <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1bh-content"
-                    id="panel1bh-header"
-                >
-                    <Typography sx={{ width: '33%', flexShrink: 0 }}>
-                        Project Description
-                    </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                    <Typography>
-                        {project.description}
-                    </Typography>
-                </AccordionDetails>
-            </Accordion>
-            <CardActionArea>
-                <CardContent>
-                    <Typography>
-                        <br />
-                        <br />
-                        <TextField value={budgetedhours} onChange={(e) => setBudgetedHours(e.target.value)} id="outlined-basic" label='budgeted hours' variant="outlined" />
-                        <br />
-                        <br />
-                        Product Manager: {project.manager}
-                        <br />
-                        <br />
-                        <InputLabel id="status">status:</InputLabel>
-                        <Select type='select' value={status} onChange={(e) => setstatus(e.target.value)}>
-                            <MenuItem value={"not_completed"}>Not Complete</MenuItem>
-                            <MenuItem value={"in_progress"}>In Progress</MenuItem>
-                            <MenuItem value={"getting_closer"}>Getting Closer</MenuItem>
-                            <MenuItem value={"done"}>Done</MenuItem>
-                        </Select>
-                        <br />
-                    </Typography>
-                    <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel2bh-content"
-          id="panel2bh-header"
-        >
-          <Typography sx={{ width: '33%', flexShrink: 0 }}>Outcome:</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-        {project.outcome}
-          </Typography>
-        </AccordionDetails>
-        </Accordion>
-                </CardContent>
-            </CardActionArea>
-            <Button onClick={() => updateStatus(project)} variant="contained">Save Changes</Button>
-        </Card>
+                                expandIcon={<ExpandMoreIcon />}
+                                aria-controls="panel1bh-content"
+                                id="panel1bh-header"
+                            >
+                                <Typography sx={{ width: '33%', flexShrink: 0 }}>
+                                    Description
+                                </Typography>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                <Typography>
+                                    {project.description}
+                                </Typography>
+                            </AccordionDetails>
+                        </Accordion>
+                        <CardActionArea>
+                            <CardContent>
+                                <Typography>
+                                    <br />
+                                    <br />
+                                    <TextField value={budgetedhours} onChange={(e) => setBudgetedHours(e.target.value)} id="outlined-basic" label='budgeted hours' variant="outlined" />
+                                    <br />
+                                    <br />
+                                    <strong>Manager:</strong> <em>{project.manager}</em>
+                                    <br />
+                                    <br />
+                                </Typography>
+                                <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
+                                    <AccordionSummary
+                                        expandIcon={<ExpandMoreIcon />}
+                                        aria-controls="panel2bh-content"
+                                        id="panel2bh-header"
+                                    >
+                                        <Typography sx={{ width: '33%', flexShrink: 0 }}>Outcome</Typography>
+                                    </AccordionSummary>
+                                    <AccordionDetails>
+                                        <Typography>
+                                            {project.outcome}
+                                        </Typography>
+                                    </AccordionDetails>
+                                </Accordion>
+                                <br />
+                                <InputLabel id="status"><strong>status:</strong>
+                                    <Select type='select' value={status} onChange={(e) => setstatus(e.target.value)}>
+                                        <MenuItem value={"not_completed"}>Not Complete</MenuItem>
+                                        <MenuItem value={"in_progress"}>In Progress</MenuItem>
+                                        <MenuItem value={"getting_closer"}>Getting Closer</MenuItem>
+                                        <MenuItem value={"done"}>Done</MenuItem>
+                                    </Select>
+                                </InputLabel>
+
+                                <br />
+                            </CardContent>
+                        </CardActionArea>
+                        <Box  textAlign='center'>
+                        <Button style={{backgroundColor:'#afcc36'}} onClick={() => updateStatus(project)} variant="contained">Save Changes</Button>
+                        </Box>
+                    </Card>
+                   
+        </Box>
 
     )
 }

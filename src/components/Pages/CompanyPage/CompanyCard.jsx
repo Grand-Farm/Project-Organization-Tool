@@ -114,7 +114,7 @@ function CompanyCard({ company }) {
             </CardActions>
             <Collapse in={selectedId[company.id]} timeout="auto" unmountOnExit>
                 <Typography>
-                    Contract End: {(moment(company.contract_start).format('l'))}
+                    Contract End: {(moment(company.contract_end).format('l'))}
                 </Typography>
                 {companyInfoStore.map((info, index) => {
                     return (
