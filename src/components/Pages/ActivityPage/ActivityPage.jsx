@@ -161,7 +161,7 @@ export default function ActivityPage() {
         <div>
             
             <Button className='optionButtons' onClick={handleOpen} size='small' variant='outlined'>Add Activity</Button>
-            <Button className='optionButtons' onClick={handleClickOpen} size='small' variant='outlined'>Add Employee</Button>
+            <Button className='optionButtons' onClick={handleClickOpen} size='small' variant='outlined'>Add Hours</Button>
             <Button className='optionButtons' onClick={handleEditOpen} size='small' variant='outlined'>Edit Hours</Button>
             <Button className='optionButtons' onClick={handleActivityOpen} size='small' variant='outlined'>Edit Activity</Button>
            
@@ -228,7 +228,7 @@ export default function ActivityPage() {
                 aria-labelledby="responsive-dialog-title"
             >
                 <DialogTitle id="responsive-dialog-title">
-                    {"Add Employee"}
+                    {"Add Hours"}
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText>

@@ -24,7 +24,7 @@ function CompanyFormPage(){
     const [allocatedHours, setAllocatedHours] = useState('');
     const [fulTimeRate, setFullTimeRate] = useState('');
     const [internRate, setInternRate] = useState('');
-    const [contractStart, setContractStart] = useState('');
+    const [contractEnd, setContractEnd] = useState('');
 
     const openForm = () => {
         setAddingCompany(true);
@@ -46,7 +46,7 @@ function CompanyFormPage(){
                 allocated_hours: allocatedHours,
                 full_time_rate: fulTimeRate,
                 intern_rate: internRate,
-                contract_start: contractStart,
+                contract_end: contractEnd,
             }
         })
         setCompanyName('');
@@ -104,8 +104,8 @@ function CompanyFormPage(){
                             // margin="dense"
                             type='date'
                             variant="standard"
-                            value={contractStart}
-                            onChange={(e) => setContractStart(e.target.value)}
+                            value={contractEnd}
+                            onChange={(e) => setContractEnd(e.target.value)}
                         />
                     </FormControl>
                 </DialogContent>
