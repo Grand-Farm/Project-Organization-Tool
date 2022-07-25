@@ -82,9 +82,6 @@ function ProjectsList() {
     
     
     
-    
-
-    const [companyName, setComapnyName] = useState('');
 
 
 
