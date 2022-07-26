@@ -78,17 +78,7 @@ function ProjectsList() {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-  
-    
-    
-    
-    
-
     const [companyName, setComapnyName] = useState('');
-
-
-
-
 
     const style = {
         position: 'absolute',
