@@ -1,9 +1,9 @@
 CREATE TABLE "company" (
 	"id" serial primary KEY,
 	"company_name" VARCHAR(255) NOT NULL,
-	"full_time_rate" decimal,
+	"full_time_rate" decimal  ,
 	"allocated_hours" DECIMAL,
-	"intern_rate" decimal,
+	"intern_rate" decimal ,
 	"contract_end" DATE,
 	"is_archived" boolean default false
 );
@@ -31,7 +31,7 @@ CREATE TABLE "projects" (
 	"description" text NOT NULL,
 	"outcome" text NOT NULL,
 	"company_id" int references "company"
-	"status" varchar(250)
+	"status" varchar(250) default "not_complete"
 );
 
 
@@ -41,6 +41,10 @@ CREATE TABLE "activity" (
 	"notes" text,
 	"activity_date" date,
 	"projects_id" int references "projects"
+	"employees" varchar(250),
+	"full_time_hours" integer default 0,
+	"part_time_hours" integer default 0
+	
 );
 
 CREATE TABLE "activity_employee"(

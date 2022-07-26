@@ -24,8 +24,10 @@ router.get('/pro', rejectUnauthenticated, (req,res) =>{
     JOIN projects ON projects.company_id=company.id
     JOIN activity ON activity.projects_id=projects.id
     JOIN activity_employee ON activity_employee.activity_id=activity.id
+
     GROUP BY company.id
  `)
+
         .then(result =>{
             console.log(result.rows);
             res.send(result.rows);
