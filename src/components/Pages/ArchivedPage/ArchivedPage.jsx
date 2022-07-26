@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import './ArchivedPage.css';
 
@@ -10,6 +10,8 @@ import CardContent from '@mui/material/CardContent';
 import  Typography  from '@mui/material/Typography';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import InputLabel from '@mui/material/InputLabel';
+
 
 
 function ArchivedPage() {
@@ -20,17 +22,22 @@ function ArchivedPage() {
         dispatch({ type: 'FETCH_COMPANY' });
     }, [])
 
+    const [filter, setFilter] = useState('');
+
     return (
         <div className='archivePage'>
             <Typography variant='h1'>
                 Archives
             </Typography>
-            <Select>
+            <Select
+                value={filter}
+                onSelect={(e) => setFilter(e.target.value)}
+            >
                 {companyStore.map(company => {
                     {
                         if (company.is_archived === true) {
                             return (
-                                <MenuItem key={company.id}>{company.name}</MenuItem>
+                                <MenuItem key={company.id} value={company.id}>{company.name}</MenuItem>
                             )
                         }
                     }

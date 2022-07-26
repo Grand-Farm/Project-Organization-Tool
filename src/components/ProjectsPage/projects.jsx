@@ -74,11 +74,12 @@ function ProjectsList() {
     const [newName, setNewName] = useState("");
     const [newManager, setNewManager] = useState(projects.manager);
     const [newDescription, setNewDescription] = useState("");
+    const [companyName, setComapnyName] = useState('');
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const [companyName, setComapnyName] = useState("");
+  
     
     
     
@@ -126,7 +127,7 @@ function ProjectsList() {
         <div >
 
             {projects[0] === undefined ?
-                <h1>Loading</h1>
+                <h1 style={{textAlign:'center'}}>Please Add new project</h1>
                 : <Box style={{color:'#afcc36'}} textAlign='center'><h1 >{projects[0].company_name}</h1>  </Box>}
             <div>
                
