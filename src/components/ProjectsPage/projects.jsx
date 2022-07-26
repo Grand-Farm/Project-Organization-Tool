@@ -74,6 +74,7 @@ function ProjectsList() {
     const [newName, setNewName] = useState("");
     const [newManager, setNewManager] = useState(projects.manager);
     const [newDescription, setNewDescription] = useState("");
+    const [companyName, setComapnyName] = useState('');
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -82,9 +83,6 @@ function ProjectsList() {
     
     
     
-    
-
-    const [companyName, setComapnyName] = useState('');
 
 
 

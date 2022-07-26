@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 // Material UI
 import Button from '@mui/material/Button';
@@ -10,21 +11,28 @@ import DialogContent from '@mui/material/DialogContent';
 import FormControl from '@mui/material/FormControl';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import moment from 'moment';
+import swal from 'sweetalert';
 
-function CompanyFormPage(){
+
+function UpdateCompany({company}){
 
     const companyStore = useSelector(store => store.company);
-    console.log('This is Company store', companyStore);
-
     const dispatch = useDispatch();
 
+    // let params = useParams();
+    // console.log(params);
+    // let companyId = params.companyId;
+    // console.log(companyId);
+    // let companyU = companyStore.find(companyU => companyU.id === Number(companyId));
+    // console.log('Updating this company', companyU)
 
     const [addingCompany, setAddingCompany] = useState(false);
-    const [companyName, setCompanyName] = useState('');
-    const [allocatedHours, setAllocatedHours] = useState('');
-    const [fulTimeRate, setFullTimeRate] = useState('');
-    const [internRate, setInternRate] = useState('');
-    const [contractEnd, setContractEnd] = useState('');
+    const [companyName, setCompanyName] = useState(company.company_name);
+    const [allocatedHours, setAllocatedHours] = useState(company.allocated_hours);
+    const [fulTimeRate, setFullTimeRate] = useState(company.full_time_rate);
+    const [internRate, setInternRate] = useState(company.intern_rate);
+    const [contractEnd, setContractEnd] = useState(company.contract_end);
 
     const openForm = () => {
         setAddingCompany(true);
@@ -40,35 +48,26 @@ function CompanyFormPage(){
 
     const addCompany = () => {
         dispatch({
-            type: 'ADD_COMPANY',
+            type: 'UPDATE_COMPANY',
             payload: {
+                id: company.id,
                 company_name: companyName,
                 allocated_hours: allocatedHours,
                 full_time_rate: fulTimeRate,
                 intern_rate: internRate,
-                contract_end: contractEnd,
+                contract_end: (moment(contractEnd).format('l')),
             }
         })
-        setCompanyName('');
-        setAllocatedHours('');
-        setFullTimeRate('');
-        setInternRate('');
-        setContractEnd('');
+        swal('Company Edited Successfully!', {
+            icon: "success",
+            button: false
+        })
         setAddingCompany(false);
     }
 
- 
-
-
-    return (
-        <div>
-            <Button 
-                onClick={openForm}
-                style={{backgroundColor:'#afcc36'}}
-                
-            >
-                Add
-            </Button>
+    return(
+        <div className='editButton'>
+            <Button onClick={openForm}>Edit</Button>
             <Dialog open={addingCompany} onClose={() => saveForm()}>
                 <DialogTitle>Add New Company</DialogTitle>
                 <DialogContent>
@@ -113,11 +112,11 @@ function CompanyFormPage(){
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={closeForm}>Cancel</Button>
-                    <Button onClick={addCompany}>Add</Button>
+                    <Button onClick={addCompany}>Edit</Button>
                 </DialogActions>
             </Dialog>
         </div>
     )
 }
 
-export default CompanyFormPage;
+export default UpdateCompany;
