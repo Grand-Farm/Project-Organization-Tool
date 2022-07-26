@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
@@ -8,7 +8,6 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import { styled } from '@mui/material/styles';
-
 import { useDispatch } from 'react-redux'
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -30,9 +29,14 @@ import Paper from '@mui/material/Paper';
 
 
 
-function ProjectRow({ project }) {
+function ProjectRow({ project, activity }) {
     console.log('this is project', project)
-
+    
+    
+    useEffect(() => {
+        dispatch({type:"FETCH_ACTIVITY",payload: { projectID:project.id }})
+    }, []);
+    console.log('this is activity', activity)
 
     const dispatch = useDispatch();
     const [status, setstatus] = useState(project.status);
@@ -81,6 +85,7 @@ function ProjectRow({ project }) {
                             className="projectTitle"
                             onClick={() => viewActivities(project.id)}>
                             {project.name}
+                            {/* <h1>{activity.em}</h1> */}
                         </Typography>
                         <br />
                         <br />

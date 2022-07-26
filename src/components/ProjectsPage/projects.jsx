@@ -39,7 +39,7 @@ function ProjectsList() {
 
 
 
-    const companyStore = useSelector(store => store.company);
+    const activity = useSelector(store => store.activity);
 
 
     const history = useHistory();
@@ -59,9 +59,8 @@ function ProjectsList() {
 
 
 
-    const companyID = params.companyID;
-    // const company = companyStore.find(company => company.id === Number(companyID))
-    
+
+
 
 
 
@@ -74,15 +73,15 @@ function ProjectsList() {
     const [newName, setNewName] = useState("");
     const [newManager, setNewManager] = useState(projects.manager);
     const [newDescription, setNewDescription] = useState("");
-    const [companyName, setComapnyName] = useState('');
+    const [companyName, setComapnyName] = useState(projects.company_name);
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-  
-    
-    
-    
+
+
+
+
 
 
 
@@ -123,15 +122,41 @@ function ProjectsList() {
     }
 
 
+
+
     return (
-        <div >
+        <><div>
 
             {projects[0] === undefined ?
-                <h1 style={{textAlign:'center'}}>Please Add new project</h1>
-                : <Box style={{color:'#afcc36'}} textAlign='center'><h1 >{projects[0].company_name}</h1>  </Box>}
-            <div>
-               
+                <h1 style={{ textAlign: 'center' }}>Please Add new project</h1>
+                : <Box style={{ color: '#afcc36' }} textAlign='center'><FormControl variant='standard' style={{ marginLeft: 5, width: 500 }}>
+                    <InputLabel style={{ fontSize: 40 }} id="demo-simple-select-label">{projects[0].company_name}</InputLabel>
+                    <Select
+                        style={{ fontSize: 40 }}
+                        onChange={(e) => setComapnyName(e.target.value)}
+                        value={companyName}
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        label="Name"
+                    >
+                        {company.map((company) => {
+                            {
+                                if (company.is_archived === false) {
+                                    return (
+                                        <MenuItem value={companyName} onClick={() => switchProjects(company.id)} key={company.id}>{company.company_name}</MenuItem>
+                                    );
+                                }
+                            }
+                        })}
+
+                    </Select>
+                </FormControl></Box>}
+        </div><div>
+
                 <br />
+
+               <h1 style={{ margin:'auto', display: 'inline-block', padding:'3em 0px 0px 12em', marginRight: '5em'}} > Current Projects</h1>
+                <Button style={{ backgroundColor: '#afcc36'}} onClick={handleOpen} variant="contained">add new project</Button>
 
                 <Modal
                     open={open}
@@ -139,7 +164,7 @@ function ProjectsList() {
                     aria-labelledby="modal-modal-title"
                     aria-describedby="modal-modal-description"
                 >
-                    <Box sx={style} >
+                    <Box sx={style}>
                         <Typography id="modal-modal-title" variant="h6" component="h2">
                             New Project
                         </Typography>
@@ -152,37 +177,12 @@ function ProjectsList() {
                         </Typography>
                     </Box>
                 </Modal>
-
-                <FormControl variant='standard'  style={{marginLeft:5,width:500}}>
-                    <InputLabel  id="demo-simple-select-label">Select Company</InputLabel>
-                    <Select
-                    
-                        onChange={handleCompany}
-                        value={companyName}
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        label="Name"
-                    >
-                        {company.map((company) => {
-                            {
-                                if (company.is_archived === false) {
-                                    return (
-                                        <MenuItem value={companyName} onClick={() => switchProjects(company.id)} key={company.id} >{company.company_name}</MenuItem>
-                                    )
-                                }
-                            }
-                        })}
-
-                    </Select>
-                </FormControl>
                 <br />
-                <Button style={{backgroundColor:'#afcc36'}} onClick={handleOpen} variant="contained" >add new project</Button>
-                <br />
-                {projects.map((project) => <ProjectRow key={project.id} project={project} />)}
+                {projects.map((project) => <ProjectRow key={project.id} project={project} activity={activity} />)}
 
-            </div>
+            </div></>
 
-        </div>
+        
     )
 
 

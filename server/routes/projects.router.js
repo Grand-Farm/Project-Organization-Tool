@@ -4,7 +4,7 @@ const pool = require('../modules/pool')
 
 
 router.get('/:companyID', (req, res) => {
-  console.log('adfhiadihsuifhudhifdfas',req.params)
+  console.log('THIS IS GET FOR THE PROJECTS OF COMPANY',req.params)
 // allowing the user to order collection by rating
     const query = `   SELECT projects.id,projects.name,projects.budgeted_hours,projects.status,projects.manager,projects.description,projects.outcome,company.company_name,company.id 
     AS company_id FROM projects 
