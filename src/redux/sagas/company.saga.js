@@ -42,7 +42,7 @@ function* archiveCompany(action){
 
 function* updateCompany(action){
     try{
-        yield axios.put(`/api/company/${action.payload}`);
+        yield axios.put(`/api/company/${action.payload.id}`,action.payload);
         yield put({type:'FETCH_COMPANY'});
     }catch(err){
         console.log('Error in Update Company saga', err);

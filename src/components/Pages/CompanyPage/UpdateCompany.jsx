@@ -11,6 +11,8 @@ import DialogContent from '@mui/material/DialogContent';
 import FormControl from '@mui/material/FormControl';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import moment from 'moment';
+import swal from 'sweetalert';
 
 
 function UpdateCompany({company}){
@@ -53,19 +55,18 @@ function UpdateCompany({company}){
                 allocated_hours: allocatedHours,
                 full_time_rate: fulTimeRate,
                 intern_rate: internRate,
-                contract_end: contractEnd,
+                contract_end: (moment(contractEnd).format('l')),
             }
         })
-        setCompanyName('');
-        setAllocatedHours('');
-        setFullTimeRate('');
-        setInternRate('');
-        setContractEnd('');
+        swal('Company Edited Successfully!', {
+            icon: "success",
+            button: false
+        })
         setAddingCompany(false);
     }
 
     return(
-        <div>
+        <div className='editButton'>
             <Button onClick={openForm}>Edit</Button>
             <Dialog open={addingCompany} onClose={() => saveForm()}>
                 <DialogTitle>Add New Company</DialogTitle>

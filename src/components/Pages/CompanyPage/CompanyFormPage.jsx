@@ -62,7 +62,13 @@ function CompanyFormPage(){
 
     return (
         <div>
-            <Button onClick={openForm}>Add</Button>
+            <Button 
+                onClick={openForm}
+                style={{backgroundColor:'#afcc36'}}
+                
+            >
+                Add
+            </Button>
             <Dialog open={addingCompany} onClose={() => saveForm()}>
                 <DialogTitle>Add New Company</DialogTitle>
                 <DialogContent>

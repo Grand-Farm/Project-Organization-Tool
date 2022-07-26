@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 
 import './ArchivedPage.css';
+import ArchiveCompanyPage from './ArchivedCompanyPage';
 
 // Material UI
 import Card from '@mui/material/Card';
@@ -26,44 +27,21 @@ function ArchivedPage() {
 
     return (
         <div className='archivePage'>
-            <Typography variant='h1'>
-                Archives
-            </Typography>
-            <Select
-                value={filter}
-                onSelect={(e) => setFilter(e.target.value)}
-            >
-                {companyStore.map(company => {
-                    {
-                        if (company.is_archived === true) {
-                            return (
-                                <MenuItem key={company.id} value={company.id}>{company.name}</MenuItem>
-                            )
-                        }
+        <Typography variant='h1'>
+            Archive
+        </Typography>
+        <div className='container'>
+            {companyStore.map((company, index) => {
+                {
+                    if (company.is_archived === true) {
+                        return (
+                            <ArchiveCompanyPage company={company} i={index} key={company.id}/>
+                        )
                     }
-                })}
-            </Select>
-            <div className='container'>
-                {companyStore.map(company => {
-                    {
-                        if (company.is_archived === true) {
-                            return (
-                                <Card key={company.id} className='content'>
-                                    <CardContent>
-                                        <Typography variant='h3'>
-                                            {company.company_name}
-                                        </Typography>
-                                    </CardContent>
-                                    {/* <h3>{company.company_name}</h3>
-                                    <h5>{company.allocated_hours}</h5>
-                                    <h5>{company.contract_start}</h5> */}
-                                </Card>
-                            )
-                        }
-                    }
-                })}
-            </div>
+                }
+            })}
         </div>
+    </div>
     )
 }
 

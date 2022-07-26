@@ -19,12 +19,13 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 
 router.get('/pro', rejectUnauthenticated, (req,res) =>{
     console.log('req_user is', req.user);
-    pool.query(`SELECT sum(activity_employee.employee_hours) as project_hours, (SELECT Count(projects.id) FROM projects) as total_project, company.id as company_id
+    pool.query(`SELECT sum(activity_employee.employee_hours) as project_hours, (SELECT Count(projects.id) FROM projects WHERE projects.company_id= company.id) as total_project, company.id as company_id
     FROM company
     JOIN projects ON projects.company_id=company.id
     JOIN activity ON activity.projects_id=projects.id
     JOIN activity_employee ON activity_employee.activity_id=activity.id
-    GROUP BY company.id;`)
+    GROUP BY company.id
+ `)
         .then(result =>{
             console.log(result.rows);
             res.send(result.rows);
@@ -64,6 +65,21 @@ router.put('/arc/:id', rejectUnauthenticated, (req, res) =>{
 
 router.put('/:id', rejectUnauthenticated, (req,res) =>{
     console.log(`company with an ID of ${req.params.id} is updated with ${req.body}`);
+    const query = `UPDATE "company" SET 
+                "company_name"=$1,
+                "allocated_hours"=$2,
+                "full_time_rate"=$3,
+                "intern_rate"=$4,
+                "contract_end"=$5
+                WHERE "id"=$6;`
+    pool.query(query,[req.body.company_name, req.body.allocated_hours, req.body.full_time_rate, req.body.intern_rate, req.body.contract_end, req.params.id])
+        .then(result =>{
+            res.sendStatus(200);
+        }).catch(err =>{
+            console.log('Error in Update company', err);
+            res.sendStatus(500);
+        })
+
 })
 
 
