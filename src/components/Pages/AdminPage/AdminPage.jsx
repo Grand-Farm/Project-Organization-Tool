@@ -69,7 +69,7 @@ function AdminPage() {
           </div>
           
         <Grid container spacing={2}>
-          <Grid  item xs={6} md={4} lg={4}>
+          <Grid  item xs={12} md={4} lg={4}>
             <Item elevation={4}>{user.is_admin ?
               <div>
                 <h3>Password Help</h3>
@@ -84,7 +84,7 @@ function AdminPage() {
               </div>
               : 'UnAuthorized'}</Item>
           </Grid>
-          <Grid item xs={6} md={8} lg={8}>
+          <Grid item xs={12} md={8} lg={8}>
             <Item elevation={2}>{user.is_admin ?
               <div>
 
