@@ -4,6 +4,7 @@ import { useHistory, useParams } from 'react-router-dom';
 
 
 import CompanyCardProgress from './CompanyCardProgress';
+import UpdateCompany from './UpdateCompany';
 
 //Material UI
 import { styled } from '@mui/material/styles';
@@ -128,6 +129,7 @@ function CompanyCard({ company }) {
                             ''
                     )
                 })}
+                <UpdateCompany company={company}/>
             </Collapse>
         </Card>
     )

@@ -33,10 +33,19 @@ function* addCompany(action) {
 function* archiveCompany(action){
     try{
         console.log('Archiving company with id', action.payload)
-        yield axios.put(`/api/company/${action.payload}`);
+        yield axios.put(`/api/company/arc/${action.payload}`);
         yield put({type:'FETCH_COMPANY'});
     }catch(err){
         console.log('Error in Archive Company Saga', err);
+    }
+}
+
+function* updateCompany(action){
+    try{
+        yield axios.put(`/api/company/${action.payload}`);
+        yield put({type:'FETCH_COMPANY'});
+    }catch(err){
+        console.log('Error in Update Company saga', err);
     }
 }
 
@@ -45,6 +54,7 @@ function* companySaga(){
     yield takeLatest('FETCH_COMPANYINFO', fetchCompanyInfo);
     yield takeLatest('ADD_COMPANY', addCompany);
     yield takeLatest('ARCHIVE_COMPANY', archiveCompany);
+    yield takeLatest('UPDATE_COMPANY', updateCompany);
 }
 
 export default companySaga;

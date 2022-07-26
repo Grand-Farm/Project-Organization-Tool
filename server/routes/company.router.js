@@ -24,7 +24,7 @@ router.get('/pro', rejectUnauthenticated, (req,res) =>{
     JOIN projects ON projects.company_id=company.id
     JOIN activity ON activity.projects_id=projects.id
     JOIN activity_employee ON activity_employee.activity_id=activity.id
-    GROUP BY projects.id, company.id;`)
+    GROUP BY company.id;`)
         .then(result =>{
             console.log(result.rows);
             res.send(result.rows);
@@ -49,7 +49,7 @@ router.post('/',  rejectUnauthenticated, (req,res) => {
         })
 })
 
-router.put('/:id', rejectUnauthenticated, (req, res) =>{
+router.put('/arc/:id', rejectUnauthenticated, (req, res) =>{
     console.log('req.userL', req.user);
     console.log(`company with an ID of ${req.params.id} is archived`);
     const query = `UPDATE "company" SET "is_archived" = NOT is_archived WHERE id=$1;`
@@ -60,6 +60,10 @@ router.put('/:id', rejectUnauthenticated, (req, res) =>{
             console.log('Error Updating compnay', err);
             res.sendStatus(500);
         })
+})
+
+router.put('/:id', rejectUnauthenticated, (req,res) =>{
+    console.log(`company with an ID of ${req.params.id} is updated with ${req.body}`);
 })
 
 
