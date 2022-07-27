@@ -17,6 +17,10 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import TextField from '@mui/material/TextField';
 import { useTheme } from '@mui/material/styles';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 
 
@@ -48,13 +52,14 @@ export default function ActivityPage() {
 
 
 
-
-    console.log(activity)
+    const handleChange = (event) => {
+        setType(event.target.value);
+    };
 
 
     const addActivity = () => {
         return (
-            dispatch({ type: "ADD_ACTIVITY", payload: { projectID: params.projectID, type, fullHours,internHours, date,employees,notes } }),
+            dispatch({ type: "ADD_ACTIVITY", payload: { projectID: params.projectID, type, fullHours, internHours, date, employees, notes } }),
             setType(''),
             setNotes(''),
             setDate(''),
@@ -70,7 +75,7 @@ export default function ActivityPage() {
         console.log('these are values', values)
         return (
             setDate(values.Date),
-            dispatch({ type: "UPDATE_ACTIVITY", payload: { projectID: params.projectID, activityID: values.id, type:values.Type, notes:values.Notes,fullHours:values.fulltime,internHours:values.intern, date:values.Date,employees:values.Employees } }),
+            dispatch({ type: "UPDATE_ACTIVITY", payload: { projectID: params.projectID, activityID: values.id, type: values.Type, notes: values.Notes, fullHours: values.fulltime, internHours: values.intern, date: values.Date, employees: values.Employees } }),
             handleActivityClose()
 
         )
@@ -99,8 +104,8 @@ export default function ActivityPage() {
     }, [])
     const columns = [
         { field: 'id', headerClassName: 'ColumnColor', headerName: 'ID', flex: .3 },
-        { field: 'Type', headerClassName: 'ColumnColor', headerName: 'Activity', flex: .5 ,editable: true, },
-        { field: 'Employees', headerClassName: 'ColumnColor', headerName: 'Employees', flex:.5,editable: true, },
+        { field: 'Type', headerClassName: 'ColumnColor', headerName: 'Activity', flex: .5, editable: true, },
+        { field: 'Employees', headerClassName: 'ColumnColor', headerName: 'Employees', flex: .5, editable: true, },
         {
             field: 'Date',
             headerName: 'Date',
@@ -109,23 +114,25 @@ export default function ActivityPage() {
             flex: .3,
             headerClassName: 'ColumnColor'
         },
-        { field: 'fulltime', headerName: 'full-time-Hours', flex: .3, headerClassName: 'ColumnColor',editable: true, },
-        { field: 'intern', headerName: 'intern-Hours', flex: .3, headerClassName: 'ColumnColor',editable: true, },
+        { field: 'fulltime', headerName: 'full-time-Hours', flex: .3, headerClassName: 'ColumnColor', editable: true, },
+        { field: 'intern', headerName: 'intern-Hours', flex: .3, headerClassName: 'ColumnColor', editable: true, },
 
-        { field: 'Notes', headerName: 'Notes', flex: 1.5, headerClassName: 'ColumnColor',editable: true, },
-        {field: 'button',headerName:'', flex:.5, headerClassName:'ColumnColor',renderCell: (cellValues) => {
-            return (
-              <Button
-                variant="text"
-                color="primary"
-                onClick={(event) => {
-                    changeActivity(cellValues.row)
-                }}
-              >
-                Save
-              </Button>
-            );
-          } }
+        { field: 'Notes', headerName: 'Notes', flex: 1.5, headerClassName: 'ColumnColor', editable: true, },
+        {
+            field: 'button', headerName: '', flex: .5, headerClassName: 'ColumnColor', renderCell: (cellValues) => {
+                return (
+                    <Button
+                        variant="text"
+                        color="primary"
+                        onClick={(event) => {
+                            changeActivity(cellValues.row)
+                        }}
+                    >
+                        Save
+                    </Button>
+                );
+            }
+        }
     ];
 
     let rows =
@@ -171,16 +178,31 @@ export default function ActivityPage() {
                 <DialogContent>
                     <DialogContentText>
 
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            label="Activity Name"
-                            type="string"
-                            fullWidth
-                            variant="standard"
-                            value={type}
-                            onChange={(event) => setType(event.target.value)}
-                        />
+                        <Box  sx={{ minWidth: 120 }}>
+                            <FormControl  fullWidth>
+                                <InputLabel>Activity</InputLabel>
+                                <Select
+                                    value={type}
+                                    label="Activity"
+                                    onChange={handleChange}
+                                >
+                                    <MenuItem value={'Training'}>Training</MenuItem>
+                                    <MenuItem value={'Innovation Consulting'}>Innovation Consulting</MenuItem>
+                                    <MenuItem value={'Project Meeting'}>Project Meeting</MenuItem>
+                                    <MenuItem value={'Internal Meeting'}>Internal Meeting</MenuItem>
+                                    <MenuItem value={'External Meeting'}>External Meeting</MenuItem>
+                                    <MenuItem value={'Calls'}>Calls</MenuItem>
+                                    <MenuItem value={'Emails'}>Emails</MenuItem>
+                                    <MenuItem value={'Research'}>Research</MenuItem>
+                                    <MenuItem value={'Report'}>Report</MenuItem>
+                                    <MenuItem value={'PM'}>PM</MenuItem>
+                                    <MenuItem value={'Misc.'}>Misc.</MenuItem>
+                                    <MenuItem value={'Field Time'}>Field Time</MenuItem>
+                                    <MenuItem value={'Stakeholder Interview'}>Stakeholder Interview</MenuItem>
+                                    <MenuItem value={'Observations'}>Observations</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Box>
 
                         <TextField
                             autoFocus
@@ -260,7 +282,7 @@ export default function ActivityPage() {
                 <DialogContent>
                     <DialogContentText>
 
-                    <TextField
+                        <TextField
                             autoFocus
                             margin="dense"
                             label="Activity ID"
@@ -281,7 +303,7 @@ export default function ActivityPage() {
                             value={type}
                             onChange={(event) => setType(event.target.value)}
                         />
-                      
+
                         <TextField
                             autoFocus
                             margin="dense"
@@ -345,7 +367,7 @@ export default function ActivityPage() {
                         columns={columns}
                         pageSize={9}
                         rowsPerPageOptions={[9]}
-                        
+
                     />
                 </Box>
             </div>
