@@ -128,6 +128,7 @@ function AdminPage() {
                 </div>
                 : 'not'}
             </Grid>
+
           </Grid>
           <LogOutButton className="btn" />
         </Box>

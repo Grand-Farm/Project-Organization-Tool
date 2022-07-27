@@ -9,16 +9,8 @@ const {
 
 router.get('/:projectID',rejectUnauthenticated, (req, res) => {
     console.log('activity-get-router running')
-    const query = `Select activity.type,
-    (select sum(activity_employee.employee_hours)
-FROM activity_employee
-join "user" on  activity_employee.user_id= "user".id
- where activity_employee.activity_id = activity.id AND "user".is_intern = false
-)as "full_Time",(select sum(activity_employee.employee_hours)
-FROM activity_employee
-join "user" on  activity_employee.user_id= "user".id
- where activity_employee.activity_id = activity.id AND "user".is_intern = true
-)as "intern",activity.id,activity.notes,activity.activity_date From activity
+    const query = `Select activity.type, activity.full_time_hours,activity.intern_hours,activity.employees,
+    activity.id,activity.notes,activity.activity_date From activity
     JOIN "projects" on activity.projects_id=projects.id
     Where projects.id = $1
     ORDER BY activity.id DESC`
@@ -32,10 +24,10 @@ join "user" on  activity_employee.user_id= "user".id
 
 
 router.post('/', (req, res) => {
-    const queryText= `INSERT INTO "activity"("type","notes","activity_date","projects_id")
-    VALUES($1,$2,$3,$4);
+    const queryText= `INSERT INTO "activity"("type","employees","notes","full_time_hours","intern_hours","activity_date","projects_id")
+    VALUES($1,$2,$3,$4,$5,$6,$7);
     `
-        pool.query(queryText,[req.body.type,req.body.notes,req.body.date,req.body.projectID])
+        pool.query(queryText,[req.body.type,req.body.employees,req.body.notes,req.body.fullHours,req.body.internHours,req.body.date,req.body.projectID])
         .then((result)=>{
           console.log('this is in server POST for activity', req.body.type)
             res.sendStatus(201)
@@ -47,10 +39,11 @@ router.post('/', (req, res) => {
 
 router.put('/:activityID', rejectUnauthenticated, (req,res) => {
     console.log('please work in activity put', req.body);
+    const activity= req.body
     const query = ` UPDATE activity
-    Set ("type","notes") = ($1,$2)
-    WHERE activity.id = $3`
-    pool.query(query,[req.body.type,req.body.notes,req.params.activityID])
+    Set ("type","notes","full_time_hours","intern_hours","activity_date","employees") = ($1,$2,$3,$4,$5,$6)
+    WHERE activity.id = $7`
+    pool.query(query,[activity.type,activity.notes,activity.fullHours,activity.internHours,activity.date,activity.employees,req.params.activityID])
         .then(results =>{
             res.sendStatus(201);
         }).catch(err => {
@@ -59,3 +52,15 @@ router.put('/:activityID', rejectUnauthenticated, (req,res) => {
         })
 })
 module.exports = router;
+
+
+
+// (select sum(activity_employee.employee_hours)
+// FROM activity_employee
+// join "user" on  activity_employee.user_id= "user".id
+//  where activity_employee.activity_id = activity.id AND "user".is_intern = false
+// )as "full_Time",(select sum(activity_employee.employee_hours)
+// FROM activity_employee
+// join "user" on  activity_employee.user_id= "user".id
+//  where activity_employee.activity_id = activity.id AND "user".is_intern = true
+// )as "intern"
