@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 
 import './ArchivedPage.css';
-import ArchiveCompanyPage from './ArchivedCompanyPage';
+import ArchivedCompanyPage from './ArchivedCompanyPage';
 
 // Material UI
 import Card from '@mui/material/Card';
@@ -35,7 +35,7 @@ function ArchivedPage() {
                 {
                     if (company.is_archived === true) {
                         return (
-                            <ArchiveCompanyPage company={company} i={index} key={company.id}/>
+                            <ArchivedCompanyPage company={company} i={index} key={company.id}/>
                         )
                     }
                 }
