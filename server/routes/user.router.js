@@ -31,11 +31,13 @@ router.get('/:admin', rejectUnauthenticated, (req, res) => {
 router.post('/register', (req, res, next) => {
   const username = req.body.username;
   const password = encryptLib.encryptPassword(req.body.password);
+  const email = req.body.email
+  const clearance = req.body.is_admin
 
-  const queryText = `INSERT INTO "user" (username, password)
-    VALUES ($1, $2) RETURNING id`;
+  const queryText = `INSERT INTO "user" (username, password, email, is_admin)
+    VALUES ($1, $2, $3, $4) RETURNING id`;
   pool
-    .query(queryText, [username, password])
+    .query(queryText, [username, password, email, clearance])
     .then(() => res.sendStatus(201))
     .catch((err) => {
       console.log('User registration failed: ', err);
@@ -58,13 +60,13 @@ router.post('/logout', (req, res) => {
   res.sendStatus(200);
 });
 
-router.put('/:username', (req, res) => {
+router.put('/:id', (req, res) => {
   console.log("THIS IS THE PUT VALUE in USER",req.body)
   const password = encryptLib.encryptPassword(req.body.password);
   const queryText = `UPDATE "user"
-  SET "password" = $1 WHERE "username" = $2` 
+  SET "password" = $1 WHERE "id" = $2` 
 
-  pool.query(queryText, [password,req.params.username])
+  pool.query(queryText, [password,req.params.id])
     .then(() => { res.sendStatus(200) })
     .catch((err) => {
       console.log('Error completing UPDATE projects query', err);

@@ -31,7 +31,7 @@ const ExpandMore = styled((props) => {
     }),
 }));
 
-function ArchiveCompanyPage({company}){
+function ArchivedCompanyPage({company}){
 
     const companyInfoStore = useSelector(store => store.companyInfo);
     const dispatch = useDispatch();
@@ -148,4 +148,4 @@ function ArchiveCompanyPage({company}){
     )
 }
 
-export default ArchiveCompanyPage;
+export default ArchivedCompanyPage;

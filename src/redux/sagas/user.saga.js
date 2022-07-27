@@ -42,11 +42,11 @@ function* fetchALLUSER() {
 function* UpdateUser(action) {
 
   try {
-      yield axios.put(`/api/user/${action.payload.username}`, action.payload)
+      yield axios.put(`/api/user/${action.payload.id}`, action.payload)
       console.log('does this work UPDATEUSER?',action.payload)
       yield put({ type: 'FETCH_ALLUSERS'})
   } catch {
-      console.error('error adding in AddActivity')
+      console.error('error adding in Update user')
   }
 }
 
