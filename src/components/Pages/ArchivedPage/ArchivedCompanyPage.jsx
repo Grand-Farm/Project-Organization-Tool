@@ -2,11 +2,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
+import CompanyCardProgress from '../CompanyPage/CompanyCardProgress';
 
-import CompanyCardProgress from './CompanyCardProgress';
-import UpdateCompany from './UpdateCompany';
-
-//Material UI
+// Material UI
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -22,7 +20,6 @@ import Typography from '@mui/material/Typography';
 import moment from 'moment';
 import swal from 'sweetalert';
 
-
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
     return <IconButton {...other} />;
@@ -34,16 +31,9 @@ const ExpandMore = styled((props) => {
     }),
 }));
 
-function CompanyCard({ company }) {
-
-
-
-    useEffect(() => {
-        dispatch({ type: 'FETCH_PROJECTS', payload: { companyID: company.id } });
-    }, [])
+function ArchiveCompanyPage({company}){
 
     const companyInfoStore = useSelector(store => store.companyInfo);
-
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -66,21 +56,18 @@ function CompanyCard({ company }) {
         console.log("THIS IS THE COMPANY", company)
         history.push(`/projects/${company}`)
     }
-    // const willArchive = () =>{
-    //     setArchive(archive => !archive);
-    // }
 
-    const archiveAlert = () => {
+    const unArchiveAlert = () => {
         swal({
             title: "Wait!",
-            text: "Are you sure you want to archive this company?",
+            text: "Are you sure you want to unarchive this company?",
             icon: "warning",
             buttons: true,
             dangerMode: true,
           })
           .then((archive) => {
               if(archive){
-                  swal("Company has been Archived!", {
+                  swal("Company has been Unarchived!", {
                     icon: "success"
                   });
                   dispatch({
@@ -91,9 +78,8 @@ function CompanyCard({ company }) {
           })
     }
 
+    return(
 
-
-    return (
         <Card className='content'
             sx={{ minWidth: 300, maxWidth: 300, pb: 2 }}
             style={{
@@ -127,7 +113,7 @@ function CompanyCard({ company }) {
             <CardActions disableSpacing>
                 <IconButton
                     aria-label="settings"
-                    onClick={() => archiveAlert()}
+                    onClick={() => unArchiveAlert()}
                 >
                     <ArchiveIcon />
                 </IconButton>
@@ -156,10 +142,10 @@ function CompanyCard({ company }) {
                             ''
                     )
                 })}
-             <UpdateCompany company={company} />
+             {/* <UpdateCompany company={company} /> */}
             </Collapse>
         </Card>
     )
 }
 
-export default CompanyCard;
+export default ArchiveCompanyPage;

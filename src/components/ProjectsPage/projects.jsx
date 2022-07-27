@@ -14,6 +14,11 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { width } from '@mui/system';
+import LinearProgress from '@mui/material/LinearProgress';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 
 
@@ -77,10 +82,6 @@ function ProjectsList() {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-
-
-
-
 
 
 
@@ -151,12 +152,36 @@ function ProjectsList() {
 
                     </Select>
                 </FormControl></Box>}
+            <Box style={{ marginLeft: '22.5em', marginTop: '5em' }} sx={{ width: '40%' }}>
+                <Accordion>
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel1a-content"
+                        id="panel1a-header"
+                    >
+                        <Typography>View Hours</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                    <LinearProgress style={{ minwidth: 240, borderRadius: 5, minHeight: 8 }} variant='determinate' />
+                        <Typography>
+                        Total Current Hours: 40 
+                        </Typography>
+                        <br/>
+                        <Typography>
+                        Total Full-Time Hours: 20/40 
+                        </Typography>
+                        <Typography>
+                        Total Intern Hours: 20/40 
+                        </Typography>
+                    </AccordionDetails>
+                </Accordion>
+            </Box>
         </div><div>
 
                 <br />
 
-               <h1 style={{ margin:'auto', display: 'inline-block', padding:'3em 0px 0px 12em', marginRight: '5em'}} > Current Projects</h1>
-                <Button style={{ backgroundColor: '#afcc36'}} onClick={handleOpen} variant="contained">add new project</Button>
+                <h1 style={{ margin: 'auto', display: 'inline-block', padding: '3em 0px 0px 12em', marginRight: '5em' }} > Current Projects</h1>
+                <Button style={{ backgroundColor: '#afcc36' }} onClick={handleOpen} variant="contained">add new project</Button>
 
                 <Modal
                     open={open}
@@ -182,7 +207,7 @@ function ProjectsList() {
 
             </div></>
 
-        
+
     )
 
 

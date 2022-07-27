@@ -20,3 +20,6 @@
 .addButton{
     align-items: flex-start;
 }
+.editButton{
+    padding-top: 1em;
+}

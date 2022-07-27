@@ -21,17 +21,6 @@ function CompaninesPage() {
     }, [])
 
 
-    function viewProjects(companyID){
-        console.log("THIS IS THE COMPANY", companyID)
-        history.push(`/projects/${companyID}`)
-      }
-
-  
-    // let companyId = params.companyId;
-    // console.log(companyId);
-    // let company = companyStore.find(company => company.id === Number(companyId));
-    // console.log('Archiving this company', company);
-
 
     return (
         <div className='landingCompany'>

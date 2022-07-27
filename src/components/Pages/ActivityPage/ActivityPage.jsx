@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react'
-import{useParams} from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import moment from 'moment';
 import { DataGrid, gridClasses } from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
@@ -24,16 +24,16 @@ export default function ActivityPage() {
     const dispatch = useDispatch();
     const activity = useSelector((store => store.activity))
     const employee = useSelector((store => store.employee))
-    const params= useParams();
+    const params = useParams();
     const [type, setType] = useState('');
     const [notes, setNotes] = useState('');
-    const [hours, setHours] = useState('');
+    const [fullHours, setFullHours] = useState('');
+    const [internHours, setInternHours] = useState('');
     const [taskNumber, setTaskNumber] = useState('');
     const [date, setDate] = useState('');
     const theme = useTheme();
     const [open, setOpen] = useState(false);
-    const [clickOpen, setClickOpen] = useState(false);
-    const [editOpen, setEditOpen] = useState(false);
+    const [employees, setEmployees] = useState('')
     const [editActivity, setEditActivity] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -46,7 +46,7 @@ export default function ActivityPage() {
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
 
-    
+
 
 
     console.log(activity)
@@ -54,7 +54,7 @@ export default function ActivityPage() {
 
     const addActivity = () => {
         return (
-            dispatch({ type: "ADD_ACTIVITY", payload: { projectID: params.projectID, type, notes, date } }),
+            dispatch({ type: "ADD_ACTIVITY", payload: { projectID: params.projectID, type, fullHours,internHours, date,employees,notes } }),
             setType(''),
             setNotes(''),
             setDate(''),
@@ -65,33 +65,12 @@ export default function ActivityPage() {
     };
 
 
-    const addEmployee = () => {
+
+    const changeActivity = (values) => {
+        console.log('these are values', values)
         return (
-            setHours(''),
-            setTaskNumber(''),
-            dispatch({ type: "ADD_EMPLOYEE", payload: { projectID: params.projectID, activityID: taskNumber, hours } }),
-            handleClickClose()
-
-        )
-    };
-
-    const changeEmployee = () => {
-        return (
-            dispatch({ type: "EDIT_EMPLOYEE", payload: { projectID:params.projectID, activityID: taskNumber, hours } }),
-            setHours(''),
-            setTaskNumber(''),
-            handleEditClose()
-
-        )
-    };
-
-    const changeActivity = () => {
-        return (
-            
-            dispatch({ type: "UPDATE_ACTIVITY", payload: { projectID:params.projectID, activityID: taskNumber, type,notes } }),
-            setTask(''),
-            setTaskNumber(''),
-            setNotes(''),
+            setDate(values.Date),
+            dispatch({ type: "UPDATE_ACTIVITY", payload: { projectID: params.projectID, activityID: values.id, type:values.Type, notes:values.Notes,fullHours:values.fulltime,internHours:values.intern, date:values.Date,employees:values.Employees } }),
             handleActivityClose()
 
         )
@@ -119,31 +98,46 @@ export default function ActivityPage() {
         dispatch({ type: "FETCH_EMPLOYEES" })
     }, [])
     const columns = [
-        { field: 'id',  headerClassName:'ColumnColor', headerName: 'ID', flex: .3 },
-        { field: 'Type',  headerClassName:'ColumnColor', headerName: 'Activity', flex: .5 },
-        { field: 'Employees',  headerClassName:'ColumnColor', headerName: 'Employees', flex: .5, renderCell: (params) => { return (params.row.Employees.map((e, i) => { return (e.employee + ', ') })) } },
+        { field: 'id', headerClassName: 'ColumnColor', headerName: 'ID', flex: .3 },
+        { field: 'Type', headerClassName: 'ColumnColor', headerName: 'Activity', flex: .5 ,editable: true, },
+        { field: 'Employees', headerClassName: 'ColumnColor', headerName: 'Employees', flex:.5,editable: true, },
         {
             field: 'Date',
             headerName: 'Date',
+            editable: true,
             type: 'string',
             flex: .3,
-            headerClassName:'ColumnColor'
+            headerClassName: 'ColumnColor'
         },
-        { field: 'fulltime', headerName: 'full-time-Hours', flex: .3, headerClassName:'ColumnColor', },
-        { field: 'intern', headerName: 'intern-Hours', flex: .3, headerClassName:'ColumnColor', },
+        { field: 'fulltime', headerName: 'full-time-Hours', flex: .3, headerClassName: 'ColumnColor',editable: true, },
+        { field: 'intern', headerName: 'intern-Hours', flex: .3, headerClassName: 'ColumnColor',editable: true, },
 
-        { field: 'Notes', headerName: 'Notes', flex: 1.5, headerClassName:'ColumnColor', }
+        { field: 'Notes', headerName: 'Notes', flex: 1.5, headerClassName: 'ColumnColor',editable: true, },
+        {field: 'button',headerName:'', flex:.5, headerClassName:'ColumnColor',renderCell: (cellValues) => {
+            return (
+              <Button
+                variant="text"
+                color="primary"
+                onClick={(event) => {
+                    changeActivity(cellValues.row)
+                }}
+              >
+                Save
+              </Button>
+            );
+          } }
     ];
 
     let rows =
         activity.map((a, i) => {
+
             <Button>employee</Button>
             return {
                 id: a.id,
-                Employees: employee.filter((e) => a.id === e.activity_id),
+                Employees: a.employees,
                 Type: a.type,
-                fulltime: a.full_Time,
-                intern: a.intern,
+                fulltime: a.full_time_hours,
+                intern: a.intern_hours,
                 Date: (moment(a.activity_date).format('l')),
                 Notes: a.notes
 
@@ -151,20 +145,15 @@ export default function ActivityPage() {
 
         })
 
-    // const typeInput = ()=>{
-    //     setType(event.)
-    // }
 
 
 
     return (
         <div>
-            
+
             <Button className='optionButtons' onClick={handleOpen} size='small' variant='outlined'>Add Activity</Button>
-            <Button className='optionButtons' onClick={handleClickOpen} size='small' variant='outlined'>Add Hours</Button>
-            <Button className='optionButtons' onClick={handleEditOpen} size='small' variant='outlined'>Edit Hours</Button>
             <Button className='optionButtons' onClick={handleActivityOpen} size='small' variant='outlined'>Edit Activity</Button>
-           
+
 
 
             <Dialog
@@ -178,6 +167,7 @@ export default function ActivityPage() {
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText>
+
                         <TextField
                             autoFocus
                             margin="dense"
@@ -188,14 +178,38 @@ export default function ActivityPage() {
                             value={type}
                             onChange={(event) => setType(event.target.value)}
                         />
+
                         <TextField
                             autoFocus
                             margin="dense"
-                            type="Date"
+                            label="Employees "
+                            type="string"
                             fullWidth
                             variant="standard"
-                            value={date}
-                            onChange={(event) => setDate(event.target.value)}
+                            value={employees}
+                            onChange={(event) => setEmployees(event.target.value)}
+                        />
+
+
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            label="Full-Time Hours"
+                            type="number"
+                            fullWidth
+                            variant="standard"
+                            value={fullHours}
+                            onChange={(event) => setFullHours(event.target.value)}
+                        />
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            label="Intern Hours"
+                            type="number"
+                            fullWidth
+                            variant="standard"
+                            value={internHours}
+                            onChange={(event) => setInternHours(event.target.value)}
                         />
                         <TextField
                             autoFocus
@@ -206,6 +220,15 @@ export default function ActivityPage() {
                             variant="standard"
                             value={notes}
                             onChange={(event) => setNotes(event.target.value)}
+                        />
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            type="Date"
+                            fullWidth
+                            variant="standard"
+                            value={date}
+                            onChange={(event) => setDate(event.target.value)}
                         />
 
 
@@ -221,93 +244,6 @@ export default function ActivityPage() {
                 </DialogActions>
             </Dialog>
 
-            <Dialog
-                fullScreen={fullScreen}
-                open={clickOpen}
-                onClose={handleClickClose}
-                aria-labelledby="responsive-dialog-title"
-            >
-                <DialogTitle id="responsive-dialog-title">
-                    {"Add Hours"}
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            label="Hours"
-                            type="number"
-                            fullWidth
-                            variant="standard"
-                            value={hours}
-                            onChange={(event) => setHours(event.target.value)}
-                        />
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            label="Activity ID"
-                            type="number"
-                            fullWidth
-                            variant="standard"
-                            value={taskNumber}
-                            onChange={(event) => setTaskNumber(event.target.value)}
-                        />
-                      
-
-
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={addEmployee} autoFocus>
-                        Add
-                    </Button>
-                </DialogActions>
-            </Dialog>
-            <Dialog
-                fullScreen={fullScreen}
-                open={editOpen}
-                onClose={handleEditClose}
-                aria-labelledby="responsive-dialog-title"
-            >
-                <DialogTitle id="responsive-dialog-title">
-                    {"Change Hours"}
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            label="Hours"
-                            type="number"
-                            fullWidth
-                            variant="standard"
-                            value={hours}
-                            onChange={(event) => setHours(event.target.value)}
-                        />
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            label="Activity Number"
-                            type="number"
-                            fullWidth
-                            variant="standard"
-                            value={taskNumber}
-                            onChange={(event) => setTaskNumber(event.target.value)}
-                        />
-                     
-
-
-
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={changeEmployee} autoFocus>
-                        Change
-                    </Button>
-                </DialogActions>
-            </Dialog>
 
             <Dialog
                 fullScreen={fullScreen}
@@ -321,6 +257,17 @@ export default function ActivityPage() {
                 <DialogContent>
                     <DialogContentText>
 
+                    <TextField
+                            autoFocus
+                            margin="dense"
+                            label="Activity ID"
+                            type="number"
+                            fullWidth
+                            variant="standard"
+                            value={taskNumber}
+                            onChange={(event) => setTaskNumber(event.target.value)}
+                        />
+
                         <TextField
                             autoFocus
                             margin="dense"
@@ -331,17 +278,8 @@ export default function ActivityPage() {
                             value={type}
                             onChange={(event) => setType(event.target.value)}
                         />
+                      
                         <TextField
-                            autoFocus
-                            margin="dense"
-                            label="Activity ID"
-                            type="number"
-                            fullWidth
-                            variant="standard"
-                            value={taskNumber}
-                            onChange={(event) => setTaskNumber(event.target.value)}
-                        />
-                             <TextField
                             autoFocus
                             margin="dense"
                             label="Notes"
@@ -350,6 +288,26 @@ export default function ActivityPage() {
                             variant="standard"
                             value={notes}
                             onChange={(event) => setNotes(event.target.value)}
+                        />
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            label="Full-Time Hours"
+                            type="number"
+                            fullWidth
+                            variant="standard"
+                            value={fullHours}
+                            onChange={(event) => setFullHours(event.target.value)}
+                        />
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            label="Intern Hours"
+                            type="number"
+                            fullWidth
+                            variant="standard"
+                            value={internHours}
+                            onChange={(event) => setInternHours(event.target.value)}
                         />
 
 
@@ -384,6 +342,7 @@ export default function ActivityPage() {
                         columns={columns}
                         pageSize={9}
                         rowsPerPageOptions={[9]}
+                        
                     />
                 </Box>
             </div>
