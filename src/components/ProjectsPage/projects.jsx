@@ -32,7 +32,7 @@ const style = {
     p: 4,
 };
 
-function ProjectsList() {    
+function ProjectsList() {
     const params = useParams();
     const history = useHistory();
     const dispatch = useDispatch();
@@ -40,8 +40,8 @@ function ProjectsList() {
     const projects = useSelector(store => store.projectsReducer);
     const companies = useSelector(store => store.company); // array of companies
     console.log('This is Company store', companies);
-    
-    
+
+
     const [status, setstatus] = useState("not_completed");
     const [newBudgetedHours, setNewBudgetedHours] = useState(0);
     const [newName, setNewName] = useState("");
@@ -57,12 +57,12 @@ function ProjectsList() {
     console.log(`Current Status: ${status}`)
 
     let currentCompany = companies.find(c => Number(c.id) === Number(params.companyid));
-    
+
     useEffect(() => {
         dispatch({ type: 'FETCH_PROJECTS', payload: { companyID: params.companyid } });
         dispatch({ type: 'FETCH_COMPANY' });
     }, []);
-    
+
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
     }
@@ -98,10 +98,10 @@ function ProjectsList() {
     return (
         <><div>
 
-            {projects.projects[0] === undefined 
-                ? <h1 style={{ textAlign: 'center',marginTop:'5em' }}>Please Add new project</h1>
-                : <Box style={{ color: '#afcc36',marginTop:'7em' }} textAlign='center'><FormControl variant='standard' style={{ margin: 'auto', width: '50%' }}>
-                    <InputLabel style={{ fontSize: 40 }} id="demo-simple-select-label">{projects.projects[0].company_name}</InputLabel>
+
+            <Box style={{ color: '#afcc36', marginTop: '7em' }} textAlign='center'>
+                <FormControl variant='standard' style={{ margin: 'auto', width: '50%' }}>
+                    <InputLabel style={{ fontSize: 40 }} id="demo-simple-select-label">{currentCompany.company_name}</InputLabel>
                     <Select
                         style={{ fontSize: 40 }}
                         onChange={(e) => setComapnyName(e.target.value)}
@@ -114,10 +114,10 @@ function ProjectsList() {
                             {
                                 if (company.is_archived === false) {
                                     return (
-                                        <MenuItem 
-                                            value={company.company_name} 
+                                        <MenuItem
+                                            value={company.company_name}
                                             onClick={() => switchProjects(company.id)} key={company.id}>
-                                                {company.company_name}
+                                            {company.company_name}
                                         </MenuItem>
                                     );
                                 }
@@ -125,7 +125,8 @@ function ProjectsList() {
                         })}
 
                     </Select>
-                </FormControl></Box>}
+                </FormControl>
+            </Box>
             <Box style={{ margin: 'auto', width: '40%' }}>
                 <br />
                 <Accordion elevation={1}>

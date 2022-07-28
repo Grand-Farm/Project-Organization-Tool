@@ -122,8 +122,8 @@ function AdminPage() {
                       getEstimatedRowHeight={() => 400}
                       rows={rows}
                       columns={columns}
-                      pageSize={3}
-                      rowsPerPageOptions={[3]}
+                      pageSize={7}
+                      rowsPerPageOptions={[7]}
                     />
                   </Box>
                 </div>

@@ -11,6 +11,7 @@ import Grid from '@mui/material/Grid';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
+import logo from '../../../images/navLogo.png'
 
 
 // CUSTOM COMPONENTS
@@ -38,17 +39,19 @@ function LandingPage() {
   };
 
   return (
-    <div className="container">
+    <div className="about">
       <Grid container spacing={2}>
         <Grid item xs={12} md={6} lg={6}>
           <Box sx={{ width: '100%', maxWidth: 700 }}>
             <div>
               <Typography mt={'5%'} ml={'15%'} color={blueGrey[800]} variant="h4" gutterBottom component="div">
-                <strong> Working </strong>
+                <strong> Time Management Tool </strong>
               </Typography>
-              <Typography ml={'15%'} color={blueGrey[800]} variant="subtitle1" gutterBottom component="div">
-                I like to work and dance and ply  I like to work and dance and ply  I like to work and dance and ply  I like to work and dance and ply I like to work and dance and ply I like to work and dance and ply I like to work and dance and ply I like to work and dance and ply I like to work and dance and ply I like to work and dance and ply
+              <br />
+              <Typography style={{fontSize:'1.5em'}} ml={'15%'} color={blueGrey[800]} variant="subtitle1" gutterBottom component="div">
+              Grand Farm's Personal time management tool, used interally for logging and viewing time information on partners and projects. 
               </Typography>
+              <img style={{marginLeft:'3em',height:'40em'}} src={logo}></img>
             </div>
 
           </Box>
