@@ -37,7 +37,7 @@ CREATE TABLE "activity" (
 	"projects_id" int references "projects"
 	"employees" varchar(250),
 	"full_time_hours" decimal default 0,
-	"part_time_hours" decimal default 0
+	"intern_hours" decimal default 0
 	
 );
 

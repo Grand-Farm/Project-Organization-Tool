@@ -90,6 +90,7 @@ function App() {
           >
             <CompaninesPage />
           </ProtectedRoute>
+          
           <ProtectedRoute
             exact
             path="/archives"

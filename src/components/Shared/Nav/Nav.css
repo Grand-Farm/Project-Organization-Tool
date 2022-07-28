@@ -3,10 +3,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  margin: 0 0 3em;
   background-color: #244c62;
   overflow: hidden;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1030;
 }
 
 .nav a {
@@ -43,5 +45,7 @@
 
 .logo-image{
   height:6em;
-  margin-left: 2em;
+  width: 15em;
+  margin-left: 1em;
+  min-width:100%;
 }

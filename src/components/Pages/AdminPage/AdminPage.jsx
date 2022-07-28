@@ -69,19 +69,17 @@ function AdminPage() {
       {user.is_admin ?
         <Box sx={{ flexGrow: 1 }}>
 
-          <Typography
-            variant='h1'
-            sx={{
-              textAlign:'center'
-            }}
-          >
-            Admin {user.username.toUpperCase()}
-          </Typography>
-         
+<div className='partners'>
+                <Typography style={{ lineHeight: '1.375em', margin: '0.1em 0', marginRight:'2%',fontSize:'5em',fontWeight:300, borderBottom:"2px solid #244c62 " }}  variant='h3'>
+                    Dashboard
+                </Typography>
+              
+            </div>
 
-          <Grid container spacing={2} sx={{mb: 1}}>
-            <Grid item xs={6} md={4} lg={4}>
-              <Item elevation={4}>{user.is_admin ?
+
+          <Grid container spacing={2} sx={{ mb: 1 }}>
+            <Grid item xs={12} md={12} lg={6}>
+              <Item style={{ backgroundColor: "#f4f1e9" }} elevation={4}>{user.is_admin ?
                 <div>
                   <RegisterForm />
                   <Box>
@@ -100,11 +98,12 @@ function AdminPage() {
                 </div>
                 : 'UnAuthorized'}</Item>
             </Grid>
-            <Grid item xs={6} md={8} lg={8}>
+            <Grid item xs={12} md={12} lg={6}>
               {user.is_admin ?
                 <div>
-                  <Box style={{ display: 'flex', height: '100%', flexGrow: 1, width: '100%' }}>
+                  <Box style={{ display: 'flex', height: '100%', flexGrow: 1, width: '100%', backgroundColor: "#f4f1e9", }}>
                     <DataGrid
+
                       density='standard'
                       sx={{
                         boxShadow: 2,
@@ -115,6 +114,7 @@ function AdminPage() {
                         [`& .${gridClasses.cell}`]: {
                           py: 1,
                         },
+
                       }}
                       autoHeight
                       getRowHeight={() => 'auto'}
@@ -132,7 +132,7 @@ function AdminPage() {
           </Grid>
           <LogOutButton className="btn" />
         </Box>
-        : <Typography variant='h1' style={{color:'red'}}>'Not Authorized'</Typography>}
+        : <Typography variant='h1' style={{ color: 'red' }}>'Not Authorized'</Typography>}
 
     </div>
   );
