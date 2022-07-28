@@ -64,7 +64,7 @@ function CompanyFormPage(){
         <div>
             <Button 
                 onClick={openForm}
-                style={{backgroundColor:'#afcc36'}}
+                style={{backgroundColor:'#afcc36',marginTop:'1rem'}}
                 
             >
                 Add
