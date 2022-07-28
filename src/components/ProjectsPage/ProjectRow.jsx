@@ -106,21 +106,24 @@ function ProjectRow({ project }) {
 
     return (
         <Box>
-            <Card className="Project Card" elevation={3} sx={{ minWidth: 250, maxWidth: 250, marginTop: "4em",marginRight:"5em" }}>
-                <Typography
-                    style={{paddingTop:10}}
-                    variant="h5"
-                    className="projectTitle"
-                    onClick={() => viewActivities(project.id)}>
+            <Card className="Project Card" elevation={3} sx={{ minWidth: 250, maxWidth: 250, marginTop: "4em", marginRight: "5em" }}>
+                <CardActionArea
+                    onClick={() => viewActivities(project.id)}
+                    className='projectHeader'
+                >
+                    <Typography
+                        style={{ paddingTop: 10 }}
+                        variant="h5"
+                        className="projectTitle"
+                    >
 
-                    {project.name}
-
-                    {/* <h1>{activity.em}</h1> */}
-                </Typography>
+                        {project.name}
+                    </Typography>
+                </CardActionArea>
+                {/* <br />
                 <br />
                 <br />
-                <br />
-                <br />
+                <br /> */}
 
                 <Accordion elevation={0} expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
                     <AccordionSummary
@@ -139,65 +142,66 @@ function ProjectRow({ project }) {
                         </Typography>
                     </AccordionDetails>
                 </Accordion>
-                <CardActionArea>
-                    <CardContent>
-                        <Typography>
-                            <br />
-                            <br />
-                            <TextField value={budgetedhours} onChange={(e) => setBudgetedHours(e.target.value)} id="outlined-basic" label='budgeted hours' variant="outlined" />
-                            <br />
-                            <br />
-                            <strong>Manager:</strong> <em>{project.manager}</em>
-                            <br />
-                            <br />
-                        </Typography>
-                        <InputLabel id="status"><strong>status:</strong>
-                            <Select type='select' value={status} onChange={(e) => setstatus(e.target.value)}>
-                                <MenuItem value={"not_completed"}>Not Complete</MenuItem>
-                                <MenuItem value={"in_progress"}>In Progress</MenuItem>
-                                <MenuItem value={"getting_closer"}>Getting Closer</MenuItem>
-                                <MenuItem onClick={addOutcome} value={"done"}>Done</MenuItem>
-                            </Select>
-                        </InputLabel>
-                        {clicked === false ? console.log("THIS WORKS") :
-                            <Modal
-                                open={open}
-                                onClose={handleClose}
-                                aria-labelledby="modal-modal-title"
-                                aria-describedby="modal-modal-description"
-                            >
-                                <Box sx={style}>
-                                    <Typography style={{ textAlign: 'center' }} id="modal-modal-title" variant="h6" component="h2">
-                                        Add Outcome
-                                    </Typography>
-                                    <Typography id="modal-modal-description" sx={{ mt: 4 }}>
-                                        <TextField style={{ width: '22em' }} value={outcome} onChange={(e) => setOutcome(e.target.value)} id="outlined-basic" label='outcome' variant="outlined" />
-                                        <Button sx={{ mt: 4 }} style={{ float: 'right' }} onClick={() => updateStatus(project)} variant="contained">Add</Button>
-                                    </Typography>
-                                </Box>
-                            </Modal>}
 
-                        {project.outcome !== null ?
-                            <Accordion elevation={0} expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
-                                <AccordionSummary
-                                    expandIcon={<ExpandMoreIcon />}
-                                    aria-controls="panel2bh-content"
-                                    id="panel2bh-header"
-                                >
-                                    <Typography sx={{ width: '33%', flexShrink: 0 }}>Outcome</Typography>
-                                </AccordionSummary>
-                                <AccordionDetails>
-                                    <Typography>
-                                        {project.outcome}
-                                    </Typography>
-                                </AccordionDetails>
-                            </Accordion> : ""}
-
-
+                <CardContent>
+                    <Typography>
                         <br />
+                        <br />
+                        <TextField value={budgetedhours} onChange={(e) => setBudgetedHours(e.target.value)} id="outlined-basic" label='budgeted hours' variant="outlined" />
+                        <br />
+                        <br />
+                        <strong>Manager:</strong> <em>{project.manager}</em>
+                        <br />
+                        <br />
+                    </Typography>
+                    <InputLabel id="status"><strong>status:</strong>
+                        <Select type='select' value={status} onChange={(e) => setstatus(e.target.value)}>
+                            <MenuItem value={"Initiation"}>Initiation</MenuItem>
+                            <MenuItem value={"Planning"}>Planning</MenuItem>
+                            <MenuItem value={"Execution"}>Execution</MenuItem>
+                            <MenuItem value={"Monitor/Control"}>Monitor/Control</MenuItem>
+                            <MenuItem onClick={addOutcome} value={"Complete"}>Complete</MenuItem>
+                        </Select>
+                    </InputLabel>
+                    {clicked === false ? console.log("THIS WORKS") :
+                        <Modal
+                            open={open}
+                            onClose={handleClose}
+                            aria-labelledby="modal-modal-title"
+                            aria-describedby="modal-modal-description"
+                        >
+                            <Box sx={style}>
+                                <Typography style={{ textAlign: 'center' }} id="modal-modal-title" variant="h6" component="h2">
+                                    Add Outcome
+                                </Typography>
+                                <Typography id="modal-modal-description" sx={{ mt: 4 }}>
+                                    <TextField style={{ width: '22em' }} value={outcome} onChange={(e) => setOutcome(e.target.value)} id="outlined-basic" label='outcome' variant="outlined" />
+                                    <Button sx={{ mt: 4 }} style={{ float: 'right' }} onClick={() => updateStatus(project)} variant="contained">Add</Button>
+                                </Typography>
+                            </Box>
+                        </Modal>}
 
-                    </CardContent>
-                </CardActionArea>
+                    {project.outcome !== null ?
+                        <Accordion elevation={0} expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
+                            <AccordionSummary
+                                expandIcon={<ExpandMoreIcon />}
+                                aria-controls="panel2bh-content"
+                                id="panel2bh-header"
+                            >
+                                <Typography sx={{ width: '33%', flexShrink: 0 }}>Outcome</Typography>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                <Typography>
+                                    {project.outcome}
+                                </Typography>
+                            </AccordionDetails>
+                        </Accordion> : ""}
+
+
+                    <br />
+
+                </CardContent>
+
                 <Box textAlign='center'>
                     <Button style={{ backgroundColor: '#afcc36' }} onClick={() => updateStatus(project)} variant="contained">Save Changes</Button>
                 </Box>

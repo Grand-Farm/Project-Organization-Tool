@@ -25,7 +25,7 @@ CREATE TABLE "projects" (
 	"description" text NOT NULL,
 	"outcome" text ,
 	"company_id" int references "company",
-	"status" varchar(250) default 'not_complete'
+	"status" varchar(250) default 'Initiation'
 );
 
 
