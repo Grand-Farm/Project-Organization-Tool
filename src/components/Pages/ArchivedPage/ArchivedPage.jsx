@@ -27,9 +27,11 @@ function ArchivedPage() {
 
     return (
         <div className='archivePage'>
-        <Typography variant='h1'>
-            Archive
-        </Typography>
+      <div className='partners'>
+                <Typography style={{ lineHeight: '1.375em', margin: '0.1em 0', marginRight:'2%',fontSize:'5em',fontWeight:300, borderBottom:"2px solid #244c62 " }} variant='h3'>
+                    Archives
+                </Typography>
+            </div>
         <div className='container'>
             {companyStore.map((company, index) => {
                 {

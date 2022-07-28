@@ -114,8 +114,8 @@ export default function ActivityPage() {
             flex: .3,
             headerClassName: 'ColumnColor'
         },
-        { field: 'fulltime', headerName: 'full-time-Hours', flex: .3, headerClassName: 'ColumnColor', editable: true, },
-        { field: 'intern', headerName: 'intern-Hours', flex: .3, headerClassName: 'ColumnColor', editable: true, },
+        { field: 'fulltime', headerName: 'full-time-Hours', flex: .7, headerClassName: 'ColumnColor', editable: true, },
+        { field: 'intern', headerName: 'intern-Hours', flex: .5, headerClassName: 'ColumnColor', editable: true, },
 
         { field: 'Notes', headerName: 'Notes', flex: 1.5, headerClassName: 'ColumnColor', editable: true, },
         {
@@ -152,18 +152,23 @@ export default function ActivityPage() {
 
         })
 
-    // const typeInput = ()=>{
-    //     setType(event.)
-    // }
 
 
 
     return (
         <div>
-
-            <Button className='optionButtons' onClick={handleOpen} size='small' variant='outlined'>Add Activity</Button>
-            <Button className='optionButtons' onClick={handleActivityOpen} size='small' variant='outlined'>Edit Activity</Button>
-
+            <div className='partners'>
+                <Typography style={{ lineHeight: '1.375em', margin: '0.1em 0', marginRight:'2%',fontSize:'5em',fontWeight:300, }} variant='h3'>
+                    Activities
+                </Typography>
+                <Typography style={{ lineHeight: '1.375em',  marginRight:'2%',fontSize:'1em',fontWeight:300, borderBottom:"2px solid #244c62 " }} variant='h3'>
+                   This page is for all the logs of the activities for a specific project
+                </Typography>
+            </div>
+            <Box style={{ marginBottom: '.5%' }}>
+                <Button className='optionButtons' onClick={handleOpen} size='small' variant='outlined'>Add Activity</Button>
+                <Button className='optionButtons' onClick={handleActivityOpen} size='small' variant='outlined'>Edit Activity</Button>
+            </Box>
 
 
             <Dialog
@@ -178,8 +183,8 @@ export default function ActivityPage() {
                 <DialogContent>
                     <DialogContentText>
 
-                        <Box  sx={{ minWidth: 120 }}>
-                            <FormControl  fullWidth>
+                        <Box sx={{ minWidth: 120 }}>
+                            <FormControl fullWidth>
                                 <InputLabel>Activity</InputLabel>
                                 <Select
                                     value={type}

@@ -2,11 +2,18 @@ html,
 body,
 #react-root {
   height: 100%;
+
 }
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  margin: 0px;
+  margin: 0;
+  
 }
 
 img {
@@ -95,8 +102,8 @@ Form Treatment
   max-width: 100%;
   padding: 25px;
   margin: 0 auto 20px;
-  background-color: #f4f1e9;
-  border-radius: 3px;
+   background-color: #f4f1e9;
+  border-radius: 2em;
   box-shadow: 0 1px 2px rgb(0, 0, 0, 0.4);
 }
 
@@ -120,16 +127,27 @@ input {
 color: #e01616;
 }
 
+
+
 .ColumnColor{
   color: #244c62;
-  font-size: 1.3em;
-  
- 
+  font-size: 1.3em; 
 }
 
 .projectTitle{
   text-align: center;
   
 }
+.partners{
+ width: 100%;
+ text-align: left;
+ color: black;
+ height: 12em;
+ display: flex;
+ align-items: center;
+ margin-top:5%;
+
+}
+
 
 

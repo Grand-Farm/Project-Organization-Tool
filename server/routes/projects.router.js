@@ -4,17 +4,31 @@ const pool = require('../modules/pool')
 
 
 router.get('/:companyID', (req, res) => {
-  console.log('adfhiadihsuifhudhifdfas',req.params)
+  console.log('THIS IS GET FOR THE PROJECTS OF COMPANY',req.params.companyID)
 // allowing the user to order collection by rating
-    const query = `   SELECT projects.id,projects.name,projects.budgeted_hours,projects.status,projects.manager,projects.description,projects.outcome,company.company_name,company.id 
-    AS company_id FROM projects 
-    join company ON projects.company_id=company.id 
-   WHERE projects.company_id = $1
-   ORDER BY projects.id ASC`
+    const query = `   SELECT c.id as Company_id, c.company_name, p.id, p.name, p.budgeted_hours, p.description, p.manager, p.outcome, p.status,
+    (select sum(a.intern_hours) as intern_Sum from activity  limit 1),
+    (select sum(a.full_time_hours) as full_time_SUM  limit 1)
+    from "company" as c
+    JOIN "projects" as p on p.company_id = c.id
+    FULL JOIN "activity" as a on a.projects_id = p.id
+    WHERE c.id = $1 
+     GROUP BY  c.id, c.company_name, p.id, p.name, p.budgeted_hours, p.description, p.manager, p.outcome, p.status
+     ORDER BY p.id`
     pool.query(query,[req.params.companyID])
-      .then( result => {
-        console.log(result.rows)
-        res.send(result.rows);
+    .then( result => {
+      let fullTimeHours = 0;
+        let internHours = 0;
+    
+        for(let i = 0; i < result.rows.length;i++){
+          if(result.rows[i].full_time_sum === null){
+            console.log("CHECKING THE HOURS", fullTimeHours)
+            continue;
+          }else{
+          fullTimeHours += Number(result.rows[i].full_time_sum);
+          internHours += Number(result.rows[i].intern_sum)}
+        }
+        res.send({projects: result.rows, fullTimeHours: fullTimeHours, internHours:internHours});
       })
       .catch(err => {
         console.log('ERROR: Get all projects', err);

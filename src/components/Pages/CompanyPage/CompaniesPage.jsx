@@ -1,6 +1,10 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import partners from '../../../images/partners.png'
+import Grid from '@mui/material/Grid';
+
+
 
 import './CompanyPage.css'
 import CompanyFormPage from './CompanyFormPage';
@@ -24,21 +28,19 @@ function CompaninesPage() {
 
     return (
         <div className='landingCompany'>
-            <Typography variant='h1'>
-                Partners
-            </Typography>
-            <div>
-                <Typography>
-                    This Paragraph is talking about what this page is. It is very helpful. Good job to who ever made this(Abdishakur).
+            <div className='partners'>
+                <Typography style={{ lineHeight: '1.375em', margin: '0.1em 0', marginRight:'2%',fontSize:'5em',fontWeight:300, borderBottom:"2px solid #244c62 " }} variant='h3'>
+                    Partners
                 </Typography>
+                <CompanyFormPage  />
             </div>
-            <CompanyFormPage />
             <div className='container'>
                 {companyStore.map((company, index) => {
                     {
                         if (company.is_archived === false) {
                             return (
-                                <CompanyCard company={company} i={index} key={company.id} />
+
+                                        <CompanyCard company={company} i={index} key={company.id} />
                             )
                         }
                     }

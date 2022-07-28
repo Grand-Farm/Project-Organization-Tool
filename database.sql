@@ -23,9 +23,9 @@ CREATE TABLE "projects" (
 	"budgeted_hours" decimal NOT NULL,
 	"manager" varchar(250) NOT NULL,
 	"description" text NOT NULL,
-	"outcome" text NOT NULL,
-	"company_id" int references "company"
-	"status" varchar(250) default "not_complete"
+	"outcome" text ,
+	"company_id" int references "company",
+	"status" varchar(250) default 'not_complete'
 );
 
 
@@ -34,10 +34,10 @@ CREATE TABLE "activity" (
 	"type" varchar(250),
 	"notes" text,
 	"activity_date" date,
-	"projects_id" int references "projects"
+	"projects_id" int references "projects",
 	"employees" varchar(250),
 	"full_time_hours" decimal default 0,
-	"part_time_hours" decimal default 0
+	"intern_hours" decimal default 0
 	
 );
 
