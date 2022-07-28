@@ -133,10 +133,16 @@ color: #e01616;
   color: #244c62;
   font-size: 1.3em; 
 }
-
+.companyTitle:hover{
+  cursor: pointer;
+  opacity: 50%;
+}
 .projectTitle{
   text-align: center;
-  
+}
+.projectHeader:hover{
+  background-color: #afcc36 ;
+  opacity: 80%;
 }
 .partners{
  width: 100%;
