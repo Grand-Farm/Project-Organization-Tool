@@ -99,8 +99,8 @@ function ProjectsList() {
         <><div>
 
             {projects.projects[0] === undefined 
-                ? <h1 style={{ textAlign: 'center' }}>Please Add new project</h1>
-                : <Box style={{ color: '#afcc36' }} textAlign='center'><FormControl variant='standard' style={{ margin: 'auto', width: '50%' }}>
+                ? <h1 style={{ textAlign: 'center',marginTop:'5em' }}>Please Add new project</h1>
+                : <Box style={{ color: '#afcc36',marginTop:'7em' }} textAlign='center'><FormControl variant='standard' style={{ margin: 'auto', width: '50%' }}>
                     <InputLabel style={{ fontSize: 40 }} id="demo-simple-select-label">{projects.projects[0].company_name}</InputLabel>
                     <Select
                         style={{ fontSize: 40 }}

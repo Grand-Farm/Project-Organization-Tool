@@ -97,7 +97,8 @@ function CompanyCard({ company }) {
     return (
 
                 <Card className='content'
-                    sx={{ minWidth: 300, maxWidth: 300, pb: 2 }}
+                elevation={3}
+                    sx={{  minWidth: 300, maxWidth: 300, pb: 2 }}
                     style={{
                         width: '25vw',
                         transitionDuration: '0.3s',
