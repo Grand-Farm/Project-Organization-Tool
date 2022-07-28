@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import './LandingPage.css';
 import Tab from '@mui/material/Tab';
@@ -8,14 +8,28 @@ import Typography from '@mui/material/Typography';
 import { purple, red, blueGrey } from '@mui/material/colors';
 import LoginForm from '../../Auth/LoginForm/LoginForm';
 import Grid from '@mui/material/Grid';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
+
 
 // CUSTOM COMPONENTS
 import RegisterForm from '../../Auth/RegisterForm/RegisterForm';
+import { useDispatch, useSelector } from 'react-redux';
 
 function LandingPage() {
   const [heading, setHeading] = useState('Welcome');
+  const AllUsers = useSelector((store)=> store.AllUser)
+
   const history = useHistory();
+  const dispatch = useDispatch();
   const [value, setValue] = useState('0');
+
+  useEffect(() => {
+    dispatch({ type: "FETCH_ALLUSERS" })
+}, [])
+
+
   const onLogin = (event) => {
     history.push('/login');
   };
@@ -45,14 +59,10 @@ function LandingPage() {
               <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <TabList onChange={handleChange} >
                   <Tab label="Sign In" value="0" />
-                  <Tab label="Sign Up" value="1" />
                 </TabList>
               </Box>
               <TabPanel value="0">
                 <LoginForm />
-              </TabPanel>
-              <TabPanel value="1">
-                <RegisterForm />
               </TabPanel>
             </TabContext>
           </Box>

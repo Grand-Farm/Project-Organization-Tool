@@ -13,7 +13,6 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import { width } from '@mui/system';
 import Grid from '@mui/material/Grid';
 import LinearProgress from '@mui/material/LinearProgress';
 import Accordion from '@mui/material/Accordion';
@@ -21,106 +20,53 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+};
 
-
-
-
-function ProjectsList() {
-
-
-
+function ProjectsList() {    
     const params = useParams();
+    const history = useHistory();
     const dispatch = useDispatch();
 
+    const projects = useSelector(store => store.projectsReducer);
+    const companies = useSelector(store => store.company); // array of companies
+    console.log('This is Company store', companies);
+    
+    
+    const [status, setstatus] = useState("not_completed");
+    const [newBudgetedHours, setNewBudgetedHours] = useState(0);
+    const [newName, setNewName] = useState("");
+    const [newManager, setNewManager] = useState();
+    const [newDescription, setNewDescription] = useState("");
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
+    const totalHours = projects.fullTimeHours + projects.internHours;
+    const { fullTimeHours, internHours } = projects;
+
+    console.log(`Current Status: ${status}`)
+
+    let currentCompany = companies.find(c => Number(c.id) === Number(params.companyid));
+    
     useEffect(() => {
         dispatch({ type: 'FETCH_PROJECTS', payload: { companyID: params.companyid } });
         dispatch({ type: 'FETCH_COMPANY' });
     }, []);
-    function totalFullHours(projects){
-        let sum = 0;
     
-        for(let i= 0; i< projects.length;i++){
-           sum += Number(projects[i].full_time_sum)
-        }
-        return sum;
-    }
-    
-    function totalInternHours(projects){
-        let internsum = 0;
-    
-        for(let i= 0; i< projects.length;i++){
-           internsum += Number(projects[i].intern_sum)
-        }
-        return internsum;
-    }
-    console.log('This is the store', company);
-    const projects = useSelector(store => store.projectsReducer);
-
-    console.log("these are the projects", projects)
-
-
-
-
-
-    const activity = useSelector(store => store.activity);
-
-
-    const history = useHistory();
-    const [status, setstatus] = useState("not_completed");
-    console.log(`Current Status: ${status}`)
-
-
-
-
-
-
-
-
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
     }
 
-
-
-
-
-
-
-
-    const company = useSelector(store => store.company);
-    console.log('This is Company store', company);
-
-
-
-    const [newBudgetedHours, setNewBudgetedHours] = useState(0);
-    const [newName, setNewName] = useState("");
-    const [newManager, setNewManager] = useState(projects.manager);
-    const [newDescription, setNewDescription] = useState("");
-    const [companyName, setComapnyName] = useState(projects.company_name);
-    const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-    const [totalHours, setTotalHours] = useState(totalFullHours(projects) + totalInternHours(projects));
-    const [fullTimeHours, setFullTimeHours] = useState(totalFullHours(projects));
-    const [internHours, setInternHours] = useState(totalInternHours(projects));
-    
-
-
-
-
-
-
-    const style = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: 400,
-        bgcolor: 'background.paper',
-        border: '2px solid #000',
-        boxShadow: 24,
-        p: 4,
-    };
     const handleCompany = (event) => {
         setComapnyName(event.target.value);
     };
@@ -139,36 +85,40 @@ function ProjectsList() {
         });
         setOpen(false)
     }
+
     function switchProjects(id) {
         dispatch({ type: 'FETCH_PROJECTS', payload: { companyID: id } });
         history.push(`/projects/${id}`)
     }
 
-
-
-
-
+    if (currentCompany === undefined) {
+        return <h2>Loading...</h2>
+    }
 
     return (
         <><div>
 
-            {projects[0] === undefined ?
-                <h1 style={{ textAlign: 'center' }}>Please Add new project</h1>
+            {projects.projects[0] === undefined 
+                ? <h1 style={{ textAlign: 'center' }}>Please Add new project</h1>
                 : <Box style={{ color: '#afcc36' }} textAlign='center'><FormControl variant='standard' style={{ margin: 'auto', width: '50%' }}>
-                    <InputLabel style={{ fontSize: 40 }} id="demo-simple-select-label">{projects[0].company_name}</InputLabel>
+                    <InputLabel style={{ fontSize: 40 }} id="demo-simple-select-label">{projects.projects[0].company_name}</InputLabel>
                     <Select
                         style={{ fontSize: 40 }}
                         onChange={(e) => setComapnyName(e.target.value)}
-                        value={companyName}
+                        value={currentCompany.company_name}
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         label="Name"
                     >
-                        {company.map((company) => {
+                        {companies.map((company) => {
                             {
                                 if (company.is_archived === false) {
                                     return (
-                                        <MenuItem value={companyName} onClick={() => switchProjects(company.id)} key={company.id}>{company.company_name}</MenuItem>
+                                        <MenuItem 
+                                            value={company.company_name} 
+                                            onClick={() => switchProjects(company.id)} key={company.id}>
+                                                {company.company_name}
+                                        </MenuItem>
                                     );
                                 }
                             }
@@ -189,7 +139,7 @@ function ProjectsList() {
                     <AccordionDetails>
                         <LinearProgress style={{ minwidth: 240, borderRadius: 5, minHeight: 8 }} variant='determinate' />
                         <Typography>
-                            Total Current Hours: {totalHours}
+                            Total Current Hours: {totalHours || 'n/a'}
                         </Typography>
                         <br />
                         <Typography>
@@ -239,8 +189,8 @@ function ProjectsList() {
                         </Typography>
                     </Box>
                 </Modal>
-                <Grid item xs={12} md={3} lg={3} style={{display: "flex", justifyContent: "space-around", flexWrap: "wrap", marginLeft: "5%", marginRight: "5%"}}>
-                    {projects.map((project) => <ProjectRow key={project.id} project={project} />)}
+                <Grid item xs={12} md={3} lg={3} style={{ display: "flex", justifyContent: "space-around", flexWrap: "wrap", marginLeft: "5%", marginRight: "5%" }}>
+                    {projects.projects.map((project) => <ProjectRow key={project.id} project={project} />)}
                 </Grid>
 
             </div>

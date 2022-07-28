@@ -8,17 +8,11 @@ CREATE TABLE "company" (
 	"is_archived" boolean default false
 );
 
-CREATE TABLE "user_company"(
-"id" serial primary key,
-"user_id" int references "user",
-"company_id" int references "company"
-);
 
 CREATE TABLE "user" (
 	"id" serial primary key,
 	"username" varchar(255) UNIQUE  NOT NULL,
 	"password" varchar(250) NOT NULL,
-	"is_intern" boolean default false,
 	"is_admin" boolean default false,
 	"email" varchar(1000)
 );
@@ -42,8 +36,8 @@ CREATE TABLE "activity" (
 	"activity_date" date,
 	"projects_id" int references "projects",
 	"employees" varchar(250),
-	"full_time_hours" integer default 0,
-	"intern_hours" integer default 0
+	"full_time_hours" decimal default 0,
+	"part_time_hours" decimal default 0
 	
 );
 

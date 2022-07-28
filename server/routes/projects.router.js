@@ -13,11 +13,22 @@ router.get('/:companyID', (req, res) => {
     JOIN "projects" as p on p.company_id = c.id
     FULL JOIN "activity" as a on a.projects_id = p.id
     WHERE c.id = $1 
-     GROUP BY  c.id, c.company_name, p.id, p.name, p.budgeted_hours, p.description, p.manager, p.outcome, p.status`
+     GROUP BY  c.id, c.company_name, p.id, p.name, p.budgeted_hours, p.description, p.manager, p.outcome, p.status
+     ORDER BY p.id`
     pool.query(query,[req.params.companyID])
-      .then( result => {
-        console.log(result.rows)
-        res.send(result.rows);
+    .then( result => {
+      let fullTimeHours = 0;
+        let internHours = 0;
+    
+        for(let i = 0; i < result.rows.length;i++){
+          if(result.rows[i].full_time_sum === null){
+            console.log("CHECKING THE HOURS", fullTimeHours)
+            continue;
+          }else{
+          fullTimeHours += Number(result.rows[i].full_time_sum);
+          internHours += Number(result.rows[i].intern_sum)}
+        }
+        res.send({projects: result.rows, fullTimeHours: fullTimeHours, internHours:internHours});
       })
       .catch(err => {
         console.log('ERROR: Get all projects', err);

@@ -107,7 +107,7 @@ function App() {
               <Redirect to="/company" />
               :
               // Otherwise, show the login page
-              <LoginPage />
+              <Redirect to="/home" />
             }
           </Route>
 
@@ -121,7 +121,7 @@ function App() {
               <Redirect to="/company" />
               :
               // Otherwise, show the registration page
-              <RegisterPage />
+              <LandingPage />
             }
           </Route>
 
