@@ -19,12 +19,13 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 
 router.get('/pro', rejectUnauthenticated, (req,res) =>{
     console.log('req_user is', req.user);
-    pool.query(`SELECT sum(activity_employee.employee_hours) as project_hours, (SELECT Count(projects.id) FROM projects WHERE projects.company_id= company.id) as total_project, company.id as company_id
+    pool.query(`SELECT company.id as company_id, Count(projects.id)  as total_projects, coalesce(sum(activity.full_time_hours) + sum(activity.intern_hours), 0) as project_hours 
     FROM company
-    JOIN projects ON projects.company_id=company.id
-    JOIN activity ON activity.projects_id=projects.id
-    JOIN activity_employee ON activity_employee.activity_id=activity.id
-    GROUP BY  company.id;`)
+    LEFT JOIN projects on projects.company_id = company.id
+    Left JOIN activity ON activity.projects_id=projects.id
+    GROUP BY company.id;
+ `)
+
         .then(result =>{
             console.log(result.rows);
             res.send(result.rows);
