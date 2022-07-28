@@ -20,7 +20,9 @@ function AdminPage() {
   const user = useSelector((store) => store.user);
   const alluser = useSelector((store) => store.AllUser)
   const companyStore = useSelector(store => store.company);
-  const projects = useSelector(store => store.projectsReducer);
+  const projects = useSelector(store => store.AllProjects);
+
+
 
 
   const dispatch = useDispatch();
@@ -63,7 +65,6 @@ function AdminPage() {
 
 
 
-  console.log('these are the projects', projects)
   return (
     <div className="container">
       {user.is_admin ?
