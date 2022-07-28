@@ -36,10 +36,12 @@ function AdminPage() {
 
   const columns = [
     { field: 'id', headerName: 'ID', headerClassName: 'ColumnColor', flex: .3 },
-    { field: 'Company', headerName: 'Company', headerClassName: 'ColumnColor', flex: .5 },
-    { field: 'Projects', headerName: 'Projects', flex: .5, headerClassName: 'ColumnColor', renderCell: (params) => { return (params.row.Projects.length) } },
-    { field: 'OnGoing', headerName: 'OnGoing', flex: 1, headerClassName: 'ColumnColor', renderCell: (params) => { return (params.row.Projects.map((p) => { return (p.status === "not_complete" || "in_progress" || "getting_closer" ? `${p.name}, ` : '') })) } },
-    { field: 'Complete', headerName: 'Complete', headerClassName: 'ColumnColor', flex: 1, renderCell: (params) => { return (params.row.Projects.map((p) => { return (p.status === "done" ? p.name : '') })) } }
+    { field: 'Company', headerName: 'Company', headerClassName: 'ColumnColor', flex: 1 },
+    { field: 'Intern_Rate', headerName: 'Intern_Rate', headerClassName: 'ColumnColor', flex: 1 },
+    { field: 'Full_Rate', headerName: 'Full_Rate', headerClassName: 'ColumnColor', flex: 1 },
+    { field: 'Projects', headerName: 'Projects', flex: 1, headerClassName: 'ColumnColor', renderCell: (params) => { return (params.row.Projects.length) } },
+    { field: 'OnGoing', headerName: 'OnGoing', flex: 1, headerClassName: 'ColumnColor', renderCell: (params) => { return (params.row.Projects.map((p) => { return (p.status === "Initiation" || "Planning" || "Execution"|| "Monitor/Control"|| "Complete" ? `${p.name}, ` : '') })) } },
+    { field: 'Complete', headerName: 'Complete', headerClassName: 'ColumnColor', flex: 1, renderCell: (params) => { return (params.row.Projects.map((p) => { return (p.status === "Complete" ? p.name : '') })) } }
 
   ];
 
@@ -48,6 +50,8 @@ function AdminPage() {
       return {
         id: company.id,
         Company: company.company_name,
+        Intern_Rate: `${company.intern_rate}/Hr`,
+        Full_Rate:`${company.full_time_rate}/Hr`,
         Projects: projects.filter((p) => company.id === p.company_id),
         OnGoing: projects.filter((p) => company.id === p.company_id),
         Complete: projects.filter((p) => company.id === p.company_id)
@@ -122,8 +126,8 @@ function AdminPage() {
                       getEstimatedRowHeight={() => 400}
                       rows={rows}
                       columns={columns}
-                      pageSize={3}
-                      rowsPerPageOptions={[3]}
+                      pageSize={7}
+                      rowsPerPageOptions={[7]}
                     />
                   </Box>
                 </div>
