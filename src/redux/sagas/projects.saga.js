@@ -21,7 +21,7 @@ function* allProjects(action) {
     try {
         const projects = yield axios.get(`/api/projects`);
         console.log('get all of projects:', projects.data);
-        yield put({ type: 'GET_PROJECTS', payload: projects.data });
+        yield put({ type: 'GET_ALLPROJECTS', payload: projects.data });
 
     } catch {
         console.log('get all PROJECTS error');

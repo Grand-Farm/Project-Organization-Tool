@@ -7,6 +7,7 @@ import projectsReducer from './projects.reducer';
 import company from './company.reducer';
 import AllUser from './alluser.reducer';
 import companyInfo from './companyInfo.reducer';
+import AllProjects from './allprojects.reducer'
 
 
 
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   company,
   AllUser,
   companyInfo,
+  AllProjects
   
 });
 
