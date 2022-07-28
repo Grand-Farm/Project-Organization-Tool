@@ -27,13 +27,18 @@ function CompaninesPage() {
             <Typography variant='h1'>
                 Partners
             </Typography>
-            <CompanyFormPage/>
+            <div>
+                <Typography>
+                    This Paragraph is talking about what this page is. It is very helpful. Good job to who ever made this(Abdishakur).
+                </Typography>
+            </div>
+            <CompanyFormPage />
             <div className='container'>
                 {companyStore.map((company, index) => {
                     {
                         if (company.is_archived === false) {
                             return (
-                                <CompanyCard company={company} i={index} key={company.id}/>
+                                <CompanyCard company={company} i={index} key={company.id} />
                             )
                         }
                     }

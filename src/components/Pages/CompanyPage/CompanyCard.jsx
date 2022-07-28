@@ -110,7 +110,7 @@ function CompanyCard({ company }) {
             >
                 <CardHeader
                     avatar={
-                        <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe"
+                        <Avatar sx={{ bgcolor:'#414d57' }} aria-label="recipe"
 
                         >
                             {company.company_name[0]}
@@ -123,6 +123,7 @@ function CompanyCard({ company }) {
                     {company.company_name}
                 </Typography>
                 <CompanyCardProgress company={company} />
+                
             </CardContent>
             <CardActions disableSpacing>
                 <IconButton
@@ -150,7 +151,7 @@ function CompanyCard({ company }) {
                     return (
                         company.id === info.company_id ?
                             <Typography key={info.company_id}>
-                                Total Projects: {info.total_project}
+                                Total Projects: {info.total_projects}
                             </Typography>
                             :
                             ''

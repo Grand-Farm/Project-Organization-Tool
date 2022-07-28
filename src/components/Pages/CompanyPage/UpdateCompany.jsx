@@ -69,7 +69,7 @@ function UpdateCompany({company}){
         <div className='editButton'>
             <Button onClick={openForm}>Edit</Button>
             <Dialog open={addingCompany} onClose={() => saveForm()}>
-                <DialogTitle>Add New Company</DialogTitle>
+                <DialogTitle>Edit Company</DialogTitle>
                 <DialogContent>
                     <FormControl  sx={{ mt: 2, minWidth: 250 }}>
                         <TextField
