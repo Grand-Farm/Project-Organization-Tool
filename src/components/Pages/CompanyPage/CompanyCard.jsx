@@ -110,16 +110,16 @@ function CompanyCard({ company }) {
                         style={{
                             cursor: 'pointer',
                         }}
-                    >
-                        <CardHeader
-                       
-                            avatar={
-                                <Avatar className='avatar' sx={{ bgcolor: red[500] }} aria-label="recipe"
-                                >
-                                    {company.company_name[0]}
-                                </Avatar>
-                            }
-                        />
+                    >  
+                    <CardHeader
+                        avatar={
+                            <Avatar sx={{ bgcolor:'#414d57' }} aria-label="recipe"
+
+                            >
+                                {company.company_name[0]}
+                            </Avatar>
+                        }
+                    />
                     </CardActions>
                     <CardContent>
                         <Typography style={{color:'#afcc36'}} gutterBottom variant="h5" component="div">
@@ -163,6 +163,7 @@ function CompanyCard({ company }) {
                     </Collapse>
                 </Card>
           
+
     )
 }
 

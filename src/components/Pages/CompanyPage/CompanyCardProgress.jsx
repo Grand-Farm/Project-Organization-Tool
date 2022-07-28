@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
 import { Typography } from '@mui/material';
-import { lightBlue,orange,red } from '@mui/material/colors';
+import { lightBlue, orange, red } from '@mui/material/colors';
 
 
 function CompanyCardProgress({ company }) {
@@ -13,7 +13,7 @@ function CompanyCardProgress({ company }) {
     useEffect(() => {
         colorz.push(lightBlue[100])
     }, [])
-    
+
     function progressColor(amount, max) {
 
         let ratio = ((amount / max) * 100)
@@ -48,14 +48,22 @@ function CompanyCardProgress({ company }) {
                 return (
                     company.id === info.company_id ?
                         <Box key={index}>
-                            <LinearProgress color={progressColor(info.project_hours,company.allocated_hours)} style={{ minwidth: 240, borderRadius: 5, minHeight: 8 }} variant='determinate' value={(info.project_hours / company.allocated_hours) * 100}>
-                            </LinearProgress>
-                            <Typography variant='body2'>
-                                {`${Math.round((info.project_hours / company.allocated_hours) * 100)}%`}
+                            <Typography variant='body1'>
+                                {info.project_hours} / {company.allocated_hours} Hours
                             </Typography>
+                                <LinearProgress
+                                    color={progressColor(info.project_hours, company.allocated_hours)}
+                                    style={{ minwidth: 240, borderRadius: 5, minHeight: 8 }}
+                                    variant='determinate'
+                                    value={((info.project_hours / company.allocated_hours) * 100 )|| 0}
+                                />
+                                <Typography variant='body2'>
+                                    {`${Math.round((info.project_hours / company.allocated_hours) * 100 )}%`}
+                                </Typography>
                         </Box>
                         :
                         ''
+                        
                 )
             })}
         </Box>
