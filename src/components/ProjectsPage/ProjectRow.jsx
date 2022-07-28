@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import { CardActionArea } from '@mui/material';
+import { CardActionArea, CardHeader } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useDispatch } from 'react-redux'
 import Button from '@mui/material/Button';
@@ -30,14 +30,15 @@ import Modal from '@mui/material/Modal';
 
 
 
-function ProjectRow({ project, activity }) {
+function ProjectRow({ project }) {
     console.log('this is project', project)
 
 
     useEffect(() => {
+        console.log("GETTING ACTIVITIES")
         dispatch({ type: "FETCH_ACTIVITY", payload: { projectID: project.id } })
     }, []);
-    console.log('this is activity', activity)
+
 
     const dispatch = useDispatch();
     const [status, setstatus] = useState(project.status);
@@ -104,14 +105,16 @@ function ProjectRow({ project, activity }) {
 
 
     return (
-        <Box sx={{ flexGrow: 1, display: 'inline-flex' }}>
-
-            <Card className="Project Card" elevation={3} sx={{ minWidth: 250, maxWidth: 250, marginTop: 5, marginLeft: 5, marginBottom: 2, marginRight: 5 }}>
+        <Box>
+            <Card className="Project Card" elevation={3} sx={{ minWidth: 250, maxWidth: 250, marginTop: "4em",marginRight:"5em" }}>
                 <Typography
+                    style={{paddingTop:10}}
                     variant="h5"
                     className="projectTitle"
                     onClick={() => viewActivities(project.id)}>
+
                     {project.name}
+
                     {/* <h1>{activity.em}</h1> */}
                 </Typography>
                 <br />

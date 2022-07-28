@@ -18,7 +18,7 @@ function* fetchActivity(action) {
 function* addActivity(action) {
 
     try {
-        yield axios.post(`/api/activity/${action.payload.activityID}`, action.payload)
+        yield axios.post(`/api/activity/`, action.payload)
         console.log('does this work ADDactivity?',action.payload)
         yield put({ type: 'FETCH_ACTIVITY', payload:action.payload})
     } catch {

@@ -14,6 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { width } from '@mui/system';
+import Grid from '@mui/material/Grid';
 import LinearProgress from '@mui/material/LinearProgress';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -35,6 +36,23 @@ function ProjectsList() {
         dispatch({ type: 'FETCH_PROJECTS', payload: { companyID: params.companyid } });
         dispatch({ type: 'FETCH_COMPANY' });
     }, []);
+    function totalFullHours(projects){
+        let sum = 0;
+    
+        for(let i= 0; i< projects.length;i++){
+           sum += Number(projects[i].full_time_sum)
+        }
+        return sum;
+    }
+    
+    function totalInternHours(projects){
+        let internsum = 0;
+    
+        for(let i= 0; i< projects.length;i++){
+           internsum += Number(projects[i].intern_sum)
+        }
+        return internsum;
+    }
     console.log('This is the store', company);
     const projects = useSelector(store => store.projectsReducer);
 
@@ -82,6 +100,10 @@ function ProjectsList() {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const [totalHours, setTotalHours] = useState(totalFullHours(projects) + totalInternHours(projects));
+    const [fullTimeHours, setFullTimeHours] = useState(totalFullHours(projects));
+    const [internHours, setInternHours] = useState(totalInternHours(projects));
+    
 
 
 
@@ -125,12 +147,14 @@ function ProjectsList() {
 
 
 
+
+
     return (
         <><div>
 
             {projects[0] === undefined ?
                 <h1 style={{ textAlign: 'center' }}>Please Add new project</h1>
-                : <Box style={{ color: '#afcc36' }} textAlign='center'><FormControl variant='standard' style={{ marginLeft: 5, width: 500 }}>
+                : <Box style={{ color: '#afcc36' }} textAlign='center'><FormControl variant='standard' style={{ margin: 'auto', width: '50%' }}>
                     <InputLabel style={{ fontSize: 40 }} id="demo-simple-select-label">{projects[0].company_name}</InputLabel>
                     <Select
                         style={{ fontSize: 40 }}
@@ -152,8 +176,9 @@ function ProjectsList() {
 
                     </Select>
                 </FormControl></Box>}
-            <Box style={{ marginLeft: '22.5em', marginTop: '5em' }} sx={{ width: '40%' }}>
-                <Accordion>
+            <Box style={{ margin: 'auto', width: '40%' }}>
+                <br />
+                <Accordion elevation={1}>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel1a-content"
@@ -162,27 +187,39 @@ function ProjectsList() {
                         <Typography>View Hours</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                    <LinearProgress style={{ minwidth: 240, borderRadius: 5, minHeight: 8 }} variant='determinate' />
+                        <LinearProgress style={{ minwidth: 240, borderRadius: 5, minHeight: 8 }} variant='determinate' />
                         <Typography>
-                        Total Current Hours: 40 
+                            Total Current Hours: {totalHours}
                         </Typography>
-                        <br/>
+                        <br />
                         <Typography>
-                        Total Full-Time Hours: 20/40 
+                            Total Full-Time Hours: {fullTimeHours}/{totalHours}
                         </Typography>
                         <Typography>
-                        Total Intern Hours: 20/40 
+                            Total Intern Hours: {internHours}/{totalHours}
                         </Typography>
                     </AccordionDetails>
                 </Accordion>
             </Box>
-        </div><div>
+        </div>
 
-                <br />
+            <br />
+            <div>
+                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: "center", alignItems: "center" }} >
+                    {/* <Grid>
+                    <Grid item xs={12} md={6} lg={6}> */}
 
-                <h1 style={{ margin: 'auto', display: 'inline-block', padding: '3em 0px 0px 12em', marginRight: '5em' }} > Current Projects</h1>
-                <Button style={{ backgroundColor: '#afcc36' }} onClick={handleOpen} variant="contained">add new project</Button>
+                    <h1 style={{}}> Current Projects</h1>
+                    {/* </Grid> */}
+                    {/* <Grid item xs={12} md={6} lg={6}> */}
+                    <div>
+                        <Button style={{ backgroundColor: '#afcc36', marginLeft: "4rem" }} onClick={handleOpen} variant="contained">add new project</Button>
+                    </div>
 
+                </div>
+                {/* </Grid>
+
+                </Grid> */}
                 <Modal
                     open={open}
                     onClose={handleClose}
@@ -202,10 +239,12 @@ function ProjectsList() {
                         </Typography>
                     </Box>
                 </Modal>
-                <br />
-                {projects.map((project) => <ProjectRow key={project.id} project={project} activity={activity} />)}
+                <Grid item xs={12} md={3} lg={3} style={{display: "flex", justifyContent: "space-around", flexWrap: "wrap", marginLeft: "5%", marginRight: "5%"}}>
+                    {projects.map((project) => <ProjectRow key={project.id} project={project} />)}
+                </Grid>
 
-            </div></>
+            </div>
+        </>
 
 
     )

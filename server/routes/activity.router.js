@@ -9,7 +9,8 @@ const {
 
 router.get('/:projectID',rejectUnauthenticated, (req, res) => {
     console.log('activity-get-router running', req.params.projectID)
-    const query = `Select activity.type, activity.full_time_hours,activity.intern_hours,activity.employees,
+    const query = `Select activity.type, activity.full_time_hours,activity.intern_hours,
+    activity.employees,
     activity.id,activity.notes,activity.activity_date From activity
     JOIN "projects" on activity.projects_id=projects.id
     Where projects.id = $1
@@ -27,7 +28,7 @@ router.post('/', (req, res) => {
     const queryText= `INSERT INTO "activity"("type","employees","notes","full_time_hours","intern_hours","activity_date","projects_id")
     VALUES($1,$2,$3,$4,$5,$6,$7);
     `
-        pool.query(queryText,[req.body.type,req.body.employees,req.body.notes,req.body.fullHours,req.body.internHours,req.body.date,req.body.projectID])
+        pool.query(queryText,[req.body.type,req.body.employees,req.body.notes,Number(req.body.fullHours),Number(req.body.internHours),req.body.date,req.body.projectID])
         .then((result)=>{
           console.log('this is in server POST for activity', req.body.type)
             res.sendStatus(201)
