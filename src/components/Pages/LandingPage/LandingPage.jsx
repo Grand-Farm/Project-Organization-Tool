@@ -2,15 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import './LandingPage.css';
 import Tab from '@mui/material/Tab';
-import TabContext from '@mui/lab/TabContext';
-import TabList from '@mui/lab/TabList';
-import TabPanel from '@mui/lab/TabPanel';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { purple, red, blueGrey } from '@mui/material/colors';
 import LoginForm from '../../Auth/LoginForm/LoginForm';
 import Grid from '@mui/material/Grid';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
+
 
 // CUSTOM COMPONENTS
 import RegisterForm from '../../Auth/RegisterForm/RegisterForm';

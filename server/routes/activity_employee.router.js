@@ -6,22 +6,7 @@ const {
   } = require('../modules/authentication-middleware');
     
 
-// router.get('/:activityID', rejectUnauthenticated, (req, res) => {
-//     console.log('employee-Activity GET',req.params.activityID)
-//     const query = `SELECT 
-// 	"user"."username" as "employee" FROM activity_employee
-// JOIN "activity" on activity_employee.activity_id=activity.id
-// JOIN "projects" on activity.projects_id=projects.id
-// join "user" on  activity_employee.user_id= "user".id
-// WHERE activity.id=$1
-// GROUP BY "user"."username"`
-//     pool.query(query,[req.params.activityID])
-//     .then(result =>{
-//         res.send(result.rows)
-//     }).catch((err)=>{
-//         console.log('get employee-activity error',err)
-//     })
-// });
+
 
 router.get('/', rejectUnauthenticated, (req, res) => {
     const query = ` SELECT 

@@ -152,9 +152,6 @@ export default function ActivityPage() {
 
         })
 
-    // const typeInput = ()=>{
-    //     setType(event.)
-    // }
 
 
 
