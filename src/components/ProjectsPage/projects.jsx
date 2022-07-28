@@ -32,7 +32,7 @@ const style = {
     p: 4,
 };
 
-function ProjectsList() {    
+function ProjectsList() {
     const params = useParams();
     const history = useHistory();
     const dispatch = useDispatch();
@@ -40,14 +40,15 @@ function ProjectsList() {
     const projects = useSelector(store => store.projectsReducer);
     const companies = useSelector(store => store.company); // array of companies
     console.log('This is Company store', companies);
-    
-    
+
+
     const [status, setstatus] = useState("not_completed");
     const [newBudgetedHours, setNewBudgetedHours] = useState(0);
     const [newName, setNewName] = useState("");
     const [newManager, setNewManager] = useState();
     const [newDescription, setNewDescription] = useState("");
     const [open, setOpen] = useState(false);
+    const [showOptions, setShowOptions] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
@@ -57,12 +58,12 @@ function ProjectsList() {
     console.log(`Current Status: ${status}`)
 
     let currentCompany = companies.find(c => Number(c.id) === Number(params.companyid));
-    
+
     useEffect(() => {
         dispatch({ type: 'FETCH_PROJECTS', payload: { companyID: params.companyid } });
         dispatch({ type: 'FETCH_COMPANY' });
     }, []);
-    
+
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
     }
@@ -98,34 +99,55 @@ function ProjectsList() {
     return (
         <><div>
 
-            {projects.projects[0] === undefined 
-                ? <h1 style={{ textAlign: 'center' }}>Please Add new project</h1>
-                : <Box style={{ color: '#afcc36' }} textAlign='center'><FormControl variant='standard' style={{ margin: 'auto', width: '50%' }}>
-                    <InputLabel style={{ fontSize: 40 }} id="demo-simple-select-label">{projects.projects[0].company_name}</InputLabel>
-                    <Select
-                        style={{ fontSize: 40 }}
-                        onChange={(e) => setComapnyName(e.target.value)}
-                        value={currentCompany.company_name}
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        label="Name"
-                    >
-                        {companies.map((company) => {
-                            {
-                                if (company.is_archived === false) {
-                                    return (
-                                        <MenuItem 
-                                            value={company.company_name} 
-                                            onClick={() => switchProjects(company.id)} key={company.id}>
-                                                {company.company_name}
-                                        </MenuItem>
-                                    );
-                                }
-                            }
-                        })}
 
-                    </Select>
-                </FormControl></Box>}
+            <Box style={{ color: '#afcc36', marginTop: '7em' }} textAlign='center' >
+                
+
+                    {showOptions === false ?
+                    <div className='companyTitle'>
+                        <Typography 
+                            variant='h1' 
+                            onClick={()=>setShowOptions(!showOptions)}
+                            style={{cursor:'pointer'}}
+                        >
+                            {currentCompany.company_name}
+                        </Typography>
+                    </div>
+                        :
+                        <Box>
+                            <Typography>
+                                Select A Different Company
+                            </Typography>
+                        
+                        <FormControl variant='standard' style={{ margin: 'auto', width: '50%' }}>
+                        <Select
+                            style={{ fontSize: 40 }}
+                            onChange={(e) => setComapnyName(e.target.value)}
+                            value={currentCompany.company_name}
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            label="Name"
+                        >
+
+                            {companies.map((company) => {
+                                {
+                                    if (company.is_archived === false) {
+                                        return (
+                                            <MenuItem
+                                                value={company.company_name}
+                                                onClick={() => switchProjects(company.id)} key={company.id}>
+                                                {company.company_name}
+                                            </MenuItem>
+                                        );
+                                    }
+                                }
+                            })}
+                        </Select>
+                </FormControl>
+                        </Box>
+
+}
+            </Box>
             <Box style={{ margin: 'auto', width: '40%' }}>
                 <br />
                 <Accordion elevation={1}>
@@ -137,7 +159,6 @@ function ProjectsList() {
                         <Typography>View Hours</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                        <LinearProgress style={{ minwidth: 240, borderRadius: 5, minHeight: 8 }} variant='determinate' />
                         <Typography>
                             Total Current Hours: {totalHours || 'n/a'}
                         </Typography>
@@ -182,7 +203,7 @@ function ProjectsList() {
                         </Typography>
                         <Typography id="modal-modal-description" sx={{ mt: 4 }}>
                             <TextField value={newName} onChange={(e) => setNewName(e.target.value)} id="outlined-basic" label='name' variant="outlined" />
-                            <TextField value={newBudgetedHours} onChange={(e) => setNewBudgetedHours(e.target.value)} id="outlined-basic" label='budgeted hours' variant="outlined" />
+                            <TextField type='number' value={newBudgetedHours} onChange={(e) => setNewBudgetedHours(e.target.value)} id="outlined-basic" label='budgeted hours' variant="outlined" />
                             <TextField value={newManager} onChange={(e) => setNewManager(e.target.value)} id="outlined-basic" label='Project Manager' variant="outlined" />
                             <TextField value={newDescription} onChange={(e) => setNewDescription(e.target.value)} id="outlined-basic" label='description' variant="outlined" />
                             <Button onClick={newProject} variant="contained">Add</Button>

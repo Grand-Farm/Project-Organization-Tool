@@ -45,9 +45,6 @@ function Nav() {
               <Link className='navLink' to='/archives'>
                 Archives
               </Link>
-              <Link className="navLink" to="/about">
-                About
-              </Link>
               {user.is_admin ?
                 <Link onClick={() => setIsOpen(false)} className="navLink" to="/admin">
                   Admin
@@ -79,10 +76,7 @@ function Nav() {
                       Archives
                     </Link>
                     <hr />
-                    <Link onClick={() => setIsOpen(false)} className="navLink" to="/about">
-                      About
-                    </Link>
-                    <hr />
+                   
                     {user.is_admin ?
                       <Link onClick={() => setIsOpen(false)} className="navLink" to="/admin">
                         Admin

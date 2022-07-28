@@ -96,73 +96,74 @@ function CompanyCard({ company }) {
 
     return (
 
-                <Card className='content'
-                    sx={{ minWidth: 300, maxWidth: 300, pb: 2 }}
-                    style={{
-                        width: '25vw',
-                        transitionDuration: '0.3s',
-                        height: 'fit-content'
-                    }}
+        <Card className='content'
+            elevation={3}
+            sx={{ minWidth: 300, maxWidth: 300, pb: 2 }}
+            style={{
+                width: '25vw',
+                transitionDuration: '0.3s',
+                height: 'fit-content'
+            }}
+        >
+            <CardActions
+                className='ClickCompany'
+                onClick={() => viewProjects(company.id)}
+                style={{
+                    cursor: 'pointer',
+                }}
+            >
+                <CardHeader
+                    avatar={
+                        <Avatar sx={{ bgcolor: '#414d57' }} aria-label="recipe"
+
+                        >
+                            {company.company_name[0]}
+                        </Avatar>
+                    }
+                />
+            </CardActions>
+            <CardContent>
+                <Typography style={{ color: '#afcc36' }} gutterBottom variant="h5" component="div">
+                    {company.company_name}
+                </Typography>
+                <CompanyCardProgress company={company} />
+            </CardContent>
+            <CardActions disableSpacing>
+                <IconButton
+                    aria-label="settings"
+                    onClick={() => archiveAlert()}
                 >
-                    <CardActions
-                     className='ClickCompany'
-                        onClick={() => viewProjects(company.id)}
-                        style={{
-                            cursor: 'pointer',
-                        }}
-                    >  
-                    <CardHeader
-                        avatar={
-                            <Avatar sx={{ bgcolor:'#414d57' }} aria-label="recipe"
+                    <ArchiveIcon />
+                </IconButton>
+                <ExpandMore
+                    expand={expanded}
+                    onClick={() => handleExpandClick(company.id)}
+                    aria-expanded={expanded}
+                    aria-label="show more"
+                >
+                    <ExpandMoreIcon />
+                </ExpandMore>
+            </CardActions>
+            <Collapse in={selectedId[company.id]} timeout="auto" unmountOnExit sx={{ pl: 2 }}>
+                <Typography>
 
-                            >
-                                {company.company_name[0]}
-                            </Avatar>
-                        }
-                    />
-                    </CardActions>
-                    <CardContent>
-                        <Typography style={{color:'#afcc36'}} gutterBottom variant="h5" component="div">
-                            {company.company_name}
-                        </Typography>
-                        <CompanyCardProgress company={company} />
-                    </CardContent>
-                    <CardActions disableSpacing>
-                        <IconButton
-                            aria-label="settings"
-                            onClick={() => archiveAlert()}
-                        >
-                            <ArchiveIcon />
-                        </IconButton>
-                        <ExpandMore
-                            expand={expanded}
-                            onClick={() => handleExpandClick(company.id)}
-                            aria-expanded={expanded}
-                            aria-label="show more"
-                        >
-                            <ExpandMoreIcon />
-                        </ExpandMore>
-                    </CardActions>
-                    <Collapse in={selectedId[company.id]} timeout="auto" unmountOnExit sx={{ pl: 2 }}>
-                        <Typography>
+                    Contract End: {(moment(company.contract_end).format('l'))}
 
-                            Contract End: {(moment(company.contract_end).format('l'))}
+                </Typography>
+                {companyInfoStore.map((info, index) => {
+                    return (
+                        company.id === info.company_id ?
+                            <Typography key={info.company_id}>
+                                Total Projects: {info.total_project}
+                            </Typography>
+                            :
+                            ''
+                    )
+                })}
+                <UpdateCompany company={company} />
+            </Collapse>
+        </Card>
 
-                        </Typography>
-                        {companyInfoStore.map((info, index) => {
-                            return (
-                                company.id === info.company_id ?
-                                    <Typography key={info.company_id}>
-                                        Total Projects: {info.total_project}
-                                    </Typography>
-                                    :
-                                    ''
-                            )
-                        })}
-                        <UpdateCompany company={company} />
-                    </Collapse>
-                </Card>
-          
 
     )
 }
