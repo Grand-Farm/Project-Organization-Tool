@@ -120,10 +120,6 @@ function ProjectRow({ project }) {
                         {project.name}
                     </Typography>
                 </CardActionArea>
-                {/* <br />
-                <br />
-                <br />
-                <br /> */}
 
                 <Accordion elevation={0} expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
                     <AccordionSummary
