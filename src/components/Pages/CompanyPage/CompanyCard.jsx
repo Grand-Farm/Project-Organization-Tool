@@ -154,7 +154,7 @@ function CompanyCard({ company }) {
                     return (
                         company.id === info.company_id ?
                             <Typography key={info.company_id}>
-                                Total Projects: {info.total_project}
+                                Total Projects: {info.total_projects}
                             </Typography>
                             :
                             ''

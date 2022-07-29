@@ -88,15 +88,16 @@ function ArchivedCompanyPage({company}){
                 height: 'fit-content'
             }}
         >
-            <CardActions 
+            <CardActions
+                className='ClickCompany'
                 onClick={() => viewProjects(company.id)}
                 style={{
-                    cursor:'pointer',
+                    cursor: 'pointer',
                 }}
             >
                 <CardHeader
                     avatar={
-                        <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe"
+                        <Avatar sx={{ bgcolor: '#414d57' }} aria-label="recipe"
 
                         >
                             {company.company_name[0]}

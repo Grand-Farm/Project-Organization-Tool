@@ -146,13 +146,14 @@ color: #e01616;
 }
 
 .partners{
- width: 100%;
- text-align: left;
+ text-align: center;
  color: black;
  height: 12em;
  display: flex;
  align-items: center;
  margin-top:5%;
+ justify-content: center;
+
 }
 
 

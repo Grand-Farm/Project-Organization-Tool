@@ -28,7 +28,7 @@ function CompaninesPage() {
     return (
         <div className='landingCompany'>
             <div className='partners'>
-                <Typography style={{ lineHeight: '1.375em', margin: '0.1em 0', marginRight:'2%',fontSize:'5em',fontWeight:300, borderBottom:"2px solid #244c62 " }} variant='h3'>
+                <Typography style={{lineHeight: '1.375em', margin: '0.1em 0', marginRight:'2%',fontSize:'5em',fontWeight:300, borderBottom:"2px solid #244c62 " }} variant='h3'>
                     Partners
                 </Typography>
                 <CompanyFormPage  />

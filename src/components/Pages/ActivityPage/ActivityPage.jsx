@@ -21,6 +21,8 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import swal from 'sweetalert';
+
 
 
 
@@ -60,6 +62,14 @@ export default function ActivityPage() {
 
     const changeActivity = (values) => {
         console.log('these are values', values)
+        swal({
+            title: "Changes",
+            icon: "success",
+            timer:1500,
+           button:'close early'
+          
+          });
+
         return (
             setDate(values.Date),
             dispatch({ type: "UPDATE_ACTIVITY", payload: { projectID: params.projectID, activityID: values.id, type: values.Type, notes: values.Notes, fullHours: values.fulltime, internHours: values.intern, date: values.Date, employees: values.Employees } }),
@@ -126,7 +136,7 @@ export default function ActivityPage() {
         <div>
             {/* Title Div */}
             <div className='partners'>
-                <Typography style={{ lineHeight: '1.375em', margin: '0.1em 0', marginRight: '2%', fontSize: '5em', fontWeight: 300, borderBottom: "2px solid #244c62" }} variant='h3'>
+                <Typography style={{ lineHeight: '1.375em', margin: '0.1em 0',  fontSize: '5em', fontWeight: 300, borderBottom: "2px solid #244c62" }} variant='h3'>
                     Activities
                 </Typography>
             </div>

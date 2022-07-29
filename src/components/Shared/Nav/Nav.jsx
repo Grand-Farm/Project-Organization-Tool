@@ -76,7 +76,7 @@ function Nav() {
                       Archives
                     </Link>
                     <hr />
-                   
+
                     {user.is_admin ?
                       <Link onClick={() => setIsOpen(false)} className="navLink" to="/admin">
                         Admin
