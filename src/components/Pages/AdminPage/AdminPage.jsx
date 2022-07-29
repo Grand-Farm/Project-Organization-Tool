@@ -74,12 +74,12 @@ function AdminPage() {
       {user.is_admin ?
         <Box sx={{ flexGrow: 1 }}>
 
-<div className='partners'>
-                <Typography style={{ lineHeight: '1.375em', margin: '0.1em 0', marginRight:'2%',fontSize:'5em',fontWeight:300, borderBottom:"2px solid #244c62 " }}  variant='h3'>
-                    Dashboard
-                </Typography>
-              
-            </div>
+          <div className='partners'>
+            <Typography style={{ lineHeight: '1.375em', margin: '0.1em 0', marginRight: '2%', fontSize: '5em', fontWeight: 300, borderBottom: "2px solid #244c62 " }} variant='h3'>
+              Dashboard
+            </Typography>
+
+          </div>
 
 
           <Grid container spacing={2} sx={{ mb: 1 }}>
@@ -89,7 +89,7 @@ function AdminPage() {
                   <RegisterForm />
                   <Box>
                     <Typography>
-                      User List
+                      <strong>User List</strong>
                     </Typography>
                     <UserList />
                   </Box>
