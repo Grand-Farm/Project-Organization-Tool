@@ -39,7 +39,7 @@ function ProjectsList() {
 
     const projects = useSelector(store => store.projectsReducer);
     const companies = useSelector(store => store.company); // array of companies
-    console.log('This is Company store', companies);
+    console.log('This is Company store', projects);
 
 
     const [status, setstatus] = useState("not_completed");
@@ -101,52 +101,52 @@ function ProjectsList() {
 
 
             <Box style={{ color: '#afcc36', marginTop: '7em' }} textAlign='center' >
-                
 
-                    {showOptions === false ?
+
+                {showOptions === false ?
                     <div className='companyTitle'>
-                        <Typography 
-                            variant='h1' 
-                            onClick={()=>setShowOptions(!showOptions)}
-                            style={{cursor:'pointer'}}
+                        <Typography
+                            variant='h1'
+                            onClick={() => setShowOptions(!showOptions)}
+                            style={{ cursor: 'pointer' }}
                         >
                             {currentCompany.company_name}
                         </Typography>
                     </div>
-                        :
-                        <Box>
-                            <Typography>
-                                Select A Different Company
-                            </Typography>
-                        
+                    :
+                    <Box>
+                        <Typography>
+                            Select A Different Company
+                        </Typography>
+
                         <FormControl variant='standard' style={{ margin: 'auto', width: '50%' }}>
-                        <Select
-                            style={{ fontSize: 40 }}
-                            onChange={(e) => setComapnyName(e.target.value)}
-                            value={currentCompany.company_name}
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            label="Name"
-                        >
+                            <Select
+                                style={{ fontSize: 40 }}
+                                onChange={(e) => setComapnyName(e.target.value)}
+                                value={currentCompany.company_name}
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                label="Name"
+                            >
 
-                            {companies.map((company) => {
-                                {
-                                    if (company.is_archived === false) {
-                                        return (
-                                            <MenuItem
-                                                value={company.company_name}
-                                                onClick={() => switchProjects(company.id)} key={company.id}>
-                                                {company.company_name}
-                                            </MenuItem>
-                                        );
+                                {companies.map((company) => {
+                                    {
+                                        if (company.is_archived === false) {
+                                            return (
+                                                <MenuItem
+                                                    value={company.company_name}
+                                                    onClick={() => switchProjects(company.id)} key={company.id}>
+                                                    {company.company_name}
+                                                </MenuItem>
+                                            );
+                                        }
                                     }
-                                }
-                            })}
-                        </Select>
-                </FormControl>
-                        </Box>
+                                })}
+                            </Select>
+                        </FormControl>
+                    </Box>
 
-}
+                }
             </Box>
             <Box style={{ margin: 'auto', width: '40%' }}>
                 <br />
@@ -176,18 +176,19 @@ function ProjectsList() {
 
             <br />
             <div>
-                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: "center", alignItems: "center" }} >
-                    {/* <Grid>
-                    <Grid item xs={12} md={6} lg={6}> */}
-
-                    <h1 style={{}}> Current Projects</h1>
-                    {/* </Grid> */}
-                    {/* <Grid item xs={12} md={6} lg={6}> */}
-                    <div>
+                    {projects.projects.length === 0 ?
+                    <center>
                         <Button style={{ backgroundColor: '#afcc36', marginLeft: "4rem" }} onClick={handleOpen} variant="contained">add new project</Button>
-                    </div>
+                        </center>
+                        :
+                        <div className='partners'  >
+                            <Typography style={{ lineHeight: '1.375em', margin: '0.1em 0', fontSize: '2.5em', fontWeight: 300, borderBottom: "2px solid #244c62" }} variant='h3'>
+                                Current Projects
+                            </Typography>
+                            <Button style={{ backgroundColor: '#afcc36', marginLeft: "4rem" }} onClick={handleOpen} variant="contained">add new project</Button>
+                        </div>
+                    }
 
-                </div>
                 {/* </Grid>
 
                 </Grid> */}
@@ -201,12 +202,13 @@ function ProjectsList() {
                         <Typography id="modal-modal-title" variant="h6" component="h2">
                             New Project
                         </Typography>
-                        <Typography id="modal-modal-description" sx={{ mt: 4 }}>
+                        <Typography className="modal-modal-description" sx={{ mt: 4 }}>
                             <TextField value={newName} onChange={(e) => setNewName(e.target.value)} id="outlined-basic" label='name' variant="outlined" />
                             <TextField type='number' value={newBudgetedHours} onChange={(e) => setNewBudgetedHours(e.target.value)} id="outlined-basic" label='budgeted hours' variant="outlined" />
                             <TextField value={newManager} onChange={(e) => setNewManager(e.target.value)} id="outlined-basic" label='Project Manager' variant="outlined" />
                             <TextField value={newDescription} onChange={(e) => setNewDescription(e.target.value)} id="outlined-basic" label='description' variant="outlined" />
-                            <Button onClick={newProject} variant="contained">Add</Button>
+                            <Button style={{ marginLeft: '80%' }} onClick={newProject} variant="contained">Add</Button>
+
                         </Typography>
                     </Box>
                 </Modal>

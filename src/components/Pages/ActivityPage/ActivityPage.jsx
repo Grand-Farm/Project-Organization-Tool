@@ -21,6 +21,8 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import swal from 'sweetalert';
+
 
 
 
@@ -29,6 +31,7 @@ export default function ActivityPage() {
     const activity = useSelector((store => store.activity))
     const employee = useSelector((store => store.employee))
     const params = useParams();
+    // Making react state
     const [type, setType] = useState('');
     const [notes, setNotes] = useState('');
     const [fullHours, setFullHours] = useState('');
@@ -41,22 +44,12 @@ export default function ActivityPage() {
     const [editActivity, setEditActivity] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    const handleClickOpen = () => setClickOpen(true);
-    const handleClickClose = () => setClickOpen(false);
-    const handleEditOpen = () => setEditOpen(true);
-    const handleEditClose = () => setEditOpen(false);
     const handleActivityOpen = () => setEditActivity(true);
     const handleActivityClose = () => setEditActivity(false);
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
 
-
-
-    const handleChange = (event) => {
-        setType(event.target.value);
-    };
-
-
+    // Button on click handlers
     const addActivity = () => {
         return (
             dispatch({ type: "ADD_ACTIVITY", payload: { projectID: params.projectID, type, fullHours, internHours, date, employees, notes } }),
@@ -64,62 +57,42 @@ export default function ActivityPage() {
             setNotes(''),
             setDate(''),
             handleClose()
-            //  dispatch({ type: "ADD_EMPLOYEE", payload: { projectID:2,activityID:taskNumber,hours} })
-
         )
     };
 
-
-
     const changeActivity = (values) => {
         console.log('these are values', values)
+        swal({
+            title: "Changes",
+            icon: "success",
+            timer:1500,
+           button:'close early'
+          
+          });
+
         return (
             setDate(values.Date),
             dispatch({ type: "UPDATE_ACTIVITY", payload: { projectID: params.projectID, activityID: values.id, type: values.Type, notes: values.Notes, fullHours: values.fulltime, internHours: values.intern, date: values.Date, employees: values.Employees } }),
             handleActivityClose()
-
         )
     };
 
-
-
-
-    const style = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: 400,
-        bgcolor: 'background.paper',
-        border: '2px solid #000',
-        boxShadow: 24,
-        p: 4,
+    const handleChange = (event) => {
+        setType(event.target.value);
     };
 
-
-    useEffect(() => {
-        dispatch({ type: "FETCH_USER" }),
-            dispatch({ type: "FETCH_ACTIVITY", payload: { projectID: params.projectID } })
-        dispatch({ type: "FETCH_EMPLOYEES" })
-    }, [])
+    // Data Grid Columns
     const columns = [
         { field: 'id', headerClassName: 'ColumnColor', headerName: 'ID', flex: .3 },
         { field: 'Type', headerClassName: 'ColumnColor', headerName: 'Activity', flex: .5, editable: true, },
         { field: 'Employees', headerClassName: 'ColumnColor', headerName: 'Employees', flex: .5, editable: true, },
-        {
-            field: 'Date',
-            headerName: 'Date',
-            editable: true,
-            type: 'string',
-            flex: .3,
-            headerClassName: 'ColumnColor'
-        },
+        { field: 'Date', headerName: 'Date', editable: true, type: 'string', flex: .3, headerClassName: 'ColumnColor' },
         { field: 'fulltime', headerName: 'full-time-Hours', flex: .7, headerClassName: 'ColumnColor', editable: true, },
         { field: 'intern', headerName: 'intern-Hours', flex: .5, headerClassName: 'ColumnColor', editable: true, },
-
         { field: 'Notes', headerName: 'Notes', flex: 1.5, headerClassName: 'ColumnColor', editable: true, },
         {
-            field: 'button', headerName: '', flex: .5, headerClassName: 'ColumnColor', renderCell: (cellValues) => {
+            field: 'button', headerName: '', flex: .5, headerClassName: 'ColumnColor',
+            renderCell: (cellValues) => {
                 return (
                     <Button
                         variant="text"
@@ -135,9 +108,9 @@ export default function ActivityPage() {
         }
     ];
 
+    // Data Grid Rows
     let rows =
         activity.map((a, i) => {
-
             <Button>employee</Button>
             return {
                 id: a.id,
@@ -147,27 +120,33 @@ export default function ActivityPage() {
                 intern: a.intern_hours,
                 Date: (moment(a.activity_date).format('l')),
                 Notes: a.notes
-
             }
-
         })
+
+    useEffect(() => {
+        dispatch({ type: "FETCH_USER" }),
+            dispatch({ type: "FETCH_ACTIVITY", payload: { projectID: params.projectID } })
+        dispatch({ type: "FETCH_EMPLOYEES" })
+    }, [])
 
 
 
 
     return (
         <div>
+            {/* Title Div */}
             <div className='partners'>
-                <Typography style={{ lineHeight: '1.375em', margin: '0.1em 0', marginRight:'2%',fontSize:'5em',fontWeight:300, }} variant='h3'>
+                <Typography style={{ lineHeight: '1.375em', margin: '0.1em 0',  fontSize: '5em', fontWeight: 300, borderBottom: "2px solid #244c62" }} variant='h3'>
                     Activities
                 </Typography>
             </div>
+
             <Box style={{ marginBottom: '.5%' }}>
                 <Button className='optionButtons' onClick={handleOpen} size='small' variant='outlined'>Add Activity</Button>
                 <Button className='optionButtons' onClick={handleActivityOpen} size='small' variant='outlined'>Edit Activity</Button>
             </Box>
 
-
+            {/* Dialog popup for inserting a new activity */}
             <Dialog
                 fullScreen={fullScreen}
                 open={open}
@@ -270,7 +249,7 @@ export default function ActivityPage() {
                     </Button>
                 </DialogActions>
             </Dialog>
-
+            {/* Dialog popup for EDITING an activity */}
 
             <Dialog
                 fullScreen={fullScreen}
@@ -284,6 +263,34 @@ export default function ActivityPage() {
                 <DialogContent>
                     <DialogContentText>
 
+                     
+
+                        <Box sx={{ minWidth: 120 }}>
+                            <FormControl fullWidth>
+                                <InputLabel>Activity</InputLabel>
+                                <Select
+                                    value={type}
+                                    label="Activity"
+                                    onChange={handleChange}
+                                >
+                                    <MenuItem value={'Training'}>Training</MenuItem>
+                                    <MenuItem value={'Innovation Consulting'}>Innovation Consulting</MenuItem>
+                                    <MenuItem value={'Project Meeting'}>Project Meeting</MenuItem>
+                                    <MenuItem value={'Internal Meeting'}>Internal Meeting</MenuItem>
+                                    <MenuItem value={'External Meeting'}>External Meeting</MenuItem>
+                                    <MenuItem value={'Calls'}>Calls</MenuItem>
+                                    <MenuItem value={'Emails'}>Emails</MenuItem>
+                                    <MenuItem value={'Research'}>Research</MenuItem>
+                                    <MenuItem value={'Report'}>Report</MenuItem>
+                                    <MenuItem value={'PM'}>PM</MenuItem>
+                                    <MenuItem value={'Misc.'}>Misc.</MenuItem>
+                                    <MenuItem value={'Field Time'}>Field Time</MenuItem>
+                                    <MenuItem value={'Stakeholder Interview'}>Stakeholder Interview</MenuItem>
+                                    <MenuItem value={'Observations'}>Observations</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Box>
+
                         <TextField
                             autoFocus
                             margin="dense"
@@ -293,17 +300,6 @@ export default function ActivityPage() {
                             variant="standard"
                             value={taskNumber}
                             onChange={(event) => setTaskNumber(event.target.value)}
-                        />
-
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            label=" Rename Activity"
-                            type="string"
-                            fullWidth
-                            variant="standard"
-                            value={type}
-                            onChange={(event) => setType(event.target.value)}
                         />
 
                         <TextField
@@ -346,8 +342,7 @@ export default function ActivityPage() {
                     </Button>
                 </DialogActions>
             </Dialog>
-
-
+            {/* Data Grid component render */}
             <div className='boxClass'>
                 <Box style={{ display: 'flex', height: '100%', flexGrow: 1, width: '100%' }}>
                     <DataGrid

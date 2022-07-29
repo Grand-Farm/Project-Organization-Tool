@@ -144,20 +144,18 @@ color: #e01616;
 .projectTitle{
   text-align: center;
 }
-.projectHeader:hover{
-  background-color: #afcc36 ;
-  opacity: 80%;
-}
+
 .partners{
- width: 100%;
- text-align: left;
+ text-align: center;
  color: black;
  height: 12em;
  display: flex;
  align-items: center;
  margin-top:5%;
+ justify-content: center;
 
 }
+
 
 
 
