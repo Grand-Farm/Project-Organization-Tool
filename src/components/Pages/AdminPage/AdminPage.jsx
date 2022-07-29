@@ -89,7 +89,7 @@ function AdminPage() {
                   <RegisterForm />
                   <Box>
                     <Typography>
-                      User List
+                      <strong>User List</strong>
                     </Typography>
                     <UserList />
                   </Box>

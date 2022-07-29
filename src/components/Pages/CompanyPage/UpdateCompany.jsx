@@ -15,7 +15,7 @@ import moment from 'moment';
 import swal from 'sweetalert';
 
 
-function UpdateCompany({company}){
+function UpdateCompany({ company }) {
 
     const companyStore = useSelector(store => store.company);
     const dispatch = useDispatch();
@@ -65,13 +65,22 @@ function UpdateCompany({company}){
         setAddingCompany(false);
     }
 
-    return(
+    return (
         <div className='editButton'>
-            <Button onClick={openForm}>Edit</Button>
+            <Button
+                style={{ 
+                    backgroundColor: '#afcc36', 
+                    color: 'white',
+                    marginTop: '1rem' 
+                }}
+                onClick={openForm}
+            >
+                Edit
+            </Button>
             <Dialog open={addingCompany} onClose={() => saveForm()}>
                 <DialogTitle>Edit Company</DialogTitle>
                 <DialogContent>
-                    <FormControl  sx={{ mt: 2, minWidth: 250 }}>
+                    <FormControl sx={{ mt: 2, minWidth: 250 }}>
                         <TextField
                             autoFocus
                             // margin="dense"
