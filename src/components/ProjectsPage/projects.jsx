@@ -201,12 +201,13 @@ function ProjectsList() {
                         <Typography id="modal-modal-title" variant="h6" component="h2">
                             New Project
                         </Typography>
-                        <Typography id="modal-modal-description" sx={{ mt: 4 }}>
-                            <TextField value={newName} onChange={(e) => setNewName(e.target.value)} id="outlined-basic" label='name' variant="outlined" />
+                        <Typography className="modal-modal-description" sx={{ mt: 4 }}>
+                            <TextField  value={newName} onChange={(e) => setNewName(e.target.value)} id="outlined-basic" label='name' variant="outlined" />
                             <TextField type='number' value={newBudgetedHours} onChange={(e) => setNewBudgetedHours(e.target.value)} id="outlined-basic" label='budgeted hours' variant="outlined" />
                             <TextField value={newManager} onChange={(e) => setNewManager(e.target.value)} id="outlined-basic" label='Project Manager' variant="outlined" />
                             <TextField value={newDescription} onChange={(e) => setNewDescription(e.target.value)} id="outlined-basic" label='description' variant="outlined" />
-                            <Button onClick={newProject} variant="contained">Add</Button>
+                            <Button style={{marginLeft:'80%'}} onClick={newProject} variant="contained">Add</Button>
+                           
                         </Typography>
                     </Box>
                 </Modal>

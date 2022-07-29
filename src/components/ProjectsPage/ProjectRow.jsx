@@ -21,6 +21,7 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Modal from '@mui/material/Modal';
+import EditIcon from '@mui/icons-material/Edit';
 
 
 
@@ -106,13 +107,13 @@ function ProjectRow({ project }) {
 
     return (
         <Box>
-            <Card className="Project Card" elevation={3} sx={{ minWidth: 250, maxWidth: 250, marginTop: "4em", marginRight: "5em" }}>
+            <Card  className="Project Card" elevation={3} sx={{ minWidth: 250, maxWidth: 250, marginTop: "4em", marginRight: "5em" }}>
                 <CardActionArea
                     onClick={() => viewActivities(project.id)}
                     className='projectHeader'
                 >
                     <Typography
-                        style={{ paddingTop: 10 }}
+                        style={{ paddingTop: 10,color: '#afcc36' }}
                         variant="h5"
                         className="projectTitle"
                     >
@@ -125,15 +126,15 @@ function ProjectRow({ project }) {
                 <br />
                 <br /> */}
 
-                <Accordion elevation={0} expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+                <Accordion  elevation={0} expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
                     <AccordionSummary
 
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel1bh-content"
                         id="panel1bh-header"
                     >
-                        <Typography sx={{ width: '33%', flexShrink: 0 }}>
-                            Description
+                        <Typography sx={{ width: '33%', flexShrink: 0,marginTop:'1em' }}>
+                           <strong>Description</strong> 
                         </Typography>
                     </AccordionSummary>
                     <AccordionDetails>
@@ -145,8 +146,6 @@ function ProjectRow({ project }) {
 
                 <CardContent>
                     <Typography>
-                        <br />
-                        <br />
                         <TextField value={budgetedhours} onChange={(e) => setBudgetedHours(e.target.value)} id="outlined-basic" label='budgeted hours' variant="outlined" />
                         <br />
                         <br />
@@ -188,7 +187,7 @@ function ProjectRow({ project }) {
                                 aria-controls="panel2bh-content"
                                 id="panel2bh-header"
                             >
-                                <Typography sx={{ width: '33%', flexShrink: 0 }}>Outcome</Typography>
+                                <Typography sx={{ width: '33%', flexShrink: 0 }}><strong>Outcome</strong></Typography>
                             </AccordionSummary>
                             <AccordionDetails>
                                 <Typography>
