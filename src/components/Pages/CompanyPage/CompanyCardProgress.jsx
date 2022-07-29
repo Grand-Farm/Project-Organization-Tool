@@ -49,16 +49,16 @@ function CompanyCardProgress({ company }) {
                     company.id === info.company_id ?
                         <Box key={index}>
                             <Typography variant='body1'>
-                                {info.project_hours} / {company.allocated_hours} Hours
+                            {company.allocated_hours- info.project_hours}/{company.allocated_hours} Hours Remaining
                             </Typography>
                                 <LinearProgress
                                     color={progressColor(info.project_hours, company.allocated_hours)}
                                     style={{ minwidth: 240, borderRadius: 5, minHeight: 8 }}
                                     variant='determinate'
-                                    value={((info.project_hours / company.allocated_hours) * 100 )|| 0}
+                                    value={(((company.allocated_hours - info.project_hours) / company.allocated_hours)) * 100|| 0 }
                                 />
                                 <Typography variant='body2'>
-                                    {`${Math.round((info.project_hours / company.allocated_hours) * 100 )}%`}
+                                    {`${Math.round((((company.allocated_hours - info.project_hours) / company.allocated_hours)) * 100|| 0  )}% `}
                                 </Typography>
                         </Box>
                         :

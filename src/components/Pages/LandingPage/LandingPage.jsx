@@ -45,13 +45,14 @@ function LandingPage() {
           <Box sx={{ width: '100%', maxWidth: 700 }}>
             <div>
               <Typography mt={'5%'} ml={'15%'} color={blueGrey[800]} variant="h4" gutterBottom component="div">
-                <strong> Time Management Tool </strong>
+                <strong>  Project Time Organization Tool</strong>
+
               </Typography>
               <br />
               <Typography style={{fontSize:'1.5em'}} ml={'15%'} color={blueGrey[800]} variant="subtitle1" gutterBottom component="div">
-              Grand Farm's Personal time management tool, used interally for logging and viewing time information on partners and projects. 
+              Grand Farm's time management tool, used by the Program Management Office for logging and viewing time information on partners and projects. 
               </Typography>
-              <img style={{marginLeft:'3em',height:'40em'}} src={logo}></img>
+              <img style={{marginLeft:'3em',height:'30em'}} src={logo}></img>
             </div>
 
           </Box>
