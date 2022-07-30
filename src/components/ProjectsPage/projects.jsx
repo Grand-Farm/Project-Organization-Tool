@@ -156,18 +156,18 @@ function ProjectsList() {
                         aria-controls="panel1a-content"
                         id="panel1a-header"
                     >
-                        <Typography>View Hours</Typography>
+                        <Typography style={{fontWeight:'bold'}}>View Hours</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
                         <Typography>
-                            Total Current Hours: {totalHours || 'n/a'}
+                           <strong> Total Current Hours:</strong> {totalHours || 'n/a'}
                         </Typography>
                         <br />
                         <Typography>
-                            Total Full-Time Hours: {fullTimeHours}/{totalHours}
+                            <strong>Full-Time Hours:</strong> {fullTimeHours}
                         </Typography>
                         <Typography>
-                            Total Intern Hours: {internHours}/{totalHours}
+                          <strong>Intern Hours:</strong> {internHours}
                         </Typography>
                     </AccordionDetails>
                 </Accordion>
@@ -181,7 +181,7 @@ function ProjectsList() {
                         <Button style={{ backgroundColor: '#afcc36', marginLeft: "4rem" }} onClick={handleOpen} variant="contained">add new project</Button>
                         </center>
                         :
-                        <div className='partners'  >
+                        <div className='projectsHeader'  >
                             <Typography style={{ lineHeight: '1.375em', margin: '0.1em 0', fontSize: '2.5em', fontWeight: 300, borderBottom: "2px solid #244c62" }} variant='h3'>
                                 Current Projects
                             </Typography>
