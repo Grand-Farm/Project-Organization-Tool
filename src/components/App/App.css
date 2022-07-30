@@ -156,6 +156,16 @@ color: #e01616;
 
 }
 
+.projectsHeader{
+  text-align: center;
+  color: black;
+  margin-bottom: 2em;
+  display: flex;
+  align-items: center;
+  margin-top:2%;
+  justify-content: center;
+ 
+ }
 
 
 
