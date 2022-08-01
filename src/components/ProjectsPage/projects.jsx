@@ -213,7 +213,8 @@ function ProjectsList() {
                             <Typography style={{ lineHeight: '1.375em', margin: '0.1em 0', fontSize: '2.5em', fontWeight: 300, borderBottom: "2px solid #244c62" }} variant='h3'>
                                 Current Projects
                             </Typography>
-                            <Button style={{ backgroundColor: '#afcc36', marginLeft: "4rem" }} onClick={handleOpen} variant="contained">add new project</Button>
+                            {currentCompany.is_archived === false ?
+                            <Button style={{ backgroundColor: '#afcc36', marginLeft: "4rem" }} onClick={handleOpen} variant="contained">add new project</Button> : ""}
                         </div>
                     }
 
