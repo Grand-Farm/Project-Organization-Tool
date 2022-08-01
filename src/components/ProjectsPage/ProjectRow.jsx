@@ -32,16 +32,15 @@ import EditIcon from '@mui/icons-material/Edit';
 
 
 function ProjectRow({ project }) {
-    console.log('this is project', project)
-
-
+    // On Render function
     useEffect(() => {
-        console.log("GETTING ACTIVITIES")
         dispatch({ type: "FETCH_ACTIVITY", payload: { projectID: project.id } })
     }, []);
 
-
+    // React Imports
     const dispatch = useDispatch();
+    const history = useHistory();
+    //Local State
     const [status, setstatus] = useState(project.status);
     const [budgetedhours, setBudgetedHours] = useState(project.budgeted_hours);
     const [outcome, setOutcome] = useState(project.outcome);
@@ -49,8 +48,9 @@ function ProjectRow({ project }) {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const [expanded, setExpanded] = useState(false);
 
-
+    // Change Functions
     function updateStatus(project) {
         console.log('This should change', project)
         dispatch({
@@ -66,18 +66,6 @@ function ProjectRow({ project }) {
         setClicked(false)
     }
 
-    const Item = styled(Paper)(({ theme }) => ({
-        backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-        ...theme.typography.body2,
-        padding: theme.spacing(1),
-        textAlign: 'center',
-        color: theme.palette.text.secondary,
-    }));
-
-
-    const history = useHistory();
-    const [expanded, setExpanded] = useState(false);
-
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
     };
@@ -90,7 +78,7 @@ function ProjectRow({ project }) {
         setClicked(true);
         handleOpen();
     }
-
+    // Styling
     const style = {
         position: 'absolute',
         top: '50%',
@@ -103,47 +91,50 @@ function ProjectRow({ project }) {
         p: 4,
     };
 
+    const Item = styled(Paper)(({ theme }) => ({
+        backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+        ...theme.typography.body2,
+        padding: theme.spacing(1),
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+    }));
+
+
 
 
     return (
         <Box>
-            <Card  className="Project Card" elevation={3} sx={{ minWidth: 250, maxWidth: 250, marginTop: "4em", marginRight: "5em" }}>
+            <Card className="Project Card" elevation={3} sx={{ minWidth: 250, maxWidth: 250, marginTop: "4em", marginRight: "5em" }}>
                 <CardActionArea
                     onClick={() => viewActivities(project.id)}
                     className='projectHeader'
                 >
                     <Typography
-                        style={{ paddingTop: 10,color: '#afcc36' }}
+                        style={{ paddingTop: 10, color: '#afcc36' }}
                         variant="h5"
                         className="projectTitle"
                     >
-
                         {project.name}
                     </Typography>
                 </CardActionArea>
-                {/* <br />
-                <br />
-                <br />
-                <br /> */}
-
-                <Accordion  elevation={0} expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+{/* Discription Accordion */}
+                <Accordion elevation={0} expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
                     <AccordionSummary
-
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel1bh-content"
                         id="panel1bh-header"
                     >
-                        <Typography sx={{ width: '33%', flexShrink: 0,marginTop:'1em' }}>
-                           <strong>Description</strong> 
+                        <Typography sx={{ width: '33%', flexShrink: 0, marginTop: '1em' }}>
+                            <strong>Description</strong>
                         </Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                        <Typography>
+                        <Typography className="boxClass">
                             {project.description}
                         </Typography>
                     </AccordionDetails>
                 </Accordion>
-
+{/* End Accordion */}
                 <CardContent>
                     <Typography>
                         <TextField value={budgetedhours} onChange={(e) => setBudgetedHours(e.target.value)} id="outlined-basic" label='budgeted hours' variant="outlined" />
@@ -162,7 +153,7 @@ function ProjectRow({ project }) {
                             <MenuItem onClick={addOutcome} value={"Complete"}>Complete</MenuItem>
                         </Select>
                     </InputLabel>
-                    {clicked === false ? console.log("THIS WORKS") :
+                    {clicked === false ? '':
                         <Modal
                             open={open}
                             onClose={handleClose}
@@ -179,7 +170,7 @@ function ProjectRow({ project }) {
                                 </Typography>
                             </Box>
                         </Modal>}
-
+{/* Conditional for projects with 'Completed' status */}
                     {project.outcome !== null ?
                         <Accordion elevation={0} expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
                             <AccordionSummary
@@ -195,12 +186,8 @@ function ProjectRow({ project }) {
                                 </Typography>
                             </AccordionDetails>
                         </Accordion> : ""}
-
-
                     <br />
-
                 </CardContent>
-
                 <Box textAlign='center'>
                     <Button style={{ backgroundColor: '#afcc36' }} onClick={() => updateStatus(project)} variant="contained">Save Changes</Button>
                 </Box>
