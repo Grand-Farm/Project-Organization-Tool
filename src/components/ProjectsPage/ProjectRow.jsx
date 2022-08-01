@@ -21,7 +21,10 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Modal from '@mui/material/Modal';
-import EditIcon from '@mui/icons-material/Edit';
+import swal from 'sweetalert';
+import TextareaAutosize from '@mui/material/TextareaAutosize';
+import ProjectsList from "./projects";
+
 
 
 
@@ -44,11 +47,27 @@ function ProjectRow({ project }) {
     const [status, setstatus] = useState(project.status);
     const [budgetedhours, setBudgetedHours] = useState(project.budgeted_hours);
     const [outcome, setOutcome] = useState(project.outcome);
+    const [description, setDescription] = useState(project.description);
+    const [manager, setManager] = useState(project.manager);
     const [clicked, setClicked] = useState(false);
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(true);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    const [editclicked, setEditClicked] = useState(false);
+    const [OpenEdit, setOpenEdit] = useState(false);
+    const handleOpenEdit = () => setOpenEdit(true);
+    const [projectName, setProjectName] = useState(project.name);
+
+
+    const handleCloseEdit = () => { 
+        setOpenEdit(false);
+
+    }
+     
+
     const [expanded, setExpanded] = useState(false);
+
 
     // Change Functions
     function updateStatus(project) {
@@ -60,11 +79,29 @@ function ProjectRow({ project }) {
                 budgeted_hours: budgetedhours,
                 ProjectID: project.id,
                 outcome: outcome,
-                companyID: project.company_id
+                companyID: project.company_id,
+                manager: manager,
+                description: description,
+                title: projectName
             }
         });
-        setClicked(false)
+        setClicked(false);
+        swal("Project Saved!", "success");
+        setOpenEdit(false);
     }
+
+    const Item = styled(Paper)(({ theme }) => ({
+        backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+        ...theme.typography.body2,
+        padding: theme.spacing(1),
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+    }));
+
+
+    const history = useHistory();
+    const [expanded, setExpanded] = useState(false);
+
 
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
@@ -74,11 +111,19 @@ function ProjectRow({ project }) {
         history.push(`/activity/${projectID}`)
     }
 
-    function addOutcome() {
+    function editProject() {
         setClicked(true);
         handleOpen();
     }
+
+
+    function done(){
+        setEditClicked(true);
+        handleOpenEdit()
+    }
+
     // Styling
+
     const style = {
         position: 'absolute',
         top: '50%',
@@ -102,6 +147,8 @@ function ProjectRow({ project }) {
 
 
 
+
+
     return (
         <Box>
             <Card className="Project Card" elevation={3} sx={{ minWidth: 250, maxWidth: 250, marginTop: "4em", marginRight: "5em" }}>
@@ -110,20 +157,36 @@ function ProjectRow({ project }) {
                     className='projectHeader'
                 >
                     <Typography
+
+                        style={{ paddingTop: 10 }}
+
                         style={{ paddingTop: 10, color: '#afcc36' }}
+
                         variant="h5"
                         className="projectTitle"
                     >
                         {project.name}
                     </Typography>
                 </CardActionArea>
+
+
+
 {/* Discription Accordion */}
+
                 <Accordion elevation={0} expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel1bh-content"
                         id="panel1bh-header"
                     >
+
+                        <Typography sx={{ width: '33%', flexShrink: 0 }}>
+                            Description
+                        </Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                 {description}
+
                         <Typography sx={{ width: '33%', flexShrink: 0, marginTop: '1em' }}>
                             <strong>Description</strong>
                         </Typography>
@@ -132,15 +195,18 @@ function ProjectRow({ project }) {
                         <Typography className="boxClass">
                             {project.description}
                         </Typography>
+
                     </AccordionDetails>
                 </Accordion>
 {/* End Accordion */}
                 <CardContent>
                     <Typography>
-                        <TextField value={budgetedhours} onChange={(e) => setBudgetedHours(e.target.value)} id="outlined-basic" label='budgeted hours' variant="outlined" />
+                      <strong>Manager:</strong> {manager}
                         <br />
                         <br />
-                        <strong>Manager:</strong> <em>{project.manager}</em>
+                    </Typography>
+                    <Typography>
+                      <strong>Budgeted Hours:</strong> {budgetedhours}
                         <br />
                         <br />
                     </Typography>
@@ -150,27 +216,42 @@ function ProjectRow({ project }) {
                             <MenuItem value={"Planning"}>Planning</MenuItem>
                             <MenuItem value={"Execution"}>Execution</MenuItem>
                             <MenuItem value={"Monitor/Control"}>Monitor/Control</MenuItem>
-                            <MenuItem onClick={addOutcome} value={"Complete"}>Complete</MenuItem>
+                            <MenuItem onClick={done} value={"Complete"}>Complete</MenuItem>
                         </Select>
                     </InputLabel>
+
+                     {editclicked === false ? "":
+
                     {clicked === false ? '':
+
                         <Modal
-                            open={open}
-                            onClose={handleClose}
+                            open={OpenEdit}
+                            onClose={handleCloseEdit}
                             aria-labelledby="modal-modal-title"
                             aria-describedby="modal-modal-description"
                         >
                             <Box sx={style}>
-                                <Typography style={{ textAlign: 'center' }} id="modal-modal-title" variant="h6" component="h2">
+                                <Typography aria-label="minimum height" style={{ textAlign: 'center' }} id="modal-modal-title" variant="h6" component="h2">
                                     Add Outcome
                                 </Typography>
+                                <TextareaAutosize aria-label="minimum height"
+                                                    minRows={4}
+                                                    maxRows={6}
+                                                    style={{ width: '100%', fontSize: 16 }}
+                                                    value={outcome} onChange={(e) => setOutcome(e.target.value)} id="outlined-basic" label='outcome' variant="outlined" />
                                 <Typography id="modal-modal-description" sx={{ mt: 4 }}>
-                                    <TextField style={{ width: '22em' }} value={outcome} onChange={(e) => setOutcome(e.target.value)} id="outlined-basic" label='outcome' variant="outlined" />
-                                    <Button sx={{ mt: 4 }} style={{ float: 'right' }} onClick={() => updateStatus(project)} variant="contained">Add</Button>
+                                      <Button sx={{ mt: 4 }} style={{ float: 'right' }} onClick={() => updateStatus(project)} variant="contained">Add</Button>
                                 </Typography>
                             </Box>
+
+                        </Modal>}                      
+                      
+            
+
+
                         </Modal>}
 {/* Conditional for projects with 'Completed' status */}
+
                     {project.outcome !== null ?
                         <Accordion elevation={0} expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
                             <AccordionSummary
@@ -178,19 +259,62 @@ function ProjectRow({ project }) {
                                 aria-controls="panel2bh-content"
                                 id="panel2bh-header"
                             >
-                                <Typography sx={{ width: '33%', flexShrink: 0 }}><strong>Outcome</strong></Typography>
+                                <Typography sx={{ width: '33%', flexShrink: 0 }}>Outcome</Typography>
                             </AccordionSummary>
                             <AccordionDetails>
-                                <Typography>
-                                    {project.outcome}
-                                </Typography>
+
+                            {project.outcome}
+
                             </AccordionDetails>
                         </Accordion> : ""}
                     <br />
+
+
+
+                {/* <Box textAlign='center'>
+
                 </CardContent>
                 <Box textAlign='center'>
+
                     <Button style={{ backgroundColor: '#afcc36' }} onClick={() => updateStatus(project)} variant="contained">Save Changes</Button>
-                </Box>
+                </Box> */}
+                {clicked === false ? "":
+                                     <Modal
+                                     open={open}
+                                     onClose={handleClose}
+                                     aria-labelledby="modal-modal-title"
+                                     aria-describedby="modal-modal-description"
+                                     >
+                                     <Box sx={style}>
+                                       
+                                         <><Typography id="modal-modal-title" variant="h6" component="h2">
+                                        Edit Project
+                                    </Typography><Typography className="modal-modal-description" sx={{ mt: 4 }}>
+                                            <center><TextField style={{marginBottom:"1em"}} value={projectName} onChange={(e) => setProjectName(e.target.value)} id="outlined-basic" label='Project Name' variant="outlined" /></center>
+                                            <br />
+                                           <center><TextField style={{marginBottom:"1em"}} type='number' value={budgetedhours} onChange={(e) => setBudgetedHours(e.target.value)} id="outlined-basic" label='budgeted hours' variant="outlined" /></center>
+                                            <br />
+                                           <center><TextField style={{marginBottom:"1em"}} value={manager} onChange={(e) => setManager(e.target.value)} id="outlined-basic" label='Project Manager' variant="outlined" /></center>
+                                            <Typography>Description:</Typography>
+                                            <TextareaAutosize aria-label="minimum height"
+                                                minRows={4}
+                                                maxRows={6}
+                                                style={{ width: '100%', fontSize: 16 }}
+                                                value={description} onChange={(e) => setDescription(e.target.value)} id="outlined-basic" label='outcome' variant="outlined" />
+                                                <br />
+                                                {project.outcome !== null ?
+                                                <><Typography>Outcome:</Typography><TextareaAutosize aria-label="minimum height"
+                                                minRows={4}
+                                                maxRows={6}
+                                                style={{ width: '100%', fontSize: 16 }}
+                                                value={outcome} onChange={(e) => setOutcome(e.target.value)} id="outlined-basic" label='outcome' variant="outlined" /></> : ""}
+
+                                            <Button sx={{ mt: 4 }} style={{ float: 'right' }} onClick={() => updateStatus(project)} variant="contained">Save</Button>
+                                        </Typography></>
+                                    </Box>
+                                 </Modal>}
+                                    <Button sx={{ mt: 4 }} style={{ float: 'right' }} onClick={editProject} variant="contained">Edit</Button>
+                                    </CardContent>
             </Card>
 
         </Box>

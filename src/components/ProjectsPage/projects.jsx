@@ -19,6 +19,7 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import TextareaAutosize from '@mui/material/TextareaAutosize';
 
 const style = {
     position: 'absolute',
@@ -199,10 +200,21 @@ function ProjectsList() {
                             New Project
                         </Typography>
                         <Typography className="modal-modal-description" sx={{ mt: 4 }}>
-                            <TextField value={newName} onChange={(e) => setNewName(e.target.value)} id="outlined-basic" label='name' variant="outlined" />
-                            <TextField type='number' value={newBudgetedHours} onChange={(e) => setNewBudgetedHours(e.target.value)} id="outlined-basic" label='budgeted hours' variant="outlined" />
-                            <TextField value={newManager} onChange={(e) => setNewManager(e.target.value)} id="outlined-basic" label='Project Manager' variant="outlined" />
-                            <TextField value={newDescription} onChange={(e) => setNewDescription(e.target.value)} id="outlined-basic" label='description' variant="outlined" />
+                            <center><TextField value={newName} onChange={(e) => setNewName(e.target.value)} id="outlined-basic" label='name' variant="outlined" /></center>
+                            <br />
+                            <br/>
+                            <center><TextField type='number' value={newBudgetedHours} onChange={(e) => setNewBudgetedHours(e.target.value)} id="outlined-basic" label='budgeted hours' variant="outlined" /></center>
+                            <br />
+                            <br/>
+                            <center><TextField value={newManager} onChange={(e) => setNewManager(e.target.value)} id="outlined-basic" label='Project Manager' variant="outlined" /></center>
+                            <br />
+                            <br/>
+                            <Typography>Description:</Typography>
+                            <TextareaAutosize aria-label="minimum height"
+                                                minRows={4}
+                                                maxRows={6}
+                                                style={{ width: '100%', fontSize: 16 }}
+                                                value={newDescription} onChange={(e) => setNewDescription(e.target.value)} id="outlined-basic" label='outcome' variant="outlined" />
                             <Button style={{ marginLeft: '80%' }} onClick={newProject} variant="contained">Add</Button>
 
                         </Typography>

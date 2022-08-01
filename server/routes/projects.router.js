@@ -70,9 +70,9 @@ router.get('/:companyID', (req, res) => {
 router.put('/:ProjectID', (req, res) => {
   console.log("THIS IS THE PUT VALUE",req.body)
   const queryText = `UPDATE "projects"
-  SET ("status","budgeted_hours","outcome") = ($1,$2,$4) WHERE "id" = $3` 
+  SET ("status","budgeted_hours","outcome","manager","description","name") = ($1,$2,$4,$5,$6,$7) WHERE "id" = $3` 
 
-  pool.query(queryText, [req.body.status,req.body.budgeted_hours,req.params.ProjectID,req.body.outcome])
+  pool.query(queryText, [req.body.status,req.body.budgeted_hours,req.params.ProjectID,req.body.outcome,req.body.manager,req.body.description,req.body.title])
     .then(() => { res.sendStatus(200) })
     .catch((err) => {
       console.log('Error completing UPDATE projects query', err);
