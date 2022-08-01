@@ -146,15 +146,18 @@ color: #e01616;
 }
 
 .partners{
- text-align: center;
- color: black;
- height: 12em;
- display: flex;
- align-items: center;
- margin-top:5%;
- justify-content: center;
-
+  text-align: center;
+  color: #244c62;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5em;
+  align-items: center;
+  margin-bottom: 1em;
+  padding-left: 2em;
+  padding-top: .5em;
 }
+
+
 
 .projectsHeader{
   text-align: center;
