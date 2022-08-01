@@ -191,7 +191,7 @@ function ProjectRow({ project }) {
                         <br />
                         <br />
                     </Typography>
-                    <InputLabel id="status"><strong>status:</strong>
+                    <InputLabel id="status"><strong>Status:</strong>
                         <Select type='select' value={status} onChange={(e) => setstatus(e.target.value)}>
                             <MenuItem value={"Initiation"}>Initiation</MenuItem>
                             <MenuItem value={"Planning"}>Planning</MenuItem>

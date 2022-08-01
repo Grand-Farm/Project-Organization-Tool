@@ -17,12 +17,14 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import TextField from '@mui/material/TextField';
 import { useTheme } from '@mui/material/styles';
-import Popover from '@mui/material/Popover';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import swal from 'sweetalert';
+import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
+import Popover from '@mui/material/Popover';
+
 
 
 
@@ -90,8 +92,8 @@ export default function ActivityPage() {
         { field: 'Type', headerClassName: 'ColumnColor', headerName: 'Activity', flex: .5, editable: true, },
         { field: 'Employees', headerClassName: 'ColumnColor', headerName: 'Employees', flex: .5, editable: true, },
         { field: 'Date', headerName: 'Date', editable: true, type: 'string', flex: .3, headerClassName: 'ColumnColor' },
-        { field: 'fulltime', headerName: 'full-time-Hours', flex: .7, headerClassName: 'ColumnColor', editable: true, },
-        { field: 'intern', headerName: 'intern-Hours', flex: .5, headerClassName: 'ColumnColor', editable: true, },
+        { field: 'fulltime', headerName: 'Full-Time-Hours', flex: .7, headerClassName: 'ColumnColor', editable: true, },
+        { field: 'intern', headerName: 'Intern-Hours', flex: .5, headerClassName: 'ColumnColor', editable: true, },
         { field: 'Notes', headerName: 'Notes', flex: 1.5, headerClassName: 'ColumnColor', editable: true, },
         {
             field: 'button', headerName: '', flex: .5, headerClassName: 'ColumnColor',
@@ -134,26 +136,30 @@ export default function ActivityPage() {
     }, [])
 
 // Popover functions
-const handlePopover =()=>{
+const handlePopoverClose =()=>{
     setOpenPopover(false);
 }
+const handlePopoverOpen =()=>{
+    setOpenPopover(true);
+}
+
 
 return (
         <div>
         <Popover
+        style={{marginTop:'10em'}}
                
                 open={openPopover}
-                anchorEl={openPopover}
-                onClose={handlePopover}
+                onClose={handlePopoverClose}
                 anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'left',
+                    vertical: 'top',
+                    horizontal: 'right',
                 }}
          >
-          <Typography sx={{ p: 2 }}>
-              Click Add Activity to add a new activity.
+          <Typography sx={{ p: 2, fontWeight:'bold' }}>
+              - Click Add Activity to add a new activity.
               <br />
-              To edit an activity, double click inside of the cell thats being edited or click Edit Activity
+              - To edit an activity, double click inside of the cell thats being edited or click Edit Activity
               </Typography>
 
       </Popover>
@@ -163,11 +169,11 @@ return (
                     Activities
                 </Typography>
                 <div style={{marginTop:'2em'}}>
-                <Button  onClick={()=> setOpenPopover(true)}>open</Button>
+                <Button  onClick={()=> handlePopoverOpen()}><QuestionMarkIcon/></Button>
                 </div>
             </div>
 
-            <Box style={{ marginBottom: '.5%' }}>
+            <Box style={{marginLeft: '2em',marginBottom: '1%', }}>
                 <Button className='optionButtons' onClick={handleOpen} size='small' variant='outlined'>Add Activity</Button>
                 <Button className='optionButtons' onClick={handleActivityOpen} size='small' variant='outlined'>Edit Activity</Button>
             </Box>
@@ -376,7 +382,7 @@ return (
                             '&.MuiDataGrid-root--densityStandard .MuiDataGrid-cell': { py: '1em' },
                             [`& .${gridClasses.cell}`]: {
                                 py: 1,
-                            },
+                            },margin:'0 2em ', marginBottom:'1%'
                         }}
                         autoHeight
                         getRowHeight={() => 'auto'}

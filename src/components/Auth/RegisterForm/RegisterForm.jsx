@@ -39,9 +39,6 @@ function RegisterForm() {
 
   return (
     <div className='formPanel'>
-      <Typography variant='h5'>
-        Register User
-      </Typography>
       {errors.registrationMessage && (
         <h3 className="alert" role="alert">
           {errors.registrationMessage}

@@ -11,42 +11,79 @@ import CompanyCard from './CompanyCard';
 
 // Material UI
 import Typography from '@mui/material/Typography';
+import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
+import Popover from '@mui/material/Popover';
+import { Button } from '@mui/material';
 
 
 
 function CompaninesPage() {
     const companyStore = useSelector(store => store.company);
-    console.log('This is Company store', companyStore);
+    const [openPopover, setOpenPopover] = useState(false)
+
 
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch({ type: 'FETCH_COMPANY' });
     }, [])
 
+    // Popover functions
+    const handlePopoverClose = () => {
+        setOpenPopover(false);
+    }
+    const handlePopoverOpen = () => {
+        setOpenPopover(true);
+    }
 
 
     return (
-        <>
+        
+        <div>
+               
+             
             <div className='partners'>
-            <Typography style={{ lineHeight: '1.375em',  fontSize: '5em', fontWeight: 300, borderBottom:"2px solid #244c62 "}} variant='h3'>                    Partners
+                <Typography style={{ lineHeight: '1.375em', fontSize: '5em', fontWeight: 300, borderBottom: "2px solid #244c62 " }} variant='h3'>
+                    Partners
                 </Typography>
-                <CompanyFormPage  />
-            </div>
-        <div className='landingCompany'>
-            <div className='container'>
-                {companyStore.map((company, index) => {
-                    {
-                        if (company.is_archived === false) {
-                            return (
+                <CompanyFormPage />
+                    <Button style={{ marginTop: '2em' }} onClick={() => handlePopoverOpen()}><QuestionMarkIcon/></Button>
+                </div>
 
-                                        <CompanyCard company={company} i={index} key={company.id} />
-                            )
+                <Popover
+                    style={{ marginTop: '10em' }}
+
+                    open={openPopover}
+                    onClose={handlePopoverClose}
+                    anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                    }}
+                >
+                    <Typography sx={{ p: 2, fontWeight: 'bold' }}>
+                        - To View projects for a company, click the company name
+                        <br />
+                        - To archive a company, click the button on the bottom left of a companies card
+                        <br />
+                        - View more details by clicking the expand icon
+                    </Typography>
+
+                </Popover>
+            <div className='landingCompany'>
+                <div className='container'>
+                    {companyStore.map((company, index) => {
+                        {
+                            if (company.is_archived === false) {
+                                return (
+
+                                    <CompanyCard company={company} i={index} key={company.id} />
+                                )
+                            }
                         }
-                    }
-                })}
+                    })}
+                </div>
             </div>
+      
         </div>
-        </>
     )
 }
 

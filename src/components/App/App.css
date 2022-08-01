@@ -100,13 +100,22 @@ Alert
 Form Treatment
 -------------------------------------------------------------------------------- */
 
-.formPanel {
+.LoginformPanel {
   box-sizing: border-box;
   width: 400px;
   max-width: 100%;
   padding: 25px;
   margin: 0 auto 20px;
    background-color: #f4f1e9;
+  border-radius: 2em;
+  box-shadow: 0 1px 2px rgb(0, 0, 0, 0.4);
+}
+.formPanel {
+  box-sizing: border-box;
+  width: 400px;
+  max-width: 100%;
+  padding: 25px;
+  margin: 0 auto 20px;
   border-radius: 2em;
   box-shadow: 0 1px 2px rgb(0, 0, 0, 0.4);
 }
