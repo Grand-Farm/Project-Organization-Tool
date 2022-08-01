@@ -17,6 +17,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import TextField from '@mui/material/TextField';
 import { useTheme } from '@mui/material/styles';
+import Popover from '@mui/material/Popover';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -41,6 +42,7 @@ export default function ActivityPage() {
     const [date, setDate] = useState('');
     const theme = useTheme();
     const [open, setOpen] = useState(false);
+    const [openPopover,setOpenPopover]= useState(false)
     const [employees, setEmployees] = useState('')
     const [editActivity, setEditActivity] = useState(false);
     const handleOpen = () => setOpen(true);
@@ -64,7 +66,7 @@ export default function ActivityPage() {
     const changeActivity = (values) => {
         console.log('these are values', values)
         swal({
-            title: "Changes",
+            title: "Changes Saved",
             icon: "success",
             timer:1500,
            button:'close early'
@@ -131,13 +133,38 @@ export default function ActivityPage() {
         dispatch({ type: "FETCH_EMPLOYEES" })
     }, [])
 
+// Popover functions
+const handlePopover =()=>{
+    setOpenPopover(false);
+}
+
 return (
         <div>
+        <Popover
+               
+                open={openPopover}
+                anchorEl={openPopover}
+                onClose={handlePopover}
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                }}
+         >
+          <Typography sx={{ p: 2 }}>
+              Click Add Activity to add a new activity.
+              <br />
+              To edit an activity, double click inside of the cell thats being edited or click Edit Activity
+              </Typography>
+
+      </Popover>
 {/* Title Div */}
             <div className='partners'>
-                <Typography style={{ lineHeight: '1.375em', margin: '0.1em 0',  fontSize: '5em', fontWeight: 300, borderBottom: "2px solid #244c62" }} variant='h3'>
+                <Typography style={{ lineHeight: '1.375em',  fontSize: '5em', fontWeight: 300, borderBottom:"2px solid #244c62 "}} variant='h3'>
                     Activities
                 </Typography>
+                <div style={{marginTop:'2em'}}>
+                <Button  onClick={()=> setOpenPopover(true)}>open</Button>
+                </div>
             </div>
 
             <Box style={{ marginBottom: '.5%' }}>
