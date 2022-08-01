@@ -104,7 +104,7 @@ function ProjectsList() {
             <Box style={{ color: '#afcc36', marginTop: '7em' }} textAlign='center' >
 
 
-                {showOptions === false ?
+                {showOptions === false  ?
                     <div className='companyTitle'>
                         <Typography
                             variant='h1'
