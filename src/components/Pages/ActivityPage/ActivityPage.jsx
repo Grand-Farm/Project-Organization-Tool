@@ -63,7 +63,7 @@ export default function ActivityPage() {
     const changeActivity = (values) => {
         console.log('these are values', values)
         swal({
-            title: "Changes",
+            title: "Changes Saved",
             icon: "success",
             timer:1500,
            button:'close early'
