@@ -168,23 +168,16 @@ function ProjectRow({ project }) {
                     >
 
                         <Typography sx={{ width: '33%', flexShrink: 0 }}>
-                            Description
+                            <strong>Description</strong>
                         </Typography>
                     </AccordionSummary>
                     <AccordionDetails>
                         
                  {description}
 
-                        <Typography sx={{ width: '33%', flexShrink: 0, marginTop: '1em' }}>
-                            <strong>Description</strong>
-                        </Typography>
+                       
                     </AccordionDetails>
-                    <AccordionDetails>
-                        <Typography className="boxClass">
-                            {project.description}
-                        </Typography>
-
-                    </AccordionDetails>
+                    
                 </Accordion>
 {/* End Accordion */}
                 <CardContent>
