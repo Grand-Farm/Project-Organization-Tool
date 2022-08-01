@@ -17,6 +17,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import TextField from '@mui/material/TextField';
 import { useTheme } from '@mui/material/styles';
+import Popover from '@mui/material/Popover';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -27,6 +28,7 @@ import swal from 'sweetalert';
 
 
 export default function ActivityPage() {
+    // React imports
     const dispatch = useDispatch();
     const activity = useSelector((store => store.activity))
     const employee = useSelector((store => store.employee))
@@ -40,6 +42,7 @@ export default function ActivityPage() {
     const [date, setDate] = useState('');
     const theme = useTheme();
     const [open, setOpen] = useState(false);
+    const [openPopover,setOpenPopover]= useState(false)
     const [employees, setEmployees] = useState('')
     const [editActivity, setEditActivity] = useState(false);
     const handleOpen = () => setOpen(true);
@@ -63,7 +66,7 @@ export default function ActivityPage() {
     const changeActivity = (values) => {
         console.log('these are values', values)
         swal({
-            title: "Changes",
+            title: "Changes Saved",
             icon: "success",
             timer:1500,
            button:'close early'
@@ -123,22 +126,45 @@ export default function ActivityPage() {
             }
         })
 
+// On render function
     useEffect(() => {
         dispatch({ type: "FETCH_USER" }),
             dispatch({ type: "FETCH_ACTIVITY", payload: { projectID: params.projectID } })
         dispatch({ type: "FETCH_EMPLOYEES" })
     }, [])
 
+// Popover functions
+const handlePopover =()=>{
+    setOpenPopover(false);
+}
 
-
-
-    return (
+return (
         <div>
-            {/* Title Div */}
+        <Popover
+               
+                open={openPopover}
+                anchorEl={openPopover}
+                onClose={handlePopover}
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                }}
+         >
+          <Typography sx={{ p: 2 }}>
+              Click Add Activity to add a new activity.
+              <br />
+              To edit an activity, double click inside of the cell thats being edited or click Edit Activity
+              </Typography>
+
+      </Popover>
+{/* Title Div */}
             <div className='partners'>
-                <Typography style={{ lineHeight: '1.375em', margin: '0.1em 0',  fontSize: '5em', fontWeight: 300, borderBottom: "2px solid #244c62" }} variant='h3'>
+                <Typography style={{ lineHeight: '1.375em',  fontSize: '5em', fontWeight: 300, borderBottom:"2px solid #244c62 "}} variant='h3'>
                     Activities
                 </Typography>
+                <div style={{marginTop:'2em'}}>
+                <Button  onClick={()=> setOpenPopover(true)}>open</Button>
+                </div>
             </div>
 
             <Box style={{ marginBottom: '.5%' }}>
@@ -146,7 +172,7 @@ export default function ActivityPage() {
                 <Button className='optionButtons' onClick={handleActivityOpen} size='small' variant='outlined'>Edit Activity</Button>
             </Box>
 
-            {/* Dialog popup for inserting a new activity */}
+{/* Dialog popup for inserting a new activity */}
             <Dialog
                 fullScreen={fullScreen}
                 open={open}
@@ -236,11 +262,6 @@ export default function ActivityPage() {
                             value={date}
                             onChange={(event) => setDate(event.target.value)}
                         />
-
-
-
-
-
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -249,8 +270,9 @@ export default function ActivityPage() {
                     </Button>
                 </DialogActions>
             </Dialog>
-            {/* Dialog popup for EDITING an activity */}
+{/* Add Activity Dialog End */}
 
+{/* Dialog popup for EDITING an activity */}
             <Dialog
                 fullScreen={fullScreen}
                 open={editActivity}
@@ -262,9 +284,6 @@ export default function ActivityPage() {
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-
-                     
-
                         <Box sx={{ minWidth: 120 }}>
                             <FormControl fullWidth>
                                 <InputLabel>Activity</InputLabel>
@@ -342,7 +361,9 @@ export default function ActivityPage() {
                     </Button>
                 </DialogActions>
             </Dialog>
-            {/* Data Grid component render */}
+{/* Edit Activity Dialog End */}
+
+ {/* Data Grid component render */}
             <div className='boxClass'>
                 <Box style={{ display: 'flex', height: '100%', flexGrow: 1, width: '100%' }}>
                     <DataGrid

@@ -1,9 +1,10 @@
+
 .landingCompany{
     display: flex;
     flex-direction: column;
     align-items: center;
-
 }
+
 
 .container{
     display: flex;
