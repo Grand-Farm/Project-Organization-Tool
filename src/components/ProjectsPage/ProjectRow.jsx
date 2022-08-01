@@ -111,6 +111,8 @@ function ProjectRow({ project }) {
         handleOpenEdit()
     }
 
+
+
     // Styling
 
     const style = {
@@ -191,15 +193,11 @@ function ProjectRow({ project }) {
                         <br />
                         <br />
                     </Typography>
-                    <InputLabel id="status"><strong>Status:</strong>
-                        <Select type='select' value={status} onChange={(e) => setstatus(e.target.value)}>
-                            <MenuItem value={"Initiation"}>Initiation</MenuItem>
-                            <MenuItem value={"Planning"}>Planning</MenuItem>
-                            <MenuItem value={"Execution"}>Execution</MenuItem>
-                            <MenuItem value={"Monitor/Control"}>Monitor/Control</MenuItem>
-                            <MenuItem onClick={done} value={"Complete"}>Complete</MenuItem>
-                        </Select>
-                    </InputLabel>
+                   <Typography><strong>Status:{" "}</strong>
+                   {project.status}
+                   </Typography>
+                        
+                    
 
                      {editclicked === false ? "":
 
@@ -268,6 +266,14 @@ function ProjectRow({ project }) {
                                                 style={{ width: '100%', fontSize: 16 }}
                                                 value={description} onChange={(e) => setDescription(e.target.value)} id="outlined-basic" label='outcome' variant="outlined" />
                                                 <br />
+                                                <Typography>Status</Typography>
+                                                <Select type='select' value={status} onChange={(e) => setstatus(e.target.value)}>
+                            <MenuItem  value={"Initiation"}>Initiation</MenuItem>
+                            <MenuItem   value={"Planning"}>Planning</MenuItem>
+                            <MenuItem  value={"Execution"}>Execution</MenuItem>
+                            <MenuItem   value={"Monitor/Control"}>Monitor/Control</MenuItem>
+                            <MenuItem onClick={done} value={"Complete"}>Complete</MenuItem>
+                        </Select>
                                                 {project.outcome !== null ?
                                                 <><Typography>Outcome:</Typography><TextareaAutosize aria-label="minimum height"
                                                 minRows={4}
@@ -280,7 +286,7 @@ function ProjectRow({ project }) {
                                     </Box>
                                  </Modal>}
                                  {project.is_archived === true ? "" :
-                                    <Button sx={{ mt: 4 }} style={{ float: 'right' }} onClick={editProject} variant="contained">Edit</Button>}
+                                    <center><Button sx={{ mt: 4 }} style={{}} onClick={editProject} variant="contained">Edit</Button></center>}
                                     </CardContent>
             </Card>
 
