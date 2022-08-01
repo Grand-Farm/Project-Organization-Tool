@@ -90,17 +90,6 @@ function ProjectRow({ project }) {
         setOpenEdit(false);
     }
 
-    const Item = styled(Paper)(({ theme }) => ({
-        backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-        ...theme.typography.body2,
-        padding: theme.spacing(1),
-        textAlign: 'center',
-        color: theme.palette.text.secondary,
-    }));
-
-
-    const history = useHistory();
-    const [expanded, setExpanded] = useState(false);
 
 
     const handleChange = (panel) => (event, isExpanded) => {
@@ -158,8 +147,6 @@ function ProjectRow({ project }) {
                 >
                     <Typography
 
-                        style={{ paddingTop: 10 }}
-
                         style={{ paddingTop: 10, color: '#afcc36' }}
 
                         variant="h5"
@@ -185,12 +172,13 @@ function ProjectRow({ project }) {
                         </Typography>
                     </AccordionSummary>
                     <AccordionDetails>
+                        
                  {description}
 
                         <Typography sx={{ width: '33%', flexShrink: 0, marginTop: '1em' }}>
                             <strong>Description</strong>
                         </Typography>
-                    </AccordionSummary>
+                    </AccordionDetails>
                     <AccordionDetails>
                         <Typography className="boxClass">
                             {project.description}
@@ -222,7 +210,6 @@ function ProjectRow({ project }) {
 
                      {editclicked === false ? "":
 
-                    {clicked === false ? '':
 
                         <Modal
                             open={OpenEdit}
@@ -246,10 +233,6 @@ function ProjectRow({ project }) {
 
                         </Modal>}                      
                       
-            
-
-
-                        </Modal>}
 {/* Conditional for projects with 'Completed' status */}
 
                     {project.outcome !== null ?
@@ -268,16 +251,6 @@ function ProjectRow({ project }) {
                             </AccordionDetails>
                         </Accordion> : ""}
                     <br />
-
-
-
-                {/* <Box textAlign='center'>
-
-                </CardContent>
-                <Box textAlign='center'>
-
-                    <Button style={{ backgroundColor: '#afcc36' }} onClick={() => updateStatus(project)} variant="contained">Save Changes</Button>
-                </Box> */}
                 {clicked === false ? "":
                                      <Modal
                                      open={open}
