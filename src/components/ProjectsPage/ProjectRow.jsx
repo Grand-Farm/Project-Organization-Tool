@@ -260,12 +260,13 @@ function ProjectRow({ project }) {
                                                 maxRows={6}
                                                 style={{ width: '100%', fontSize: 16 }}
                                                 value={outcome} onChange={(e) => setOutcome(e.target.value)} id="outlined-basic" label='outcome' variant="outlined" /></> : ""}
-
+                                            
                                             <Button sx={{ mt: 4 }} style={{ float: 'right' }} onClick={() => updateStatus(project)} variant="contained">Save</Button>
                                         </Typography></>
                                     </Box>
                                  </Modal>}
-                                    <Button sx={{ mt: 4 }} style={{ float: 'right' }} onClick={editProject} variant="contained">Edit</Button>
+                                 {project.is_archived === true ? "" :
+                                    <Button sx={{ mt: 4 }} style={{ float: 'right' }} onClick={editProject} variant="contained">Edit</Button>}
                                     </CardContent>
             </Card>
 
