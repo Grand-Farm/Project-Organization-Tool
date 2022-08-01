@@ -57,8 +57,8 @@ function AdminPage() {
         InternRate: `${company.intern_rate}/Hr`,
         FullRate: `${company.full_time_rate}/Hr`,
         Projects: projects.filter((p) => company.id === p.company_id),
-        OnGoing: projects.filter((p) => company.id === p.company_id),
-        Complete: projects.filter((p) => company.id === p.company_id)
+        OnGoing: `${projects.filter((p) => company.id === p.company_id)},`,
+        Complete: `${projects.filter((p) => company.id === p.company_id)},`
       }
 
     })
