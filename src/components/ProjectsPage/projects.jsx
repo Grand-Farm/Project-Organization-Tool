@@ -38,6 +38,7 @@ function ProjectsList() {
     const history = useHistory();
     const dispatch = useDispatch();
 
+    
     const projects = useSelector(store => store.projectsReducer);
     const companies = useSelector(store => store.company); // array of companies
     console.log('This is Company store', projects);
