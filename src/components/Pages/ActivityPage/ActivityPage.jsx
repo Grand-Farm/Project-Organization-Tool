@@ -23,6 +23,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import swal from 'sweetalert';
+import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 
 
 
@@ -134,26 +135,30 @@ export default function ActivityPage() {
     }, [])
 
 // Popover functions
-const handlePopover =()=>{
+const handlePopoverClose =()=>{
     setOpenPopover(false);
 }
+const handlePopoverOpen =()=>{
+    setOpenPopover(true);
+}
+
 
 return (
         <div>
         <Popover
+        style={{marginTop:'10em'}}
                
                 open={openPopover}
-                anchorEl={openPopover}
-                onClose={handlePopover}
+                onClose={handlePopoverClose}
                 anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'left',
+                    vertical: 'top',
+                    horizontal: 'right',
                 }}
          >
           <Typography sx={{ p: 2 }}>
-              Click Add Activity to add a new activity.
+              - Click Add Activity to add a new activity.
               <br />
-              To edit an activity, double click inside of the cell thats being edited or click Edit Activity
+              - To edit an activity, double click inside of the cell thats being edited or click Edit Activity
               </Typography>
 
       </Popover>
@@ -163,7 +168,7 @@ return (
                     Activities
                 </Typography>
                 <div style={{marginTop:'2em'}}>
-                <Button  onClick={()=> setOpenPopover(true)}>open</Button>
+                <Button  onClick={()=> handlePopoverOpen()}><QuestionMarkIcon/></Button>
                 </div>
             </div>
 
