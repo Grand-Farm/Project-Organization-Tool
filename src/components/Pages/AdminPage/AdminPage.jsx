@@ -20,6 +20,7 @@ import { Typography } from '@mui/material';
 
 
 function AdminPage() {
+  // React imports
   const user = useSelector((store) => store.user);
   const alluser = useSelector((store) => store.AllUser)
   const companyStore = useSelector(store => store.company);
@@ -71,12 +72,11 @@ function AdminPage() {
   }, [])
 
   return (
-
     <div className="container">
-      {/* Admin validation ternary operator */}
+{/* Entire return is conditionally rendured depending on if use is admin or not */}
       {user.is_admin ?
         <Box sx={{ flexGrow: 1 }}>
-          {/* div for title */}
+{/* div for title */}
           <div className='partners'>
             <Typography style={{ lineHeight: '1.375em', margin: '0.1em 0', marginRight: '2%', fontSize: '5em', fontWeight: 300, borderBottom: "2px solid #244c62 " }} variant='h3'>
               Dashboard
@@ -86,7 +86,6 @@ function AdminPage() {
             <Grid item xs={12} md={12} lg={4}>
               <Item style={{ backgroundColor: "#f4f1e9" }} elevation={4}>{user.is_admin ?
                 <div>
-
                   <RegisterForm />
                   <Box>
                     <Typography>
@@ -111,7 +110,6 @@ function AdminPage() {
                     <DataGrid
                       density='standard'
                       sx={{
-                      
                         boxShadow: 2,
                         '& .MuiDataGrid-cell:hover': {
                           color: 'primary.main',
@@ -131,17 +129,16 @@ function AdminPage() {
                     />
                   </Box>
                 </div>
-                : 'not'}
+                : 'Unauthorized |Error 404|'}
             </Grid>
 
           </Grid>
           <LogOutButton className="btn" />
         </Box>
         : <Typography variant='h1' style={{ color: 'red' }}>'Not Authorized'</Typography>}
-
     </div>
   );
 }
 
-// this allows us to use <App /> in index.js
+
 export default AdminPage;
