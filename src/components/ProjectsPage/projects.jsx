@@ -119,7 +119,7 @@ function ProjectsList() {
                         <Typography>
                             Select A Different Company
                         </Typography>
-
+                        {currentCompany.is_archived === false ?
                         <FormControl variant='standard' style={{ margin: 'auto', width: '50%' }}>
                             <Select
                                 style={{ fontSize: 40 }}
@@ -139,12 +139,38 @@ function ProjectsList() {
                                                     onClick={() => switchProjects(company.id)} key={company.id}>
                                                     {company.company_name}
                                                 </MenuItem>
-                                            );
+                                            )
                                         }
+                                        
                                     }
                                 })}
                             </Select>
-                        </FormControl>
+                        </FormControl> :                      <FormControl variant='standard' style={{ margin: 'auto', width: '50%' }}>
+                            <Select
+                                style={{ fontSize: 40 }}
+                                onChange={(e) => setComapnyName(e.target.value)}
+                                value={currentCompany.company_name}
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                label="Name"
+                            >
+
+                                {companies.map((company) => {
+                                    {
+                                        if (company.is_archived === true) {
+                                            return (
+                                                <MenuItem
+                                                    value={company.company_name}
+                                                    onClick={() => switchProjects(company.id)} key={company.id}>
+                                                    {company.company_name}
+                                                </MenuItem>
+                                            )
+                                        }
+                                        
+                                    }
+                                })}
+                            </Select>
+                        </FormControl>}
                     </Box>
 
                 }
