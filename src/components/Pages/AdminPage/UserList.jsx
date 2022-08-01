@@ -26,7 +26,7 @@ function UserList({ users }) {
 
     return (
         <div>
-            <Accordion style={{backgroundColor:'#f4f1e9'}} elevation={0} expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+            <Accordion style={{}} elevation={0} expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
                 <AccordionSummary
                     style={{
                         textAlign: 'center',

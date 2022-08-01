@@ -20,6 +20,8 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
+import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
+import Popover from '@mui/material/Popover';
 
 const style = {
     position: 'absolute',
@@ -33,18 +35,20 @@ const style = {
     p: 4,
 };
 
+
 function ProjectsList() {
     const params = useParams();
     const history = useHistory();
     const dispatch = useDispatch();
 
-    
+
     const projects = useSelector(store => store.projectsReducer);
     const companies = useSelector(store => store.company); // array of companies
     console.log('This is Company store', projects);
 
 
     const [status, setstatus] = useState("not_completed");
+    const [openPopover, setOpenPopover] = useState(false)
     const [newBudgetedHours, setNewBudgetedHours] = useState(0);
     const [newName, setNewName] = useState("");
     const [newManager, setNewManager] = useState();
@@ -57,7 +61,6 @@ function ProjectsList() {
     const totalHours = projects.fullTimeHours + projects.internHours;
     const { fullTimeHours, internHours } = projects;
 
-    console.log(`Current Status: ${status}`)
 
     let currentCompany = companies.find(c => Number(c.id) === Number(params.companyid));
 
@@ -98,125 +101,156 @@ function ProjectsList() {
         return <h2>Loading...</h2>
     }
 
+    // Popover functions
+    const handlePopoverClose = () => {
+        setOpenPopover(false);
+    }
+    const handlePopoverOpen = () => {
+        setOpenPopover(true);
+    }
+
     return (
-        <><div>
+        <>
+            <div>
+                <Popover
+                    style={{ marginTop: '10em' }}
 
+                    open={openPopover}
+                    onClose={handlePopoverClose}
+                    anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                    }}
+                >
+                    <Typography sx={{ p: 2, fontWeight:'bold' }}>
+                        - To change companies click the company name and select one from the drop down
+                        <br />
+                        - View activities of a project by clicking the project name
+                        <br />
+                        - change status by clicking the status dropdown
+                        <br />
+                        - To add an outcome,change project status to "Complete"
+                    </Typography>
 
-            <Box style={{ color: '#afcc36', marginTop: '7em' }} textAlign='center' >
-
-
-                {showOptions === false  ?
-                    <div className='companyTitle'>
-                        <Typography
-                            variant='h1'
-                            onClick={() => setShowOptions(!showOptions)}
-                            style={{ cursor: 'pointer' }}
-                        >
-                            {currentCompany.company_name}
-                        </Typography>
-                    </div>
-                    :
-                    <Box>
-                        <Typography>
-                            Select A Different Company
+                </Popover>
+                <div className='partners'>
+                    <div className='projectsHeader'  >
+                        <Typography style={{ lineHeight: '1.375em', margin: '0.1em 0', fontSize: '4em', fontWeight: 300, borderBottom: "2px solid #244c62" }} variant='h3'>
+                            Current Projects
                         </Typography>
                         {currentCompany.is_archived === false ?
-                        <FormControl variant='standard' style={{ margin: 'auto', width: '50%' }}>
-                            <Select
-                                style={{ fontSize: 40 }}
-                                onChange={(e) => setComapnyName(e.target.value)}
-                                value={currentCompany.company_name}
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                label="Name"
+                            <Button style={{ backgroundColor: 'rgb(175,204,54)', margin: '3rem 0 0 2em' }} onClick={handleOpen} variant="contained">add new project</Button> : ""}
+                    </div>
+                    <div style={{ marginTop: '2em' }}>
+                        <Button onClick={() => handlePopoverOpen()}><QuestionMarkIcon /></Button>
+                    </div>
+
+                </div>
+
+
+                <Box style={{ color: '#afcc36', marginLeft: '2em' }}  >
+
+
+                    {showOptions === false ?
+                        <div className='companyTitle'>
+                            <Typography
+                                variant='h3'
+                                onClick={() => setShowOptions(!showOptions)}
+                                style={{ cursor: 'pointer' }}
                             >
+                                {currentCompany.company_name}
+                            </Typography>
+                        </div>
+                        :
+                        <Box >
+                            <Typography>
+                                Select A Different Company
+                            </Typography>
+                            {currentCompany.is_archived === false ?
+                                <FormControl variant='standard' style={{ margin: 'auto', width: '20%' }}>
+                                    <Select
+                                        style={{ fontSize: 40 }}
+                                        onChange={(e) => setComapnyName(e.target.value)}
+                                        value={currentCompany.company_name}
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        label="Name"
+                                    >
 
-                                {companies.map((company) => {
-                                    {
-                                        if (company.is_archived === false) {
-                                            return (
-                                                <MenuItem
-                                                    value={company.company_name}
-                                                    onClick={() => switchProjects(company.id)} key={company.id}>
-                                                    {company.company_name}
-                                                </MenuItem>
-                                            )
-                                        }
-                                        
-                                    }
-                                })}
-                            </Select>
-                        </FormControl> :                      <FormControl variant='standard' style={{ margin: 'auto', width: '50%' }}>
-                            <Select
-                                style={{ fontSize: 40 }}
-                                onChange={(e) => setComapnyName(e.target.value)}
-                                value={currentCompany.company_name}
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                label="Name"
-                            >
+                                        {companies.map((company) => {
+                                            {
+                                                if (company.is_archived === false) {
+                                                    return (
+                                                        <MenuItem
+                                                            value={company.company_name}
+                                                            onClick={() => switchProjects(company.id)} key={company.id}>
+                                                            {company.company_name}
+                                                        </MenuItem>
+                                                    )
+                                                }
 
-                                {companies.map((company) => {
-                                    {
-                                        if (company.is_archived === true) {
-                                            return (
-                                                <MenuItem
-                                                    value={company.company_name}
-                                                    onClick={() => switchProjects(company.id)} key={company.id}>
-                                                    {company.company_name}
-                                                </MenuItem>
-                                            )
-                                        }
-                                        
-                                    }
-                                })}
-                            </Select>
-                        </FormControl>}
-                    </Box>
+                                            }
+                                        })}
+                                    </Select>
+                                </FormControl> :
+                                <FormControl variant='standard' style={{ margin: 'auto', width: '50%' }}>
+                                    <Select
+                                        style={{ fontSize: 40 }}
+                                        onChange={(e) => setComapnyName(e.target.value)}
+                                        value={currentCompany.company_name}
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        label="Name"
+                                    >
 
-                }
-            </Box>
-            <Box style={{ margin: 'auto', width: '20%' }}>
-                <br />
-                <Accordion elevation={1}>
-                    <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel1a-content"
-                        id="panel1a-header"
-                    >
-                        <Typography style={{fontWeight:'bold'}}>View Hours</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <Typography>
-                           <strong> Total Current Hours:</strong> {totalHours || 'n/a'}
-                        </Typography>
-                        <br />
-                        <Typography>
-                            <strong>Full-Time Hours:</strong> {fullTimeHours}
-                        </Typography>
-                        <Typography>
-                          <strong>Intern Hours:</strong> {internHours}
-                        </Typography>
-                    </AccordionDetails>
-                </Accordion>
-            </Box>
-        </div>
+                                        {companies.map((company) => {
+                                            {
+                                                if (company.is_archived === true) {
+                                                    return (
+                                                        <MenuItem
+                                                            value={company.company_name}
+                                                            onClick={() => switchProjects(company.id)} key={company.id}>
+                                                            {company.company_name}
+                                                        </MenuItem>
+                                                    )
+                                                }
+
+                                            }
+                                        })}
+                                    </Select>
+                                </FormControl>}
+                        </Box>
+
+                    }
+                </Box>
+                <Box style={{ marginLeft: '2em', width: '20%' }}>
+                    <br />
+                    <Accordion elevation={1}>
+                        <AccordionSummary
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls="panel1a-content"
+                            id="panel1a-header"
+                        >
+                            <Typography style={{ fontWeight: 'bold' }}>View Hours</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                            <Typography>
+                                <strong> Total Current Hours:</strong> {totalHours || 'n/a'}
+                            </Typography>
+                            <br />
+                            <Typography>
+                                <strong>Full-Time Hours:</strong> {fullTimeHours}
+                            </Typography>
+                            <Typography>
+                                <strong>Intern Hours:</strong> {internHours}
+                            </Typography>
+                        </AccordionDetails>
+                    </Accordion>
+                </Box>
+            </div>
 
             <br />
             <div>
-                    {projects.projects.length === 0 ?
-                    <center>
-                        <Button style={{ backgroundColor: '#afcc36', marginLeft: "4rem" }} onClick={handleOpen} variant="contained">add new project</Button>
-                        </center>
-                        :
-                        <div className='projectsHeader'  >
-                            <Typography style={{ lineHeight: '1.375em', margin: '0.1em 0', fontSize: '2.5em', fontWeight: 300, borderBottom: "2px solid #244c62" }} variant='h3'>
-                                Current Projects
-                            </Typography>
-                            {currentCompany.is_archived === false ?
-                            <Button style={{ backgroundColor: '#afcc36', marginLeft: "4rem" }} onClick={handleOpen} variant="contained">add new project</Button> : ""}
-                        </div>
-                    }
 
                 {/* </Grid>
 
@@ -234,19 +268,19 @@ function ProjectsList() {
                         <Typography className="modal-modal-description" sx={{ mt: 4 }}>
                             <center><TextField value={newName} onChange={(e) => setNewName(e.target.value)} id="outlined-basic" label='name' variant="outlined" /></center>
                             <br />
-                            <br/>
+                            <br />
                             <center><TextField type='number' value={newBudgetedHours} onChange={(e) => setNewBudgetedHours(e.target.value)} id="outlined-basic" label='budgeted hours' variant="outlined" /></center>
                             <br />
-                            <br/>
+                            <br />
                             <center><TextField value={newManager} onChange={(e) => setNewManager(e.target.value)} id="outlined-basic" label='Project Manager' variant="outlined" /></center>
                             <br />
-                            <br/>
+                            <br />
                             <Typography>Description:</Typography>
                             <TextareaAutosize aria-label="minimum height"
-                                                minRows={4}
-                                                maxRows={6}
-                                                style={{ width: '100%', fontSize: 16 }}
-                                                value={newDescription} onChange={(e) => setNewDescription(e.target.value)} id="outlined-basic" label='outcome' variant="outlined" />
+                                minRows={4}
+                                maxRows={6}
+                                style={{ width: '100%', fontSize: 16 }}
+                                value={newDescription} onChange={(e) => setNewDescription(e.target.value)} id="outlined-basic" label='outcome' variant="outlined" />
                             <Button style={{ marginLeft: '80%' }} onClick={newProject} variant="contained">Add</Button>
 
                         </Typography>

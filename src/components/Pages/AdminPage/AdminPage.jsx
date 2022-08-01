@@ -73,10 +73,10 @@ function AdminPage() {
 
   return (
     <div className="container">
-{/* Entire return is conditionally rendured depending on if use is admin or not */}
+      {/* Entire return is conditionally rendured depending on if use is admin or not */}
       {user.is_admin ?
         <Box sx={{ flexGrow: 1 }}>
-{/* div for title */}
+          {/* div for title */}
           <div className='partners'>
             <Typography style={{ lineHeight: '1.375em', margin: '0.1em 0', marginRight: '2%', fontSize: '5em', fontWeight: 300, borderBottom: "2px solid #244c62 " }} variant='h3'>
               Dashboard
@@ -84,29 +84,42 @@ function AdminPage() {
           </div>
           <Grid container spacing={2} sx={{ mb: 1 }}>
             <Grid item xs={12} md={12} lg={4}>
-              <Item style={{ backgroundColor: "#f4f1e9" }} elevation={4}>{user.is_admin ?
-                <div>
-                  <RegisterForm />
-                  <Box>
-                    <Typography>
-                      <strong>User List</strong>
-                    </Typography>
-                    <UserList />
-                  </Box>
-                  {alluser.map((users) => {
-                    return (
-                      < div key={users.id}>
+              <Typography style={{ marginBottom: '1em', textAlign: 'center' }} variant='h5'>
+                Register User
+              </Typography>
+              <Item style={{}} elevation={4}>
+                {user.is_admin ?
+                  <div style={{ marginTop: '1em' }}>
+                    <RegisterForm />
+                    {alluser.map((users) => {
+                      return (
+                        < div key={users.id}>
 
-                      </div>
-                    )
-                  })}
-                </div>
-                : 'UnAuthorized'}</Item>
+                        </div>
+                      )
+                    })}
+                  </div>
+                  : 'UnAuthorized'}</Item>
+              <Grid container spacing={2} sx={{ mb: 1 }}>
+                <Grid item xs={12} md={12} lg={12}>
+                <Item style={{marginTop:'1em'}} elevation={4}>
+                <Box>
+                      <Typography>
+                        <strong>User List</strong>
+                      </Typography>
+                      <UserList />
+                    </Box>
+                    </Item>
+                </Grid>
+              </Grid>
             </Grid>
             <Grid item xs={12} md={12} lg={8}>
+              <Typography style={{ marginBottom: '1em', textAlign: 'center' }} variant='h5'>
+                Partner List
+              </Typography>
               {user.is_admin ?
-                <div style={{width:'100%'}}>
-                  <Box style={{ display: 'flex', height: '100%', flexGrow: 1, width: '100%', backgroundColor: "#f4f1e9",}}>
+                <div style={{ width: '100%' }}>
+                  <Box style={{ display: 'flex', height: '100%', flexGrow: 1, width: '100%', }}>
                     <DataGrid
                       density='standard'
                       sx={{
@@ -133,7 +146,6 @@ function AdminPage() {
             </Grid>
 
           </Grid>
-          <LogOutButton className="btn" />
         </Box>
         : <Typography variant='h1' style={{ color: 'red' }}>'Not Authorized'</Typography>}
     </div>
