@@ -127,8 +127,6 @@ function ProjectsList() {
                         <br />
                         - View activities of a project by clicking the project name
                         <br />
-                        - change status by clicking the status dropdown
-                        <br />
                         - To add an outcome,change project status to "Complete"
                     </Typography>
 

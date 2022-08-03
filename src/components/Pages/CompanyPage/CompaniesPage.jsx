@@ -45,8 +45,12 @@ function CompaninesPage() {
                 <Typography style={{ lineHeight: '1.375em', fontSize: '5em', fontWeight: 300, borderBottom: "2px solid #244c62 " }} variant='h3'>
                     Partners
                 </Typography>
+                <div style={{marginRight:'70%'}}>
                 <CompanyFormPage />
-                    <Button style={{ marginTop: '2em' }} onClick={() => handlePopoverOpen()}><QuestionMarkIcon/></Button>
+                </div>
+                <div>
+                    <Button style={{ marginTop: '2em',marginLeft:'20%' }} onClick={() => handlePopoverOpen()}><QuestionMarkIcon/></Button>
+                    </div>
                 </div>
 
                 <Popover

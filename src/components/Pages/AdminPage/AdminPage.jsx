@@ -44,7 +44,7 @@ function AdminPage() {
     { field: 'FullRate', headerName: 'Full Rate', headerClassName: 'ColumnColor', flex: 1 },
     { field: 'Projects', headerName: 'Projects', flex: 1, headerClassName: 'ColumnColor', renderCell: (params) => { return (params.row.Projects.length) } },
     { field: 'OnGoing', headerName: 'OnGoing', flex: 1.5, headerClassName: 'ColumnColor', renderCell: (params) => { return (params.row.Projects.map((p) => { return (p.status != 'Complete' ? `${p.name}, ` : '') })) } },
-    { field: 'Complete', headerName: 'Complete', headerClassName: 'ColumnColor', flex: 1.5, renderCell: (params) => { return (params.row.Projects.map((p) => { return (p.status === "Complete" ? p.name : '') })) } }
+    { field: 'Complete', headerName: 'Complete', headerClassName: 'ColumnColor', flex: 1.5, renderCell: (params) => { return (params.row.Projects.map((p) => { return (p.status === "Complete" ? `${p.name},`: '') })) } }
 
   ];
 

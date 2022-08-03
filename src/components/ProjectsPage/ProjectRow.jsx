@@ -226,6 +226,7 @@ function ProjectRow({ project }) {
                       
 {/* Conditional for projects with 'Completed' status */}
 
+                        <br />
                     {project.outcome !== null ?
                         <Accordion elevation={0} expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
                             <AccordionSummary
@@ -233,7 +234,7 @@ function ProjectRow({ project }) {
                                 aria-controls="panel2bh-content"
                                 id="panel2bh-header"
                             >
-                                <Typography sx={{ width: '33%', flexShrink: 0 }}>Outcome</Typography>
+                                <Typography sx={{ width: '33%',marginRight:'7em', flexShrink: 0 }}><strong>Outcome:</strong></Typography>
                             </AccordionSummary>
                             <AccordionDetails>
 
