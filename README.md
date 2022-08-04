@@ -17,38 +17,6 @@ Grand Farm Management allows Grand Farm to add and view a partnered company’s 
 **Database:** Postgres
 
 
-## Run Locally
-
-Clone the project
-
-```bash
-  git clone hhttps://github.com/Grand-Farm/Project-Organization-Tool
-```
-
-Go to the project directory
-
-```bash
-  cd my-project
-```
-
-Install dependencies
-
-```bash
-  npm install
-```
-
-Start the server
-
-```bash
-  npm run start
-
-```
-```bash
-npm run client
-
-```
-
-
 ## Usage/Examples
 
  ## Dahboard page
@@ -90,3 +58,9 @@ This page will allow users to view all the comapnies than no longer have any on 
 They will. have the same view that the partner page with the same buttons and features with the exception of clicking the button to arc hive a company unarchives it and moves it back to the parnters page.
 
 
+## Hosting Fees
+
+## heroku
+If you want you app to not take 30 seconds to spin up the first time someone goes to it, you will need to pay $7/month for a heroku dyno
+
+If you want your app to hold 10,000 users (which might translate to a million rows of total SQL information) then you will need to pay $9/month for a million database rows
