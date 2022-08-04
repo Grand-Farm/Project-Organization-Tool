@@ -40,11 +40,3 @@ CREATE TABLE "activity" (
 	"intern_hours" decimal default 0
 	
 );
-
-CREATE TABLE "activity_employee"(
-"id" serial primary key,
-"user_id" int references "user" NOT NULL,
-"activity_id" int references "activity" NOT NULL,
-"employee_hours" decimal NOT NULL
-
-);

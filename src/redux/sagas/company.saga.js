@@ -4,20 +4,18 @@ import { put, take, takeLatest } from 'redux-saga/effects';
 function* fetchCompany() {
     try {
         const response = yield axios.get('/api/company');
-        console.log('In Fetch company Saga', response.data)
         yield put({ type: 'SET_COMPANY', payload: response.data });
     } catch (err) {
-        console.log('Error in Fetch company Saga', err);
+        console.error('Error in Fetch company Saga', err);
     }
 }
 
 function* fetchCompanyInfo(){
     try{
         const response = yield axios.get('api/company/pro');
-        console.log('In Fetch company info', response.data);
         yield put({type: 'SET_COMPANYINFO', payload: response.data});
     }catch(err){
-        console.log('ERROR in Fetch company info saga', err);
+        console.error('ERROR in Fetch company info saga', err);
     }
 }
 
@@ -26,17 +24,17 @@ function* addCompany(action) {
         yield axios.post('/api/company/', action.payload);
         yield put({ type: 'FETCH_COMPANY' });
     } catch (err) {
-        console.log('Error in Add company Saga', err);
+        console.error('Error in Add company Saga', err);
     }
 }
 
 function* archiveCompany(action){
     try{
-        console.log('Archiving company with id', action.payload)
+        console.error('Archiving company with id', action.payload)
         yield axios.put(`/api/company/arc/${action.payload}`);
         yield put({type:'FETCH_COMPANY'});
     }catch(err){
-        console.log('Error in Archive Company Saga', err);
+        console.error('Error in Archive Company Saga', err);
     }
 }
 
@@ -45,7 +43,7 @@ function* updateCompany(action){
         yield axios.put(`/api/company/${action.payload.id}`,action.payload);
         yield put({type:'FETCH_COMPANY'});
     }catch(err){
-        console.log('Error in Update Company saga', err);
+        console.error('Error in Update Company saga', err);
     }
 }
 

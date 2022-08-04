@@ -39,9 +39,9 @@ function UserList({ users }) {
                 >
                 </AccordionSummary>
                 <AccordionDetails>
-                    {alluser.map(user => {
+                    {alluser.map((user,i) => {
                         return (
-                            <div>
+                            <div key={i}>
                                 <Grid container spacing={10}>
                                     <Grid item sx={{m:2}}>
                                         <Typography>

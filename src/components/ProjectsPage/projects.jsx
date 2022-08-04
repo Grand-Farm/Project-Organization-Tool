@@ -44,7 +44,7 @@ function ProjectsList() {
 
     const projects = useSelector(store => store.projectsReducer);
     const companies = useSelector(store => store.company); // array of companies
-    console.log('This is Company store', projects);
+
 
 
     const [status, setstatus] = useState("not_completed");
@@ -78,7 +78,7 @@ function ProjectsList() {
     };
 
     function newProject() {
-        console.log('DISPATCHING NEW PROJECT', params.companyid);
+
         dispatch({
             type: 'ADD_PROJECTS',
             payload: {

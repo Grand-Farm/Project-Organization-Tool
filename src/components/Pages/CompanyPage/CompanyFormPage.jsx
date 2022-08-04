@@ -14,7 +14,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 function CompanyFormPage(){
 
     const companyStore = useSelector(store => store.company);
-    console.log('This is Company store', companyStore);
 
     const dispatch = useDispatch();
 

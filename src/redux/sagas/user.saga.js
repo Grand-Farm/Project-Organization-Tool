@@ -28,14 +28,13 @@ function* fetchUser() {
 function* fetchALLUSER() {
   try {
     const response = yield axios.get('/api/user/admin');
-    console.log('my response for alluser is',response.data)
 
     // now that the session has given us a user object
     // with an id and username set the client-side user object to let
     // the client-side code know the user is logged in
     yield put({ type: 'GETALL_USERS', payload: response.data });
   } catch (error) {
-    console.log('GET ALL USER get request failed', error);
+    console.error('GET ALL USER get request failed', error);
   }
 }
 
@@ -43,7 +42,6 @@ function* UpdateUser(action) {
 
   try {
       yield axios.put(`/api/user/${action.payload.id}`, action.payload)
-      console.log('does this work UPDATEUSER?',action.payload)
       yield put({ type: 'FETCH_ALLUSERS'})
   } catch {
       console.error('error adding in Update user')

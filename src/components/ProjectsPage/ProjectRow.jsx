@@ -71,7 +71,7 @@ function ProjectRow({ project }) {
 
     // Change Functions
     function updateStatus(project) {
-        console.log('This should change', project)
+
         dispatch({
             type: 'STATUS',
             payload: {
@@ -254,7 +254,8 @@ function ProjectRow({ project }) {
                                        
                                          <><Typography id="modal-modal-title" variant="h6" component="h2">
                                         Edit Project
-                                    </Typography><Typography className="modal-modal-description" sx={{ mt: 4 }}>
+                                    </Typography>
+                                    <Typography className="modal-modal-description" sx={{ mt: 4 }}>
                                             <center><TextField style={{marginBottom:"1em"}} value={projectName} onChange={(e) => setProjectName(e.target.value)} id="outlined-basic" label='Project Name' variant="outlined" /></center>
                                             <br />
                                            <center><TextField style={{marginBottom:"1em"}} type='number' value={budgetedhours} onChange={(e) => setBudgetedHours(e.target.value)} id="outlined-basic" label='budgeted hours' variant="outlined" /></center>
