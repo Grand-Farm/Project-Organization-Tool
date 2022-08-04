@@ -60,11 +60,9 @@ function CompanyCard({ company }) {
     function handleExpandClick(id) {
         setSelectedId((prevState => ({ ...prevState, [id]: !prevState[id] })));
         setExpanded(expanded => !expanded);
-        console.log(id);
     }
 
     function viewProjects(company) {
-        console.log("THIS IS THE COMPANY", company)
         history.push(`/projects/${company}`)
     }
     // const willArchive = () =>{

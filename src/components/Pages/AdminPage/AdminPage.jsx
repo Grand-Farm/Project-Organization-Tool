@@ -44,7 +44,7 @@ function AdminPage() {
     { field: 'FullRate', headerName: 'Full Rate', headerClassName: 'ColumnColor', flex: 1 },
     { field: 'Projects', headerName: 'Projects', flex: 1, headerClassName: 'ColumnColor', renderCell: (params) => { return (params.row.Projects.length) } },
     { field: 'OnGoing', headerName: 'OnGoing', flex: 1.5, headerClassName: 'ColumnColor', renderCell: (params) => { return (params.row.Projects.map((p) => { return (p.status != 'Complete' ? `${p.name}, ` : '') })) } },
-    { field: 'Complete', headerName: 'Complete', headerClassName: 'ColumnColor', flex: 1.5, renderCell: (params) => { return (params.row.Projects.map((p) => { return (p.status === "Complete" ? `${p.name},`: '') })) } }
+    { field: 'Complete', headerName: 'Complete', headerClassName: 'ColumnColor', flex: 1.5, renderCell: (params) => { return (params.row.Projects.map((p) => { return (p.status === "Complete" ? `${p.name},` : '') })) } }
 
   ];
 
@@ -83,36 +83,6 @@ function AdminPage() {
             </Typography>
           </div>
           <Grid container spacing={2} sx={{ mb: 1 }}>
-            <Grid item xs={12} md={12} lg={4}>
-              <Typography style={{ marginBottom: '1em', textAlign: 'center' }} variant='h5'>
-                Register User
-              </Typography>
-              <Item style={{}} elevation={4}>
-                {user.is_admin ?
-                  <div style={{ marginTop: '1em' }}>
-                    <RegisterForm />
-                    {alluser.map((users) => {
-                      return (
-                        < div key={users.id}>
-
-                        </div>
-                      )
-                    })}
-                  </div>
-                  : 'UnAuthorized'}</Item>
-              <Grid container spacing={2} sx={{ mb: 1 }}>
-                <Grid item xs={12} md={12} lg={12}>
-                <Item style={{marginTop:'1em'}} elevation={4}>
-                <Box>
-                      <Typography>
-                        <strong>User List</strong>
-                      </Typography>
-                      <UserList />
-                    </Box>
-                    </Item>
-                </Grid>
-              </Grid>
-            </Grid>
             <Grid item xs={12} md={12} lg={8}>
               <Typography style={{ marginBottom: '1em', textAlign: 'center' }} variant='h5'>
                 Partner List
@@ -144,7 +114,38 @@ function AdminPage() {
                 </div>
                 : 'Unauthorized |Error 404|'}
             </Grid>
+            <Grid item xs={12} md={12} lg={4}>
+              <Typography style={{ marginBottom: '1em', textAlign: 'center' }} variant='h5'>
+                Register User
+              </Typography>
+              <Item style={{}} elevation={4}>
+                {user.is_admin ?
+                  <div style={{ marginTop: '1em' }}>
+                    <RegisterForm />
+                    {alluser.map((users) => {
+                      return (
+                        < div key={users.id}>
 
+                        </div>
+                      )
+                    })}
+                  </div>
+                  : 'UnAuthorized'}</Item>
+              {user.is_admin ?
+                <Grid container spacing={2} sx={{ mb: 1 }}>
+                  <Grid item xs={12} md={12} lg={12}>
+                    <Item style={{ marginTop: '1em' }} elevation={4}>
+                      <Box>
+                        <Typography>
+                          <strong>User List</strong>
+                        </Typography>
+                        <UserList />
+                      </Box>
+                    </Item>
+                  </Grid>
+                </Grid>
+                : 'Unauthorized |Error 404|'}
+            </Grid>
           </Grid>
         </Box>
         : <Typography variant='h1' style={{ color: 'red' }}>'Not Authorized'</Typography>}

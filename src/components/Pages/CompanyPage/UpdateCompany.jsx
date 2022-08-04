@@ -20,13 +20,6 @@ function UpdateCompany({ company }) {
     const companyStore = useSelector(store => store.company);
     const dispatch = useDispatch();
 
-    // let params = useParams();
-    // console.log(params);
-    // let companyId = params.companyId;
-    // console.log(companyId);
-    // let companyU = companyStore.find(companyU => companyU.id === Number(companyId));
-    // console.log('Updating this company', companyU)
-
     const [addingCompany, setAddingCompany] = useState(false);
     const [companyName, setCompanyName] = useState(company.company_name);
     const [allocatedHours, setAllocatedHours] = useState(company.allocated_hours);

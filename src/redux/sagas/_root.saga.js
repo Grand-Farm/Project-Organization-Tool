@@ -5,7 +5,7 @@ import registrationSaga from './registration.saga';
 import userSaga from './user.saga';
 
 
-import employeeSaga from './activity_employee.saga';
+
 import fetchProjects from './projects.saga';
 import statusSaga from './status.saga';
 import companySaga from './company.saga';
@@ -25,7 +25,6 @@ export default function* rootSaga() {
     registrationSaga(),
     userSaga(),
     activitySaga(),
-    employeeSaga(),
     fetchProjects(),
     statusSaga(),
     companySaga(),
