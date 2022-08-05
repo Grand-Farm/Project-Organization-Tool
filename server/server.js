@@ -12,7 +12,6 @@ const userRouter = require('./routes/user.router');
 const companyRouter = require('./routes/company.router');
 const ProjectsRouter = require('./routes/projects.router.js');
 const activityRouter = require('./routes/activity.router')
-const activity_employeeRouter= require('./routes/activity_employee.router')
 
 
 // Body parser middleware
@@ -31,7 +30,7 @@ app.use('/api/user', userRouter);
 app.use('/api/company', companyRouter);
 app.use('/api/projects',ProjectsRouter)
 app.use('/api/activity', activityRouter)
-app.use('/api/activity_employee', activity_employeeRouter)
+
 
 
 
