@@ -65,9 +65,7 @@ function CompanyCard({ company }) {
     function viewProjects(company) {
         history.push(`/projects/${company}`)
     }
-    // const willArchive = () =>{
-    //     setArchive(archive => !archive);
-    // }
+   
 
     const archiveAlert = () => {
         swal({
